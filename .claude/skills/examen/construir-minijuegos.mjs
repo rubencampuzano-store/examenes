@@ -129,4 +129,30 @@ for (const id of JUEGOS) {
   if (kb > 3072) avisos.push(`${id}.html pesa ${(kb / 1024).toFixed(2)} MB (límite recomendado 3 MB)`);
   console.log(`OK  ${ruta}  (${kb.toFixed(0)} KB)`);
 }
+// ---------- Carrera v2 (3D con Three.js incrustado) ----------
+// Usa los mismos datos que "carrera" y guarda su récord por separado (id carrera-v2).
+const rutaV2 = join(aqui, 'carrera3d.html'), rutaThree = join(aqui, 'vendor', 'three.min.js');
+if (mini.carrera && existsSync(rutaV2)) {
+  if (!existsSync(rutaThree)) {
+    avisos.push('carrera-v2 no generada: falta minijuegos/vendor/three.min.js (three@0.159.0/build/three.min.js)');
+  } else {
+    // Se quita el aviso de "build obsoleta" que Three.js r159 muestra en la consola al cargarse
+    const three = readFileSync(rutaThree, 'utf8').replace(/^console\.warn\('[^']*'\),/, '0,');
+    const plantilla = readFileSync(rutaV2, 'utf8');
+    const datos = { meta: examen.meta, tema, textos, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d || ' 3D') }) };
+    for (const m of ['/*__COMUN_CSS__*/', '/*__COMUN_JS__*/', '/*__DATOS__*/null', '/*__THREE__*/']) if (!plantilla.includes(m)) { console.error(`carrera3d.html no contiene ${m}`); process.exit(1); }
+    const html = plantilla
+      .replace('/*__COMUN_CSS__*/', () => css)
+      .replace('/*__COMUN_JS__*/', () => js)
+      .replace('/*__THREE__*/', () => three)
+      .replace('/*__DATOS__*/null', () => escJSON(datos))
+      .replace('<title>Minijuego</title>', () => `<title>${escHTML(datos.juego.titulo)}</title>`);
+    const ruta = join(salida, 'carrera-v2.html');
+    writeFileSync(ruta, html, 'utf8');
+    const kb = Buffer.byteLength(html) / 1024;
+    if (kb > 3072) avisos.push(`carrera-v2.html pesa ${(kb / 1024).toFixed(2)} MB (límite recomendado 3 MB)`);
+    console.log(`OK  ${ruta}  (${kb.toFixed(0)} KB, 3D)`);
+  }
+}
+
 if (avisos.length) console.log('AVISOS:\n - ' + avisos.join('\n - '));

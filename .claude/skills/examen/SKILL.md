@@ -111,6 +111,7 @@ Cuatro minijuegos temáticos en archivos separados (de momento no están integra
    node "<ruta del skill>/construir-minijuegos.mjs" "<carpeta>/juego-datos.json" "<carpeta>/minijuegos-datos.json" "<carpeta>/minijuegos"
    ```
 3. Corrige los ERRORES y revisa los AVISOS (textos demasiado largos para móvil).
+   El script genera también `carrera-v2.html` (versión 3D de la carrera, con los mismos datos) si existe `minijuegos/vendor/three.min.js`. Su escena es la de la Revolución francesa: en otros temas, avisa al usuario de que la carrera 3D mantiene ese escenario salvo que se adapte `carrera3d.html`.
 4. Sonido de `carrera` (ver "Sonido" en `esquema-minijuegos.md`): elige el `preset` más cercano al tema y, si hay una grabación adecuada de dominio público o CC0 en Wikimedia Commons, descárgala y comprímela con
    `node "<ruta del skill>/audio.mjs" "File:Nombre.ogg" "<carpeta>/audio/nombre.mp3" 48`
    y añádela en `carrera.sonido.musica` con su crédito completo. Si no hay ninguna adecuada, deja solo el `preset` (ambiente y efectos sintetizados).

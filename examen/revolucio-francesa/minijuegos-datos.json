@@ -42,7 +42,9 @@
     "detalleAmbiente": "Multitud i campanes",
     "detalleEfectos": "Passos, cops, canó i fanfàrries",
     "activat": "Activat",
-    "desactivat": "Desactivat"
+    "desactivat": "Desactivat",
+    "sinWebgl": "Aquest dispositiu no pot mostrar gràfics 3D.",
+    "versioClassica": "Juga a la versió clàssica"
   },
   "carrera": {
     "titulo": "L'Assalt a la Bastilla",

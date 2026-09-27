@@ -69,6 +69,15 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
 - **clasifica**: dos categorías excluyentes por ronda (vertebrado/invertebrado, metal/no metal…).
 - El personaje y los objetos dibujados de `carrera` son genéricos (figura con bandera, barricadas, insignias) y usan los colores del tema.
 
+## Carrera 3D (`carrera-v2.html`)
+Versión 3D de `carrera` con Three.js (plantilla `minijuegos/carrera3d.html`). **Usa los mismos datos** que `carrera` (no necesita sección propia) y se genera automáticamente junto a los demás minijuegos. Opcional: `carrera.sufijo3d` (por defecto " 3D") para su título.
+- Misma mecánica, controles, sonido, pausa y contrato de resultado; récord propio con id `carrera-v2`.
+- Escena generada por código (sin imágenes externas): calle de adoquines, edificios con ventanas iluminadas, farolas, luna y estrellas, la meta al fondo, corredor low-poly animado, barricadas, escarapelas y puertas con carteles (se eligen también tocando la puerta 3D).
+- Three.js r159 incrustado desde `minijuegos/vendor/three.min.js` (licencia MIT en `vendor/THREE-LICENSE.txt`): funciona sin internet. Peso ≈ 1,4 MB con música.
+- Rendimiento: resolución limitada y **calidad automática** (si baja de ~40 fps quita sombras y luego resolución). Sin WebGL muestra un aviso con enlace a `carrera.html`.
+- La escena está pensada para la Revolución francesa (París nocturno y la Bastilla). Para otros temas, el texto `carrera.objetivo` se sigue mostrando, pero los edificios y la fortaleza son los mismos: adaptar la escena de `carrera3d.html` si el tema lo pide.
+- Textos opcionales: `sinWebgl`, `versioClassica`.
+
 ## Sonido
 Tres canales independientes: **música**, **ambiente** y **efectos** (este último comparte preferencia con el examen). En la cabecera hay botón de música y de efectos; en el **menú de pausa** hay un interruptor por cada canal que tenga el juego (los minijuegos sin `sonido` solo muestran Efectes). Cada preferencia se guarda en `localStorage` (`…:musica`, `…:ambiente`, `…:sonido`).
 - **Música**: una grabación real de dominio público o CC0, incrustada. Suena en bucle; en `carrera` su tempo sigue la velocidad (0,9×–1,15×, sin cambiar el tono) y baja de volumen cuando el corredor se para ante las puertas.
