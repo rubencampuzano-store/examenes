@@ -13,7 +13,8 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
     "pistaCronoTactil", "pistaCronoTeclado", "deixaAqui", "ratxa", "millorRatxa", "parelles", "moviments",
     "cartaTapada", "restants", "tempsEsgotat",
     "triaTactil", "triaTeclat", "rapidesa",  // carrera: indicación al pararse ante las puertas y nombre del bonus
-    "musica", "silenciarMusica", "activarMusica"  // opcionales: crédito y botón de música
+    "musica", "silenciarMusica", "activarMusica",  // opcionales: crédito y botón de música
+    "audio", "ambiente", "efectos", "detalleAmbiente", "detalleEfectos", "activat", "desactivat"  // opcionales: interruptores del menú de pausa
   },
 
   // Campos comunes a los 4 juegos:
@@ -69,7 +70,7 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
 - El personaje y los objetos dibujados de `carrera` son genéricos (figura con bandera, barricadas, insignias) y usan los colores del tema.
 
 ## Sonido
-Dos canales con botón propio en la cabecera: **efectos** (misma preferencia que el examen) y **música/ambiente**.
+Tres canales independientes: **música**, **ambiente** y **efectos** (este último comparte preferencia con el examen). En la cabecera hay botón de música y de efectos; en el **menú de pausa** hay un interruptor por cada canal que tenga el juego (los minijuegos sin `sonido` solo muestran Efectes). Cada preferencia se guarda en `localStorage` (`…:musica`, `…:ambiente`, `…:sonido`).
 - **Música**: una grabación real de dominio público o CC0, incrustada. Suena en bucle; en `carrera` su tempo sigue la velocidad (0,9×–1,15×, sin cambiar el tono) y baja de volumen cuando el corredor se para ante las puertas.
   - Buscar en Wikimedia Commons (espacio de nombres File, `filetype:audio`). Buenas fuentes: bandas militares o de gobiernos (p. ej. U.S. Navy Band, U.S. Air Force Band: obras del Gobierno de EE. UU., dominio público) y grabaciones antiguas marcadas como dominio público.
   - Descargar y comprimir: `node "<ruta del skill>/audio.mjs" "File:Nombre.ogg" "<carpeta>/audio/nombre.mp3" 48` → MP3 mono 48 kbps (~6 KB por segundo). Rechaza licencias no libres. Necesita ffmpeg (`pip install --user imageio-ffmpeg`).

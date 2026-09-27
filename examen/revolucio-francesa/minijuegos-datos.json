@@ -35,7 +35,14 @@
     "rapidesa": "Rapidesa",
     "musica": "Música",
     "silenciarMusica": "Silencia la música",
-    "activarMusica": "Activa la música"
+    "activarMusica": "Activa la música",
+    "audio": "So",
+    "ambiente": "Ambient",
+    "efectos": "Efectes",
+    "detalleAmbiente": "Multitud i campanes",
+    "detalleEfectos": "Passos, cops, canó i fanfàrries",
+    "activat": "Activat",
+    "desactivat": "Desactivat"
   },
   "carrera": {
     "titulo": "L'Assalt a la Bastilla",

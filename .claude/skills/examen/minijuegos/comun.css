@@ -98,6 +98,23 @@
   .mj-controles li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; font-size: .95rem; }
   .mj-controles li i { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-style: normal; border: 1.5px solid var(--tinta); font-family: var(--f-mono); font-size: .8rem; }
   .mj-acciones { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .mj-audio { display: grid; gap: 8px; text-align: left; padding: 12px 0 4px; border-top: 1px solid var(--linea); }
+  .mj-audio > .eyebrow { color: var(--tinta-suave); }
+  .mj-interruptores { display: grid; gap: 6px; }
+  .mj-switch {
+    display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; width: 100%; min-height: 52px;
+    padding: 8px 12px; border-radius: 10px; border: 1px solid var(--linea); background: color-mix(in srgb, var(--papel) 70%, white);
+    text-align: left; transition: border-color .15s, background .15s;
+  }
+  .mj-switch:hover { border-color: var(--tinta); }
+  .mj-switch-txt { display: grid; min-width: 0; }
+  .mj-switch-txt b { font-weight: 700; }
+  .mj-switch-txt small { color: var(--tinta-suave); font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mj-switch-estado { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-suave); }
+  .mj-switch-pista { position: relative; width: 46px; height: 26px; border-radius: 999px; background: color-mix(in srgb, var(--tinta) 22%, transparent); transition: background .2s; }
+  .mj-switch-pista i { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--papel); box-shadow: 0 1px 3px rgba(0,0,0,.35); transition: transform .2s; }
+  .mj-switch[aria-checked="true"] .mj-switch-pista { background: var(--acierto); }
+  .mj-switch[aria-checked="true"] .mj-switch-pista i { transform: translateX(20px); }
   .mj-cuenta { font-family: var(--f-display); font-weight: 800; font-size: clamp(6rem, 30vw, 11rem); color: var(--claro); text-shadow: 0 10px 40px rgba(0,0,0,.6); animation: mjLatido .9s ease both; }
   @keyframes mjLatido { 0% { transform: scale(1.8); opacity: 0; } 30% { transform: scale(1); opacity: 1; } 100% { opacity: .0; transform: scale(.8); } }
   .mj-sello { width: 110px; justify-self: center; transform: rotate(-10deg); filter: drop-shadow(0 8px 14px rgba(0,0,0,.35)); }

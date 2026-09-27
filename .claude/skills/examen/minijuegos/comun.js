@@ -59,8 +59,13 @@ const MJ = (function () {
   // puede ser una grabación incrustada (JUEGO.sonido.musica.src).
   const CLAVE_SONIDO = CLAVE + ':sonido';
   const CLAVE_MUSICA = CLAVE + ':musica';
-  let sonidoOn = true, musicaOn = true;
-  try { sonidoOn = localStorage.getItem(CLAVE_SONIDO) !== 'off'; musicaOn = localStorage.getItem(CLAVE_MUSICA) !== 'off'; } catch (e) {}
+  const CLAVE_AMBIENTE = CLAVE + ':ambiente';
+  let sonidoOn = true, musicaOn = true, ambienteOn = true;
+  try {
+    sonidoOn = localStorage.getItem(CLAVE_SONIDO) !== 'off';
+    musicaOn = localStorage.getItem(CLAVE_MUSICA) !== 'off';
+    ambienteOn = localStorage.getItem(CLAVE_AMBIENTE) !== 'off';
+  } catch (e) {}
   const CFG_SONIDO = JUEGO.sonido || {};
   const PRESETS = {
     // ambiente: multitud | viento | naturaleza | pulsos | ninguno ; perc: caja | marco | tabor | madera | electronica
@@ -71,13 +76,16 @@ const MJ = (function () {
     tecnologia: { ambiente: 'pulsos', campanas: false, perc: 'electronica', metal: 'square', fanfarria: [440, 554, 659, 880], trompeta: [110, 82] },
   };
   const P = PRESETS[CFG_SONIDO.preset] || PRESETS.revolucion;
-  let ctx = null, gEfectos = null, gFondo = null;
+  // gFondo solo se usa para silenciar música y ambiente durante la pausa; cada canal tiene su propia ganancia
+  let ctx = null, gEfectos = null, gFondo = null, gMusica = null, gAmbiente = null;
   function contexto() {
     try {
       if (!ctx) {
         ctx = new (window.AudioContext || window.webkitAudioContext)();
         gEfectos = ctx.createGain(); gEfectos.gain.value = sonidoOn ? 1 : 0; gEfectos.connect(ctx.destination);
-        gFondo = ctx.createGain(); gFondo.gain.value = musicaOn ? 1 : 0; gFondo.connect(ctx.destination);
+        gFondo = ctx.createGain(); gFondo.gain.value = 1; gFondo.connect(ctx.destination);
+        gMusica = ctx.createGain(); gMusica.gain.value = musicaOn ? 1 : 0; gMusica.connect(gFondo);
+        gAmbiente = ctx.createGain(); gAmbiente.gain.value = ambienteOn ? 1 : 0; gAmbiente.connect(gFondo);
       }
       if (ctx.state === 'suspended') ctx.resume();
     } catch (e) { return null; }
@@ -148,12 +156,12 @@ const MJ = (function () {
     percusion: (fuerte) => percusion(0, fuerte),
   };
 
-  // Ambiente sintetizado (canal música/ambiente)
+  // Ambiente sintetizado (canal ambiente)
   let amb = null, campanasT = 0;
   function ambienteIniciar() {
     const c = contexto(); if (!c || amb || P.ambiente === 'ninguno') return;
     amb = { nodos: [] };
-    const g = c.createGain(); g.gain.value = .0001; g.connect(gFondo); amb.g = g;
+    const g = c.createGain(); g.gain.value = .0001; g.connect(gAmbiente); amb.g = g;
     const lazo = (filtro, f, q, vol) => {
       const s = c.createBufferSource(); s.buffer = ruido(); s.loop = true;
       const fl = c.createBiquadFilter(); fl.type = filtro; fl.frequency.value = f; fl.Q.value = q;
@@ -167,7 +175,7 @@ const MJ = (function () {
     else if (P.ambiente === 'pulsos') { const o = c.createOscillator(); o.frequency.value = 55; const og = c.createGain(); og.gain.value = .25; o.connect(og).connect(g); o.start(); amb.nodos.push(o); lfo(og.gain, 2, .2); }
     // Sonidos ocasionales: campanas lejanas o pájaros
     const ocasional = () => {
-      if (!amb || !musicaOn) return;
+      if (!amb || !ambienteOn || estado !== 'jugando') return;
       if (P.campanas) { campanaFondo(); }
       else if (P.ambiente === 'naturaleza') [0, .15, .3].forEach((t) => tonoFondo(2200 + Math.random() * 1200, t, .12, 'sine', .04, 3200));
     };
@@ -178,7 +186,7 @@ const MJ = (function () {
     const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + t0;
     o.type = tipo; o.frequency.setValueAtTime(f, t); if (fFin) o.frequency.exponentialRampToValueAtTime(fFin, t + dur);
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    o.connect(g).connect(gFondo); o.start(t); o.stop(t + dur + .05);
+    o.connect(g).connect(gAmbiente); o.start(t); o.stop(t + dur + .05);
   }
   function campanaFondo() { [0, 1.1, 2.2].forEach((t, i) => [1, 2.01, 2.43, 3].forEach((m, k) => tonoFondo((i % 2 ? 311 : 349) * m, t, 2.4 - k * .4, 'sine', .035 / (k + 1)))); }
   function ambienteParar() {
@@ -190,7 +198,7 @@ const MJ = (function () {
   }
   function ambienteIntensidad(x) { if (amb && ctx) amb.g.gain.setTargetAtTime(.02 + Math.max(0, Math.min(1, x)) * .1, ctx.currentTime, .4); }
 
-  // Música grabada (canal música/ambiente)
+  // Música grabada (canal música)
   let musEl = null, musGain = null, musRate = 1, atenuada = false;
   function musicaPreparar() {
     const m = CFG_SONIDO.musica;
@@ -198,7 +206,7 @@ const MJ = (function () {
     musEl = new Audio(); musEl.src = m.src; musEl.loop = true; musEl.preload = 'auto';
     musEl.preservesPitch = true; musEl.mozPreservesPitch = true; musEl.webkitPreservesPitch = true;
     const c = contexto();
-    try { const srcN = c.createMediaElementSource(musEl); musGain = c.createGain(); musGain.gain.value = CFG_SONIDO.volumenMusica || .55; srcN.connect(musGain).connect(gFondo); }
+    try { const srcN = c.createMediaElementSource(musEl); musGain = c.createGain(); musGain.gain.value = CFG_SONIDO.volumenMusica || .55; srcN.connect(musGain).connect(gMusica); }
     catch (e) { musGain = null; musEl.volume = musicaOn ? .55 : 0; }
   }
   function fondoIniciar() {
@@ -207,7 +215,7 @@ const MJ = (function () {
     atenuar(false);
   }
   function fondoPausar() { if (musEl) musEl.pause(); if (ctx && gFondo) gFondo.gain.setTargetAtTime(0, ctx.currentTime, .05); redoble(false); }
-  function fondoReanudar() { if (musEl && musicaOn) musEl.play().catch(() => {}); if (ctx && gFondo) gFondo.gain.setTargetAtTime(musicaOn ? 1 : 0, ctx.currentTime, .1); }
+  function fondoReanudar() { if (musEl && musicaOn) musEl.play().catch(() => {}); if (ctx && gFondo) gFondo.gain.setTargetAtTime(1, ctx.currentTime, .1); }
   function fondoParar() { if (musEl) musEl.pause(); ambienteParar(); redoble(false); }
   function tempo(r) { if (!musEl || Math.abs(r - musRate) < .01) return; musRate = r; try { musEl.playbackRate = r; } catch (e) {} }
   function atenuar(on) {
@@ -216,11 +224,18 @@ const MJ = (function () {
     if (musGain && ctx) musGain.gain.setTargetAtTime(on ? base * .3 : base, ctx.currentTime, .25);
     else if (musEl) musEl.volume = musicaOn ? (on ? .2 : .55) : 0;
   }
-  const hayFondo = () => !!(CFG_SONIDO.musica && CFG_SONIDO.musica.src) || (CFG_SONIDO.preset && P.ambiente !== 'ninguno');
+  const hayMusica = () => !!(CFG_SONIDO.musica && CFG_SONIDO.musica.src);
+  const hayAmbiente = () => !!(CFG_SONIDO.preset && P.ambiente !== 'ninguno');
+  const hayFondo = () => hayMusica() || hayAmbiente();
 
   const ICON_MUSICA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>';
   const ICON_MUSICA_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/><path d="M3 3l18 18"/></svg>';
   function pintarSonido() {
+    const sw = $('#mjInterruptores');
+    if (sw) sw.querySelectorAll('.mj-switch').forEach((b) => {
+      const k = canales().find((x) => x.id === b.dataset.canal);
+      if (k) { b.setAttribute('aria-checked', String(k.on)); b.querySelector('.mj-switch-estado').textContent = k.on ? (T.activat || 'Sí') : (T.desactivat || 'No'); }
+    });
     const b = $('#mjSonido');
     if (b) {
       b.innerHTML = sonidoOn ? ICON.sonido : ICON.mudo;
@@ -246,14 +261,45 @@ const MJ = (function () {
   function alternarMusica() {
     musicaOn = !musicaOn;
     try { localStorage.setItem(CLAVE_MUSICA, musicaOn ? 'on' : 'off'); } catch (e) {}
-    const c = contexto(); if (c && gFondo && estado !== 'pausa') gFondo.gain.setTargetAtTime(musicaOn ? 1 : 0, c.currentTime, .05);
+    const c = contexto(); if (c && gMusica) gMusica.gain.setTargetAtTime(musicaOn ? 1 : 0, c.currentTime, .05);
     if (musEl) { if (musicaOn && estado === 'jugando') musEl.play().catch(() => {}); else if (!musicaOn) musEl.pause(); if (!musGain) musEl.volume = musicaOn ? .55 : 0; }
     pintarSonido();
+  }
+  function alternarAmbiente() {
+    ambienteOn = !ambienteOn;
+    try { localStorage.setItem(CLAVE_AMBIENTE, ambienteOn ? 'on' : 'off'); } catch (e) {}
+    const c = contexto(); if (c && gAmbiente) gAmbiente.gain.setTargetAtTime(ambienteOn ? 1 : 0, c.currentTime, .05);
+    pintarSonido();
+  }
+  // Interruptores de sonido (menú de pausa): solo los canales que tiene el juego
+  function canales() {
+    const l = [];
+    if (hayMusica()) l.push({ id: 'musica', nombre: T.musica || 'Música', detalle: CFG_SONIDO.musica.titulo, on: musicaOn, alternar: alternarMusica });
+    if (hayAmbiente()) l.push({ id: 'ambiente', nombre: T.ambiente || 'Ambient', detalle: T.detalleAmbiente || '', on: ambienteOn, alternar: alternarAmbiente });
+    l.push({ id: 'efectos', nombre: T.efectos || 'Efectes', detalle: T.detalleEfectos || '', on: sonidoOn, alternar: alternarEfectos });
+    return l;
+  }
+  function htmlInterruptores() {
+    return canales().map((k) => `<button class="mj-switch" role="switch" aria-checked="${k.on}" data-canal="${k.id}">
+        <span class="mj-switch-txt"><b>${esc(k.nombre)}</b>${k.detalle ? `<small>${esc(k.detalle)}</small>` : ''}</span>
+        <span class="mj-switch-estado">${esc(k.on ? (T.activat || 'Sí') : (T.desactivat || 'No'))}</span>
+        <span class="mj-switch-pista" aria-hidden="true"><i></i></span>
+      </button>`).join('');
+  }
+  function enlazarInterruptores(cont) {
+    cont.addEventListener('click', (e) => {
+      const b = e.target.closest('.mj-switch'); if (!b) return;
+      const k = canales().find((x) => x.id === b.dataset.canal); if (!k) return;
+      k.alternar();
+      cont.innerHTML = htmlInterruptores();
+      const nb = cont.querySelector(`.mj-switch[data-canal="${k.id}"]`); if (nb) nb.focus({ preventScroll: true });
+    });
   }
   const sonido = {
     fondoIniciar, fondoPausar, fondoReanudar, fondoParar, tempo, atenuar, redoble, ambienteIntensidad,
     estado: () => ({
-      efectosOn: sonidoOn, musicaOn, hayFondo: hayFondo(), redoble: !!redobleT, atenuada, ambiente: !!amb,
+      efectosOn: sonidoOn, musicaOn, ambienteOn, hayFondo: hayFondo(), redoble: !!redobleT, atenuada, ambiente: !!amb,
+      gMusica: gMusica ? +gMusica.gain.value.toFixed(3) : null, gAmbiente: gAmbiente ? +gAmbiente.gain.value.toFixed(3) : null,
       musica: musEl ? { pausada: musEl.paused, rate: musEl.playbackRate, src: musEl.src.slice(0, 22), ganancia: musGain ? +musGain.gain.value.toFixed(3) : null } : null,
       gFondo: gFondo ? +gFondo.gain.value.toFixed(3) : null, gEfectos: gEfectos ? +gEfectos.gain.value.toFixed(3) : null,
     }),
@@ -351,7 +397,9 @@ const MJ = (function () {
     opciones.pausar && opciones.pausar();
     fondoPausar();
     const c = capa(`<div class="mj-carta"><span class="eyebrow">${esc(JUEGO.titulo)}</span><h2>${esc(T.pausa)}</h2>
+      <div class="mj-audio"><span class="eyebrow">${esc(T.audio || 'So')}</span><div class="mj-interruptores" id="mjInterruptores" role="group" aria-label="${esc(T.audio || 'So')}">${htmlInterruptores()}</div></div>
       <div class="mj-acciones"><button class="btn" id="mjSeguir">${esc(T.continuar)}</button><button class="btn fantasma" id="mjReiniciar">${esc(T.reiniciar)}</button></div></div>`);
+    enlazarInterruptores($('#mjInterruptores', c));
     $('#mjSeguir', c).addEventListener('click', reanudar);
     $('#mjReiniciar', c).addEventListener('click', () => { cerrarCapa(); fondoIniciar(); cuentaAtras(); });
     $('#mjSeguir', c).focus({ preventScroll: true });
