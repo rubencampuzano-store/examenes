@@ -13,7 +13,7 @@ const TX = {
   idioma: 'ca',
   titulo: 'Examen',
   subtitulo: 'Jocs d\'estudi per preparar els exàmens: apunts, preguntes per nivells i minijocs.',
-  jugar: 'Juga',
+  jugar: 'Comença',
   minijocs: 'Minijocs',
   preguntes: 'preguntes',
   nivells: 'nivells',
