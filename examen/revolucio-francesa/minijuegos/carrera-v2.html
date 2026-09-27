@@ -737,7 +737,7 @@ const MJ = (function () {
   const VIDAS = J.vidas || 3;
   const V0 = 17, VMAX = 31;
   // Escena 3D (metros)
-  const CARRIL = 2.2, CALLE = CARRIL * 3, ACERA = 1.8, VISTA = 190, PASO_FAROLA = 18;
+  const CARRIL = 2.2, CALLE = CARRIL * 3, ACERA = 1.8, VISTA = 190, PASO_FAROLA = 20;
 
   // ---------- WebGL ----------
   let renderer = null;
@@ -969,30 +969,75 @@ const MJ = (function () {
       for (let y = 0; y < 4; y++) for (let x = 0; x < 2; x++) { const t = 92 + r() * 22; g.fillStyle = `rgb(${t},${t - 6},${t - 14})`; g.fillRect(x * 128 + 3, y * 64 + 3, 122, 58); }
     });
   }
-  function texFachada(semilla, luces) {
-    // luces=false: color; luces=true: mapa emisivo (solo ventanas iluminadas)
-    const r = aleatorio(semilla);
-    const tonos = ['#c9b99a', '#b8aa90', '#d3c4a4', '#a99d86', '#bfae8e'];
-    const base = tonos[semilla % tonos.length];
+  // Fachadas del París de 1789 (anterior a Haussmann): entramado de madera, sillería o revoque;
+  // ventanas pequeñas de muchos cristales con contraventanas y tienda en la planta baja.
+  // luces=false: color; luces=true: mapa emisivo (solo las ventanas iluminadas con velas)
+  function texFachada(tipo, semilla, plantas, luces) {
+    const r = aleatorio(semilla * 31 + 7);
+    const revoques = ['#cdbf9f', '#c2ae8a', '#d6c6a2', '#b9a27e', '#c9b48e'];
     return lienzo(256, 512, (g, w, h) => {
-      g.fillStyle = luces ? '#000' : base; g.fillRect(0, 0, w, h);
-      if (!luces) { for (let i = 0; i < 400; i++) { g.fillStyle = `rgba(0,0,0,${r() * .06})`; g.fillRect(r() * w, r() * h, 2 + r() * 6, 2 + r() * 6); } }
-      const plantas = 4, alto = h / (plantas + .6);
+      const baja = h * .22, alto = (h - baja - h * .04) / plantas;
+      if (luces) { g.fillStyle = '#000'; g.fillRect(0, 0, w, h); }
+      else if (tipo === 'piedra') {
+        g.fillStyle = '#b3a78f'; g.fillRect(0, 0, w, h);
+        for (let y = 0; y < h; y += 18) for (let x = (y / 18) % 2 ? -22 : 0; x < w; x += 44) { const t = 150 + r() * 30; g.fillStyle = `rgb(${t},${t - 8},${t - 24})`; g.fillRect(x + 1, y + 1, 42, 16); }
+      } else {
+        g.fillStyle = revoques[semilla % revoques.length]; g.fillRect(0, 0, w, h);
+        for (let i = 0; i < 700; i++) { g.fillStyle = `rgba(${r() < .5 ? '0,0,0' : '255,255,255'},${r() * .07})`; g.fillRect(r() * w, r() * h, 2 + r() * 8, 2 + r() * 8); }
+        if (tipo === 'revoque') { g.fillStyle = 'rgba(0,0,0,.12)'; for (let y = 0; y < h - baja; y += 16) { g.fillRect(0, y, 18, 14); g.fillRect(w - 18, y + 8, 18, 14); } } // esquinas de piedra
+      }
+      // Entramado de madera: vigas horizontales, postes y cruces de San Andrés
+      if (tipo === 'entramado' && !luces) {
+        g.fillStyle = '#4a3222';
+        for (let p = 0; p <= plantas; p++) g.fillRect(0, h - baja - p * alto - 6, w, 9);
+        for (let x = 0; x <= w; x += 64) g.fillRect(x - 5, 0, 10, h - baja);
+        g.strokeStyle = '#4a3222'; g.lineWidth = 8;
+        for (let p = 0; p < plantas; p++) { const y0 = h - baja - (p + 1) * alto; for (const x of [0, 192]) { g.beginPath(); g.moveTo(x + 4, y0 + 6); g.lineTo(x + 60, y0 + alto - 6); g.moveTo(x + 60, y0 + 6); g.lineTo(x + 4, y0 + alto - 6); g.stroke(); } }
+      }
+      // Ventanas: 2 por planta, de cuarterones pequeños
       for (let p = 0; p < plantas; p++) {
-        const y0 = h - (p + 1) * alto;
-        if (!luces) { g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(0, y0 + alto - 6, w, 5); }
-        for (let v = 0; v < 3; v++) {
-          const x = 22 + v * 78, ancho = 44, altoV = p === 0 ? alto * .72 : alto * .6, y = y0 + (alto - altoV) * .45;
-          const encendida = r() < (p === 0 ? .25 : .38);
-          if (luces) { if (encendida) { g.fillStyle = r() < .5 ? '#ffb45a' : '#ffd08a'; g.fillRect(x + 3, y + 3, ancho - 6, altoV - 6); } continue; }
-          g.fillStyle = '#6b5f50'; g.fillRect(x - 4, y - 4, ancho + 8, altoV + 8);            // marco
-          g.fillStyle = encendida ? '#e6a760' : '#1b1e2a'; g.fillRect(x, y, ancho, altoV);     // cristal
-          g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(x + ancho / 2 - 1.5, y, 3, altoV); g.fillRect(x, y + altoV * .45, ancho, 3);
-          g.fillStyle = semilla % 2 ? '#3e5a4a' : '#4b3a2e'; g.fillRect(x - 13, y, 9, altoV); g.fillRect(x + ancho + 4, y, 9, altoV); // contraventanas
-          if (p > 0) { g.fillStyle = '#20201f'; g.fillRect(x - 6, y + altoV - 2, ancho + 12, 4); for (let k = 0; k < 7; k++) g.fillRect(x - 4 + k * 8, y + altoV - 16, 2, 14); } // balcón
+        const y0 = h - baja - (p + 1) * alto;
+        for (let v = 0; v < 2; v++) {
+          const ancho = 46, altoV = alto * (p === plantas - 1 ? .5 : .62), x = (tipo === 'entramado' ? 92 : 56) + v * (tipo === 'entramado' ? 36 : 100) - (tipo === 'entramado' ? 18 : 0), y = y0 + (alto - altoV) * .5;
+          if (tipo === 'entramado' && v === 1) continue;
+          const encendida = r() < .3;
+          if (luces) { if (encendida) { g.fillStyle = r() < .5 ? '#d98a3a' : '#f0a850'; g.fillRect(x + 3, y + 3, ancho - 6, altoV - 6); g.fillStyle = '#000'; for (let k = 1; k < 3; k++) g.fillRect(x + (ancho / 3) * k - 1, y, 2, altoV); for (let k = 1; k < 4; k++) g.fillRect(x, y + (altoV / 4) * k - 1, ancho, 2); } continue; }
+          g.fillStyle = tipo === 'piedra' ? '#d9cfb8' : '#5a4634'; g.fillRect(x - 5, y - 6, ancho + 10, altoV + 10);   // marco / dintel
+          if (tipo === 'piedra') { g.fillStyle = '#e6dcc4'; g.fillRect(x + ancho / 2 - 6, y - 12, 12, 10); }            // clave
+          g.fillStyle = encendida ? '#c98a44' : '#1e2230'; g.fillRect(x, y, ancho, altoV);
+          g.fillStyle = 'rgba(40,30,20,.85)'; for (let k = 1; k < 3; k++) g.fillRect(x + (ancho / 3) * k - 1, y, 2, altoV); for (let k = 1; k < 4; k++) g.fillRect(x, y + (altoV / 4) * k - 1, ancho, 2);
+          const colCont = ['#3f5a46', '#5a3b2a', '#43546a', '#6a5632'][(semilla + p) % 4];
+          g.fillStyle = colCont; g.fillRect(x - 16, y, 12, altoV); g.fillRect(x + ancho + 4, y, 12, altoV);           // contraventanas abiertas
+          g.fillStyle = 'rgba(0,0,0,.25)'; for (let k = 0; k < 5; k++) { g.fillRect(x - 16, y + k * altoV / 5, 12, 1.5); g.fillRect(x + ancho + 4, y + k * altoV / 5, 12, 1.5); }
+          g.fillStyle = 'rgba(0,0,0,.22)'; g.fillRect(x - 6, y + altoV + 3, ancho + 12, 4);                             // alféizar
         }
       }
-      if (!luces) { g.fillStyle = '#3a2e24'; g.fillRect(w / 2 - 20, h - alto * .8, 40, alto * .8); } // portal
+      // Planta baja: tienda con arco de madera, escaparate y puerta, o portalón de sillería
+      const yb = h - baja;
+      if (luces) { if (r() < .45) { g.fillStyle = '#e09a4a'; g.fillRect(40, yb + 30, 90, baja - 48); } return; }
+      g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, yb, w, 8);
+      if (tipo === 'piedra' && semilla % 2) {
+        g.fillStyle = '#2e241c'; g.beginPath(); g.moveTo(68, h); g.lineTo(68, yb + 40); g.arc(128, yb + 40, 60, Math.PI, 0); g.lineTo(188, h); g.fill();
+        g.fillStyle = '#4a3a2c'; g.fillRect(74, yb + 44, 52, h - yb - 44); g.fillRect(130, yb + 44, 52, h - yb - 44);
+      } else {
+        g.fillStyle = '#4f3524'; g.fillRect(24, yb + 16, w - 48, baja - 16);                 // frente de madera
+        g.fillStyle = '#2a1e16'; g.fillRect(40, yb + 30, 90, baja - 48);                     // escaparate
+        g.fillStyle = 'rgba(255,220,160,.15)'; for (let k = 1; k < 3; k++) g.fillRect(40 + k * 30, yb + 30, 2, baja - 48);
+        g.fillStyle = '#35251a'; g.fillRect(150, yb + 30, 64, baja - 30);                    // puerta
+        g.fillStyle = '#c9a44c'; g.fillRect(200, yb + 70, 5, 5);                              // pomo
+        g.fillStyle = '#6b4a30'; g.fillRect(24, yb + 16, w - 48, 12);                        // rótulo pintado
+      }
+    });
+  }
+  function texRotulo(k) {
+    return lienzo(128, 96, (g, w, h) => {
+      g.fillStyle = ['#6b2a22', '#26405a', '#3a4a2a', '#5a4a1e'][k % 4]; g.fillRect(0, 0, w, h);
+      g.strokeStyle = '#c9a44c'; g.lineWidth = 6; g.strokeRect(5, 5, w - 10, h - 10);
+      g.fillStyle = '#e8d7a0'; g.strokeStyle = '#e8d7a0'; g.lineWidth = 7;
+      if (k % 4 === 0) { g.beginPath(); g.arc(46, 48, 14, 0, Math.PI * 2); g.stroke(); g.fillRect(58, 44, 40, 8); g.fillRect(86, 52, 6, 12); }           // llave
+      else if (k % 4 === 1) { g.beginPath(); g.moveTo(40, 26); g.lineTo(40, 64); g.lineTo(90, 64); g.lineTo(90, 56); g.lineTo(56, 52); g.lineTo(54, 26); g.fill(); } // bota
+      else if (k % 4 === 2) { for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(50 + (i % 3) * 14 - (i > 2 ? 7 : 0), 40 + (i > 2 ? 14 : 0), 8, 0, Math.PI * 2); g.fill(); } } // uvas
+      else { g.beginPath(); g.moveTo(64, 22); g.lineTo(88, 72); g.lineTo(40, 72); g.fill(); }                                                              // pan
     });
   }
   function texMadera() {
@@ -1030,8 +1075,13 @@ const MJ = (function () {
     texturas.madera = textura(texMadera(), true);
     texturas.escarapela = textura(texEscarapela());
     texturas.brillo = textura(texBrillo());
-    MAT.madera = new THREE.MeshStandardMaterial({ map: texturas.madera, roughness: .9 });
-    MAT.maderaOscura = new THREE.MeshStandardMaterial({ map: texturas.madera, color: 0x8a6a4a, roughness: .9 });
+    // Madera clara y con un leve brillo propio para que las barricadas se distingan de noche
+    MAT.madera = new THREE.MeshStandardMaterial({ map: texturas.madera, color: 0xfff0dc, emissive: 0x3a2412, emissiveIntensity: .9, roughness: .85 });
+    MAT.maderaOscura = new THREE.MeshStandardMaterial({ map: texturas.madera, color: 0xd0a878, emissive: 0x2a1a0c, emissiveIntensity: .8, roughness: .85 });
+    MAT.soldado = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .75 });
+    MAT.teja = new THREE.MeshStandardMaterial({ color: 0x8a4a34, roughness: .85, flatShading: true });
+    MAT.revoque = new THREE.MeshStandardMaterial({ color: 0xbfae8e, roughness: .95 });
+    MAT.cuerda = new THREE.LineBasicMaterial({ color: 0x1a140e });
     MAT.hierro = new THREE.MeshStandardMaterial({ color: 0x222325, roughness: .6, metalness: .6 });
     MAT.pizarra = new THREE.MeshStandardMaterial({ color: 0x3a3f4a, roughness: .7, metalness: .1, flatShading: true });
     MAT.ladrillo = new THREE.MeshStandardMaterial({ color: 0x6a4a3a, roughness: .9 });
@@ -1052,22 +1102,25 @@ const MJ = (function () {
     escena = new THREE.Scene();
     const fondo = new THREE.Color(C.shell);
     escena.background = fondo;
-    escena.fog = new THREE.Fog(fondo, 28, VISTA);
+    // Niebla nocturna algo más clara que el fondo de la app: la escena se ve más y la distancia sigue difuminada
+    const colorNiebla = new THREE.Color(C.shell).lerp(new THREE.Color(0x4a5a8a), .4);
+    escena.background = colorNiebla;
+    escena.fog = new THREE.Fog(colorNiebla, 34, VISTA + 20);
     camara = new THREE.PerspectiveCamera(60, 1, .1, 400);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.65;
     renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     materiales();
 
-    escena.add(new THREE.HemisphereLight(0x5a6fa8, 0x2a2018, .75));
-    luna = new THREE.DirectionalLight(0xb8c6ff, .9);
+    escena.add(new THREE.HemisphereLight(0x8a9ad0, 0x3a2e22, 1.4));
+    luna = new THREE.DirectionalLight(0xc4d0ff, 1.4);
     luna.position.set(-12, 22, 8); luna.castShadow = true;
     luna.shadow.mapSize.set(1024, 1024);
     Object.assign(luna.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 70 });
     luna.shadow.bias = -.0008;
     escena.add(luna, luna.target);
-    luzCalida = new THREE.PointLight(0xffb070, 18, 14, 2); luzCalida.position.set(0, 3.2, 2); escena.add(luzCalida);
-    for (let i = 0; i < 2; i++) { const l = new THREE.PointLight(0xff9c50, 30, 22, 2); escena.add(l); farolasLuz.push(l); }
+    luzCalida = new THREE.PointLight(0xffb070, 30, 18, 2); luzCalida.position.set(0, 3.2, 2); escena.add(luzCalida);
+    for (let i = 0; i < 2; i++) { const l = new THREE.PointLight(0xffa058, 55, 28, 2); escena.add(l); farolasLuz.push(l); }
 
     // Cielo: estrellas lejanas
     const n = 500, pos = new Float32Array(n * 3);
@@ -1094,39 +1147,67 @@ const MJ = (function () {
     const tierra = new THREE.Mesh(new THREE.PlaneGeometry(200, VISTA + 20), new THREE.MeshStandardMaterial({ color: 0x1a1714, roughness: 1 }));
     tierra.rotation.x = -Math.PI / 2; tierra.position.set(0, -.02, -(VISTA / 2) + 10); escena.add(tierra);
 
-    // Edificios parisinos reciclables
-    const facC = [], facE = [];
-    for (let k = 0; k < 5; k++) { facC.push(textura(texFachada(k + 1, false))); facE.push(textura(texFachada(k + 1, true))); }
-    const tramo = 14;
+    // Casas del París de 1789: estrechas, de alturas desiguales, con tres estilos de fachada,
+    // tejados inclinados de teja o pizarra (a dos aguas hacia la calle o con buhardilla) y rótulos colgados
+    const TIPOS = ['entramado', 'revoque', 'piedra'];
+    const facC = {}, facE = {};
+    const facKey = (tipo, k, pl) => `${tipo}-${k}-${pl}`;
+    const texRot = [0, 1, 2, 3].map((k) => textura(texRotulo(k)));
+    const fondoE = 6;
     for (const lado of [-1, 1]) {
-      for (let i = 0; i * tramo < VISTA + 30; i++) {
-        const plantas = 4, alto = 12 + (i * 7 + (lado > 0 ? 3 : 0)) % 4 * 1.6, fondoE = 6;
-        const k = (i * 3 + (lado > 0 ? 2 : 0)) % 5;
-        const matFac = new THREE.MeshStandardMaterial({ map: facC[k], emissive: 0xffa050, emissiveMap: facE[k], emissiveIntensity: 1.1, roughness: .9 });
-        // Un solo material por edificio (una llamada de dibujo): las caras laterales apenas se ven
-        const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(fondoE, alto, tramo - .4), matFac);
-        cuerpo.position.y = alto / 2; cuerpo.castShadow = false; cuerpo.receiveShadow = true;
-        const edif = new THREE.Group(); edif.add(cuerpo);
-        // Tejado abuhardillado de pizarra
-        const forma = new THREE.Shape(); forma.moveTo(-fondoE / 2, 0); forma.lineTo(fondoE / 2, 0); forma.lineTo(fondoE / 2 - 1.4, 2.4); forma.lineTo(-fondoE / 2 + 1.4, 2.4); forma.lineTo(-fondoE / 2, 0);
-        const tejado = new THREE.Mesh(new THREE.ExtrudeGeometry(forma, { depth: tramo - .4, bevelEnabled: false }), MAT.pizarra);
-        tejado.position.set(0, alto, -(tramo - .4) / 2); edif.add(tejado);
-        const ch = new THREE.Mesh(new THREE.BoxGeometry(.6, 1.6, .9), MAT.ladrillo); ch.position.set((i % 2 ? 1 : -1) * .8, alto + 2.6, (i % 3) - 1.5); edif.add(ch);
-        edif.position.x = lado * (CALLE / 2 + ACERA + fondoE / 2);
-        edif.userData = { pos: i * tramo - 10, tramo };
-        escena.add(edif); edificios.push(edif);
+      const rnd = aleatorio(lado > 0 ? 97 : 53);
+      let pos = -10; const casasLado = [];
+      while (pos < VISTA + 30) {
+        const ancho = 5 + Math.floor(rnd() * 4), plantas = 3 + Math.floor(rnd() * 3), tipo = TIPOS[Math.floor(rnd() * 3)], k = Math.floor(rnd() * 5);
+        const clave = facKey(tipo, k, plantas);
+        if (!facC[clave]) { facC[clave] = textura(texFachada(tipo, k + 1, plantas, false)); facE[clave] = textura(texFachada(tipo, k + 1, plantas, true)); }
+        const alto = 3.6 + plantas * 2.9;
+        const matFac = new THREE.MeshStandardMaterial({ map: facC[clave], emissive: 0xffa050, emissiveMap: facE[clave], emissiveIntensity: 1.3, roughness: .92 });
+        const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(fondoE, alto, ancho - .08), matFac);
+        cuerpo.position.y = alto / 2; cuerpo.receiveShadow = true;
+        const casa = new THREE.Group(); casa.add(cuerpo);
+        const matTejado = rnd() < .5 ? MAT.teja : MAT.pizarra;
+        if (rnd() < .45) {
+          // Tejado a dos aguas con el hastial mirando a la calle
+          const f = new THREE.Shape(); f.moveTo(-ancho / 2, 0); f.lineTo(ancho / 2, 0); f.lineTo(0, ancho * .62); f.lineTo(-ancho / 2, 0);
+          const t = new THREE.Mesh(new THREE.ExtrudeGeometry(f, { depth: fondoE, bevelEnabled: false }), [MAT.revoque, matTejado]);
+          t.rotation.y = Math.PI / 2; t.position.set(-fondoE / 2, alto, 0); casa.add(t);
+        } else {
+          // Tejado muy inclinado paralelo a la calle, con buhardilla hacia la calle
+          const f = new THREE.Shape(); f.moveTo(-fondoE / 2, 0); f.lineTo(fondoE / 2, 0); f.lineTo(0, 3.4); f.lineTo(-fondoE / 2, 0);
+          const t = new THREE.Mesh(new THREE.ExtrudeGeometry(f, { depth: ancho - .08, bevelEnabled: false }), [MAT.revoque, matTejado]);
+          t.position.set(0, alto, -(ancho - .08) / 2); casa.add(t);
+          const hacia = -lado; // la buhardilla mira a la calle
+          const buh = new THREE.Mesh(new THREE.BoxGeometry(1, 1.1, 1.2), MAT.revoque); buh.position.set(hacia * 1.6, alto + 1.1, 0); casa.add(buh);
+          const ventB = new THREE.Mesh(new THREE.PlaneGeometry(.5, .6), new THREE.MeshBasicMaterial({ color: rnd() < .4 ? 0xf0a850 : 0x1e2230 })); ventB.position.set(hacia * 2.11, alto + 1.05, 0); ventB.rotation.y = hacia * Math.PI / 2; casa.add(ventB);
+          const tb = new THREE.Mesh(new THREE.ConeGeometry(.95, .7, 4), matTejado); tb.position.set(hacia * 1.6, alto + 2, 0); tb.rotation.y = Math.PI / 4; casa.add(tb);
+        }
+        if (rnd() < .7) { const ch = new THREE.Mesh(new THREE.BoxGeometry(.6, 1.8, .9), MAT.ladrillo); ch.position.set(lado * 1.2, alto + 2.4, (rnd() - .5) * (ancho - 2)); casa.add(ch); }
+        if (rnd() < .45) {
+          // Rótulo de tienda colgado en perpendicular a la fachada
+          const hacia = -lado, brazo = new THREE.Mesh(new THREE.BoxGeometry(.9, .05, .05), MAT.hierro); brazo.position.set(hacia * (fondoE / 2 + .45), 4.2, ancho / 2 - .8); casa.add(brazo);
+          const rot = new THREE.Mesh(new THREE.PlaneGeometry(.62, .46), new THREE.MeshStandardMaterial({ map: texRot[Math.floor(rnd() * 4)], side: THREE.DoubleSide, emissive: 0x302018, roughness: .8 }));
+          rot.position.set(hacia * (fondoE / 2 + .55), 3.85, ancho / 2 - .8); casa.add(rot);
+        }
+        casa.position.x = lado * (CALLE / 2 + ACERA + fondoE / 2);
+        casa.userData = { pos: pos + ancho / 2 };
+        escena.add(casa); edificios.push(casa); casasLado.push(casa);
+        pos += ancho;
       }
+      const largoLado = pos + 10;
+      casasLado.forEach((c) => { c.userData.largoLado = largoLado; });
     }
-    // Farolas reciclables (alternas a cada lado)
+    // Faroles de aceite colgados de una cuerda sobre el centro de la calle (el alumbrado del París de 1789)
+    const ext = CALLE / 2 + ACERA;
     for (let i = 0; i * PASO_FAROLA < VISTA + 20; i++) {
-      const lado = i % 2 ? 1 : -1, f = new THREE.Group();
-      const palo = new THREE.Mesh(new THREE.CylinderGeometry(.07, .1, 4, 8), MAT.hierro); palo.position.y = 2; f.add(palo);
-      const brazo = new THREE.Mesh(new THREE.BoxGeometry(.9, .06, .06), MAT.hierro); brazo.position.set(-lado * .4, 3.9, 0); f.add(brazo);
-      const farol = new THREE.Mesh(new THREE.BoxGeometry(.32, .45, .32), new THREE.MeshStandardMaterial({ color: 0xffc070, emissive: 0xffa040, emissiveIntensity: 2.2 }));
-      farol.position.set(-lado * .8, 3.65, 0); f.add(farol);
-      const halo = new THREE.Sprite(MAT.brillo); halo.scale.set(2.6, 2.6, 1); halo.position.copy(farol.position); f.add(halo);
-      f.position.x = lado * (CALLE / 2 + .5);
-      f.userData = { pos: i * PASO_FAROLA + 6, lado, farol };
+      const f = new THREE.Group();
+      const puntos = [new THREE.Vector3(-ext, 7.4, 0), new THREE.Vector3(-ext / 2, 6.75, 0), new THREE.Vector3(0, 6.5, 0), new THREE.Vector3(ext / 2, 6.75, 0), new THREE.Vector3(ext, 7.4, 0)];
+      f.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(puntos), MAT.cuerda));
+      const farol = new THREE.Mesh(new THREE.BoxGeometry(.34, .5, .34), new THREE.MeshStandardMaterial({ color: 0xffc070, emissive: 0xffa040, emissiveIntensity: 2.4 }));
+      farol.position.set(0, 6.05, 0); f.add(farol);
+      const tapa = new THREE.Mesh(new THREE.ConeGeometry(.3, .22, 4), MAT.hierro); tapa.position.set(0, 6.4, 0); tapa.rotation.y = Math.PI / 4; f.add(tapa);
+      const halo = new THREE.Sprite(MAT.brillo); halo.scale.set(3, 3, 1); halo.position.copy(farol.position); f.add(halo);
+      f.userData = { pos: i * PASO_FAROLA + 6, farol };
       escena.add(f); farolas.push(f);
     }
     // La Bastilla: torres almenadas al fondo de la calle
@@ -1203,6 +1284,63 @@ const MJ = (function () {
     corredor.visible = !(s.invul > 0 && Math.floor(s.invul * 12) % 2);
   }
 
+  // --- Soldados del ejército real (1789): casaca blanca con solapas azules, tricornio negro con
+  //     escarapela blanca, calzón blanco, polainas negras y mosquete con bayoneta.
+  //     Todas las piezas se fusionan en una sola geometría con colores por vértice: 1 llamada de dibujo por soldado.
+  const geoSoldado = {};
+  function fusionar(partes) {
+    const pos = [], nor = [], col = [], c = new THREE.Color();
+    for (const pz of partes) {
+      const g = (pz.geo.index ? pz.geo.toNonIndexed() : pz.geo.clone());
+      g.applyMatrix4(new THREE.Matrix4().compose(new THREE.Vector3(...pz.p), new THREE.Quaternion().setFromEuler(new THREE.Euler(...(pz.r || [0, 0, 0]))), new THREE.Vector3(1, 1, 1)));
+      c.set(pz.c);
+      const P = g.attributes.position.array, N = g.attributes.normal.array;
+      for (let i = 0; i < P.length; i++) { pos.push(P[i]); nor.push(N[i]); }
+      for (let i = 0; i < P.length / 3; i++) col.push(c.r, c.g, c.b);
+      g.dispose();
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    return geo;
+  }
+  function geometriaSoldado(pose) {
+    if (geoSoldado[pose]) return geoSoldado[pose];
+    const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+    const BLANCO = 0xebe7dc, AZUL = 0x2a3c7a, NEGRO = 0x161616, PIEL = 0xe0b890, CUERO = 0xc9b38a, MADERA = 0x5a3a22, METAL = 0xa0a6ac, CALZON = 0xe2ddd0;
+    const partes = [
+      { geo: B(.14, .42, .17), p: [-.12, .21, 0], c: NEGRO }, { geo: B(.14, .42, .17), p: [.12, .21, 0], c: NEGRO },      // polainas
+      { geo: B(.16, .38, .19), p: [-.12, .6, 0], c: CALZON }, { geo: B(.16, .38, .19), p: [.12, .6, 0], c: CALZON },       // calzón
+      { geo: B(.52, .34, .31), p: [0, .86, 0], c: BLANCO },                                                                 // faldones
+      { geo: B(.46, .6, .28), p: [0, 1.18, 0], c: BLANCO },                                                                 // casaca
+      { geo: B(.1, .52, .02), p: [-.1, 1.2, .145], c: AZUL }, { geo: B(.1, .52, .02), p: [.1, 1.2, .145], c: AZUL },       // solapas
+      { geo: B(.06, .7, .015), p: [0, 1.15, .16], r: [0, 0, .62], c: CUERO }, { geo: B(.06, .7, .015), p: [0, 1.15, .16], r: [0, 0, -.62], c: CUERO }, // correajes cruzados
+      { geo: new THREE.SphereGeometry(.16, 12, 10), p: [0, 1.64, 0], c: PIEL },                                             // cabeza
+      { geo: new THREE.CylinderGeometry(.27, .27, .09, 3), p: [0, 1.81, 0], c: NEGRO },                                     // tricornio (punta al frente)
+      { geo: new THREE.CylinderGeometry(.05, .05, .03, 10), p: [-.13, 1.86, .08], r: [Math.PI / 2, 0, .5], c: BLANCO },     // escarapela blanca
+    ];
+    if (pose === 'apunta') {
+      // Brazos al frente sujetando el mosquete en horizontal, apuntando hacia el corredor
+      const a = -1.4, cy = 1.5 - .25 * Math.cos(-a), cz = .25 * Math.sin(-a);
+      partes.push({ geo: B(.11, .5, .12), p: [-.29, cy, cz], r: [a, 0, 0], c: BLANCO }, { geo: B(.11, .5, .12), p: [.29, cy, cz], r: [a, 0, 0], c: BLANCO });
+      partes.push({ geo: B(.12, .1, .12), p: [-.29, cy - .02, cz + .22], c: AZUL }, { geo: B(.12, .1, .12), p: [.29, cy - .02, cz + .22], c: AZUL }); // bocamangas
+      partes.push({ geo: B(.07, .09, 1.35), p: [.12, 1.47, .5], c: MADERA }, { geo: new THREE.ConeGeometry(.025, .4, 6), p: [.12, 1.49, 1.37], r: [Math.PI / 2, 0, 0], c: METAL });
+    } else {
+      // Firmes con el mosquete vertical al costado
+      partes.push({ geo: B(.11, .52, .12), p: [-.29, 1.24, 0], c: BLANCO }, { geo: B(.11, .52, .12), p: [.29, 1.24, 0], c: BLANCO });
+      partes.push({ geo: B(.12, .1, .13), p: [-.29, .98, 0], c: AZUL }, { geo: B(.12, .1, .13), p: [.29, .98, 0], c: AZUL });
+      partes.push({ geo: B(.07, 1.4, .08), p: [.4, 1.02, .06], c: MADERA }, { geo: new THREE.ConeGeometry(.025, .4, 6), p: [.4, 1.92, .06], c: METAL });
+    }
+    geoSoldado[pose] = fusionar(partes);
+    return geoSoldado[pose];
+  }
+  function crearSoldado(pose) {
+    const m = new THREE.Mesh(geometriaSoldado(pose), MAT.soldado);
+    m.castShadow = true;
+    return m;
+  }
+
   // --- Objetos de la pista (se crean al verlos y se quitan al pasar) ---
   function crearMalla(o) {
     if (o.tipo === 'obst') {
@@ -1213,6 +1351,19 @@ const MJ = (function () {
       const tablon = new THREE.Mesh(new THREE.BoxGeometry(1.9, .12, .25), MAT.madera); tablon.position.set(0, .85, .35); tablon.rotation.z = .35; g.add(tablon);
       if (o.v > .5) { const palo = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, 1.1, 5), MAT.hierro); palo.position.set(.7, 1.3, 0); g.add(palo); const band = new THREE.Mesh(new THREE.PlaneGeometry(.4, .26), MAT.rojo); band.position.set(.9, 1.7, 0); g.add(band); }
       g.traverse((m) => { if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; } });
+      // Soldados detrás de algo más de la mitad de las barricadas (decorativos: la colisión es la de la barricada)
+      const nSold = o.v < .3 ? 2 : o.v < .55 ? 1 : 0;
+      for (let k = 0; k < nSold; k++) {
+        const sd = crearSoldado((k + Math.floor(o.v * 10)) % 2 ? 'firme' : 'apunta');
+        // Sobre una tarima detrás de la barricada y algo mayores para que asomen de cintura para arriba
+        sd.position.set(nSold === 2 ? (k ? .55 : -.5) : (o.v * 2 - .5), .35, -1.05);
+        sd.scale.setScalar(1.2);
+        sd.rotation.y = (o.v - .5) * .1;  // la barricada ya gira (o.v - .5) * .5; los soldados casi de frente al corredor
+        sd.userData.soldado = true;
+        g.add(sd);
+      }
+      if (nSold) { const tarima = new THREE.Mesh(new THREE.BoxGeometry(1.8, .35, .8), MAT.maderaOscura); tarima.position.set(0, .175, -1.05); tarima.receiveShadow = true; g.add(tarima); }
+      if (nSold) { const luz = new THREE.Sprite(MAT.brillo); luz.scale.set(1.6, 1.6, 1); luz.position.set(-.8, 1.55, -.2); g.add(luz); }
       g.rotation.y = (o.v - .5) * .5;
       return g;
     }
@@ -1244,7 +1395,7 @@ const MJ = (function () {
     if (!o.malla) return;
     grupoPista.remove(o.malla);
     o.malla.traverse((m) => {
-      if (m.geometry) m.geometry.dispose();
+      if (m.geometry && !m.userData.soldado) m.geometry.dispose();
       if (m.userData && m.userData.texN) { m.userData.texN.dispose(); m.userData.texM.dispose(); m.material.dispose(); }
     });
     o.malla = null;
@@ -1312,9 +1463,8 @@ const MJ = (function () {
     texturas.adoquines.offset.y = s.dist / CALLE;
     texturas.losas.offset.y = s.dist / 3.6;
     // Edificios y farolas: reciclar por delante
-    const largoE = edificios.length / 2 * edificios[0].userData.tramo;
     for (const e of edificios) {
-      while (e.userData.pos < s.dist - 16) e.userData.pos += largoE;
+      while (e.userData.pos < s.dist - 16) e.userData.pos += e.userData.largoLado;
       e.position.z = -(e.userData.pos - s.dist);
     }
     const largoF = farolas.length * PASO_FAROLA;
