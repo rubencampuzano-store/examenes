@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minijuego</title>
+<style>
+/*__COMUN_CSS__*/
+  .mj-zona { display: grid; grid-template-rows: auto 1fr auto; gap: 14px; padding: 14px 16px 18px; overflow: hidden; }
+  .bandos { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; max-width: 760px; width: 100%; margin: 0 auto; }
+  .bando { display: grid; gap: 2px; padding: 10px 12px; border-radius: var(--r); border: 1px solid var(--linea-clara); transition: background .2s, border-color .2s, transform .2s; }
+  .bando b { font-family: var(--f-display); font-size: clamp(1rem, 3.8vw, 1.4rem); font-style: italic; line-height: 1.05; }
+  .bando small { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .14em; color: var(--claro-suave); text-transform: uppercase; }
+  .bando.izq { text-align: left; }
+  .bando.der { text-align: right; }
+  .bando.activo { border-color: var(--oro); background: color-mix(in srgb, var(--oro) 16%, transparent); transform: scale(1.03); }
+  .vs { font-family: var(--f-display); font-style: italic; color: var(--oro); }
+  .mesa { position: relative; display: grid; place-items: center; touch-action: none; min-height: 220px; }
+  .pila { position: relative; width: min(360px, 82vw); aspect-ratio: 4 / 3; max-height: 100%; }
+  .naipe {
+    position: absolute; inset: 0; border-radius: 10px; background: var(--papel); color: var(--tinta);
+    display: grid; place-items: center; padding: 22px; text-align: center;
+    font-family: var(--f-display); font-weight: 700; font-size: clamp(1.25rem, 5.2vw, 1.9rem); line-height: 1.15; text-wrap: balance;
+    box-shadow: 0 30px 50px -24px rgba(0,0,0,.9); touch-action: none; cursor: grab; will-change: transform;
+  }
+  .naipe::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--linea); border-radius: 6px; pointer-events: none; }
+  .naipe::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background-image: var(--grano); opacity: .3; mix-blend-mode: multiply; pointer-events: none; }
+  .naipe.detras { transform: translateY(10px) scale(.95); filter: brightness(.82); cursor: default; }
+  .naipe.detras2 { transform: translateY(20px) scale(.9); filter: brightness(.66); cursor: default; }
+  .naipe .marca { position: absolute; top: 18px; padding: 4px 10px; border: 3px double currentColor; border-radius: 6px; font-family: var(--f-mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; opacity: 0; }
+  .naipe .marca.izq { left: 16px; color: var(--acento); transform: rotate(-10deg); }
+  .naipe .marca.der { right: 16px; color: var(--acierto); transform: rotate(10deg); }
+  .naipe.vuela { transition: transform .35s ease-in, opacity .35s ease-in; }
+  .naipe.vuelve { transition: transform .3s cubic-bezier(.2,1.4,.4,1); }
+  .contador { position: absolute; bottom: -2px; font-family: var(--f-mono); font-size: .75rem; color: var(--claro-suave); }
+  .botones { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 520px; width: 100%; margin: 0 auto; }
+  .botones .btn { min-height: 58px; }
+  .botones .btn.b-izq { background: transparent; color: var(--claro); border: 1.5px solid var(--linea-clara); box-shadow: none; justify-content: flex-start; }
+  .botones .btn.b-der { background: transparent; color: var(--claro); border: 1.5px solid var(--linea-clara); box-shadow: none; justify-content: flex-end; }
+  .botones .btn:active { background: color-mix(in srgb, var(--oro) 20%, transparent); }
+  .botones .btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .reloj { height: 4px; border-radius: 2px; background: var(--linea-clara); overflow: hidden; max-width: 760px; width: 100%; margin: -6px auto 0; }
+  .reloj i { display: block; height: 100%; background: var(--oro); transform-origin: left; }
+</style>
+</head>
+<body>
+<main class="mj-zona" id="zona">
+  <div>
+    <div class="bandos"><div class="bando izq" id="bIzq"><small>← </small><b></b></div><span class="vs">o</span><div class="bando der" id="bDer"><small> →</small><b></b></div></div>
+    <div class="reloj" style="margin-top:10px"><i id="barra"></i></div>
+  </div>
+  <div class="mesa" id="mesa"><div class="pila" id="pila"></div></div>
+  <div class="botones"><button class="btn b-izq" id="btnIzq">← <span></span></button><button class="btn b-der" id="btnDer"><span></span> →</button></div>
+</main>
+<script>
+const DATOS = /*__DATOS__*/null;
+</script>
+<script>
+/*__COMUN_JS__*/
+</script>
+<script>
+(function () {
+  'use strict';
+  const J = MJ.JUEGO, T = MJ.T;
+  const $pila = document.getElementById('pila'), $bI = document.getElementById('bIzq'), $bD = document.getElementById('bDer'), $barra = document.getElementById('barra');
+  const TIEMPO = J.tiempoRonda || 30;
+  let s = null, reloj = 0, ultimo = 0;
+
+  function nuevo() {
+    s = { ronda: 0, puntos: 0, racha: 0, aciertos: 0, fallos: 0, total: 0, restante: TIEMPO, cola: [], animando: false, fin: false };
+    MJ.hud([{ id: 'ronda', etiqueta: T.ronda, valor: `1/${J.rondas.length}` }, { id: 'mult', etiqueta: T.ratxa, valor: '×1' }, { id: 'puntos', etiqueta: T.puntos, valor: 0 }]);
+    prepararRonda();
+  }
+  const mult = () => Math.min(4, 1 + Math.floor(s.racha / 3));
+  function prepararRonda() {
+    const r = J.rondas[s.ronda];
+    s.cola = MJ.azar(r.tarjetas); s.restante = TIEMPO; s.total += s.cola.length;
+    $bI.querySelector('b').textContent = r.izquierda; $bD.querySelector('b').textContent = r.derecha;
+    document.querySelector('#btnIzq span').textContent = r.izquierda; document.querySelector('#btnDer span').textContent = r.derecha;
+    MJ.hudSet('ronda', `${s.ronda + 1}/${J.rondas.length}`);
+    pintarPila();
+  }
+  function pintarPila() {
+    const r = J.rondas[s.ronda];
+    const vis = s.cola.slice(0, 3);
+    $pila.innerHTML = vis.map((c, i) => `<div class="naipe ${i === 1 ? 'detras' : i === 2 ? 'detras2' : ''}" style="z-index:${10 - i}" ${i === 0 ? 'id="top" tabindex="0" role="button"' : 'aria-hidden="true"'} aria-label="${MJ.esc(c.texto)}">
+      ${i === 0 ? `<span class="marca izq">${MJ.esc(r.izquierda)}</span><span class="marca der">${MJ.esc(r.derecha)}</span>` : ''}${MJ.esc(c.texto)}</div>`).reverse().join('')
+      + `<span class="contador">${s.cola.length} ${MJ.esc(T.restants)}</span>`;
+    enlazarTop();
+  }
+
+  function decidir(lado) {
+    if (MJ.estado() !== 'jugando' || s.animando || !s.cola.length) return;
+    const top = document.getElementById('top');
+    const c = s.cola[0];
+    const ok = c.lado === lado;
+    s.animando = true;
+    if (ok) { s.racha++; s.aciertos++; s.puntos += 100 * mult(); MJ.sfx.acierto(); if (s.racha % 3 === 0) MJ.flash(`×${mult()}`, true); }
+    else {
+      s.racha = 0; s.fallos++; MJ.sfx.fallo();
+      const r = J.rondas[s.ronda];
+      MJ.flash(`${T.selloFallo}: ${c.lado === 'izquierda' ? r.izquierda : r.derecha}`, false);
+    }
+    MJ.hudSet('mult', '×' + mult()); MJ.hudSet('puntos', MJ.fmt(s.puntos));
+    const bando = lado === 'izquierda' ? $bI : $bD;
+    bando.classList.add('activo'); setTimeout(() => bando.classList.remove('activo'), 250);
+    if (top) {
+      top.classList.add('vuela');
+      const dx = (lado === 'izquierda' ? -1 : 1) * (window.innerWidth * .8);
+      top.style.transform = `translate(${dx}px, ${-40}px) rotate(${lado === 'izquierda' ? -28 : 28}deg)`;
+      top.style.opacity = '0';
+    }
+    setTimeout(() => {
+      s.cola.shift(); s.animando = false;
+      if (s.fin) return;
+      if (!s.cola.length) finRonda(); else pintarPila();
+    }, MJ.reducido() ? 20 : 280);
+  }
+  function finRonda() {
+    const bonus = Math.round(Math.max(0, s.restante) * 10);
+    s.puntos += bonus; MJ.hudSet('puntos', MJ.fmt(s.puntos));
+    if (s.ronda + 1 < J.rondas.length) {
+      s.ronda++; MJ.flash(`${T.ronda} ${s.ronda + 1}`, true);
+      prepararRonda();
+    } else terminar();
+  }
+  function terminar() {
+    if (s.fin) return;
+    s.fin = true; detener();
+    const pct = s.total ? s.aciertos / s.total : 0;
+    MJ.fin({ puntos: s.puntos, victoria: pct >= .6, titulo: pct >= .6 ? J.textoVictoria : J.textoDerrota, resumen: [[T.encerts, `${s.aciertos}/${s.total}`], [T.errors, s.fallos]] });
+  }
+
+  // ---------- Reloj por ronda ----------
+  function tic() {
+    const t = performance.now();
+    s.restante -= (t - ultimo) / 1000; ultimo = t;
+    $barra.style.transform = `scaleX(${Math.max(0, s.restante / TIEMPO)})`;
+    if (s.restante <= 0 && !s.animando) {
+      // Las tarjetas no clasificadas cuentan como fallo
+      s.fallos += s.cola.length; s.racha = 0; s.cola = [];
+      MJ.flash(T.tempsEsgotat, false); MJ.sfx.fallo();
+      finRonda();
+    }
+  }
+  function arrancar() { detener(); ultimo = performance.now(); reloj = setInterval(tic, 100); }
+  function detener() { clearInterval(reloj); }
+
+  // ---------- Arrastre de la tarjeta ----------
+  function enlazarTop() {
+    const top = document.getElementById('top'); if (!top) return;
+    let x0 = 0, y0 = 0, t0 = 0, dx = 0, dy = 0, activo = false;
+    const mIzq = top.querySelector('.marca.izq'), mDer = top.querySelector('.marca.der');
+    top.addEventListener('pointerdown', (e) => {
+      if (MJ.estado() !== 'jugando' || s.animando) return;
+      activo = true; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); dx = dy = 0;
+      top.classList.remove('vuelve');
+      try { top.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    top.addEventListener('pointermove', (e) => {
+      if (!activo) return;
+      dx = e.clientX - x0; dy = e.clientY - y0;
+      top.style.transform = `translate(${dx}px, ${dy * .3}px) rotate(${dx * .06}deg)`;
+      const f = Math.min(1, Math.abs(dx) / 110);
+      mIzq.style.opacity = dx < 0 ? f : 0; mDer.style.opacity = dx > 0 ? f : 0;
+      $bI.classList.toggle('activo', dx < -60); $bD.classList.toggle('activo', dx > 60);
+    });
+    const soltar = () => {
+      if (!activo) return; activo = false;
+      $bI.classList.remove('activo'); $bD.classList.remove('activo');
+      const vel = Math.abs(dx) / Math.max(1, performance.now() - t0);
+      const umbral = Math.min(110, $pila.clientWidth * .3);
+      if (Math.abs(dx) > umbral || (vel > .6 && Math.abs(dx) > 30)) decidir(dx < 0 ? 'izquierda' : 'derecha');
+      else { top.classList.add('vuelve'); top.style.transform = ''; mIzq.style.opacity = 0; mDer.style.opacity = 0; }
+    };
+    top.addEventListener('pointerup', soltar);
+    top.addEventListener('pointercancel', soltar);
+  }
+
+  document.getElementById('btnIzq').addEventListener('click', () => decidir('izquierda'));
+  document.getElementById('btnDer').addEventListener('click', () => decidir('derecha'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { decidir('izquierda'); e.preventDefault(); }
+    else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { decidir('derecha'); e.preventDefault(); }
+  });
+
+  MJ.iniciar({
+    preparar: () => { detener(); nuevo(); },
+    empezar: arrancar,
+    pausar: detener,
+    reanudar: arrancar,
+  });
+  nuevo();
+
+  window.__minijuego = Object.assign(window.__minijuego || {}, {
+    juego: 'clasifica',
+    info: () => ({ ronda: s.ronda, puntos: s.puntos, racha: s.racha, aciertos: s.aciertos, fallos: s.fallos, total: s.total, fin: s.fin, actual: s.cola[0] || null }),
+    decidir,
+  });
+})();
+</script>
+</body>
+</html>

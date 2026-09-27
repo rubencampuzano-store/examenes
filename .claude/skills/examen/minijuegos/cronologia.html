@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minijuego</title>
+<style>
+/*__COMUN_CSS__*/
+  .mj-zona { overflow: auto; padding: 16px; }
+  .tablero { max-width: 1040px; margin: 0 auto; display: grid; gap: 18px; }
+  .cab-ronda { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .cab-ronda h2 { font-size: clamp(1.4rem, 4.5vw, 2rem); font-style: italic; }
+  .cab-ronda span { color: var(--claro-suave); font-size: .9rem; }
+  .linea { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; padding-top: 26px; }
+  .linea::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: linear-gradient(90deg, var(--oro), var(--linea-clara)); }
+  .hueco { position: relative; display: grid; gap: 6px; align-content: start; text-align: left; }
+  .hueco::before { content: ""; position: absolute; top: -20px; left: 14px; width: 12px; height: 12px; border-radius: 50%; background: var(--shell); border: 2px solid var(--oro); }
+  .hueco .fecha { font-family: var(--f-mono); color: var(--oro); font-size: .95rem; font-variant-numeric: tabular-nums; }
+  .hueco .caja {
+    min-height: 86px; border-radius: var(--r); border: 1.5px dashed var(--linea-clara);
+    display: grid; place-items: center; padding: 8px; color: var(--claro-suave); font-size: .82rem; text-align: center;
+    transition: border-color .15s, background .15s, transform .15s;
+  }
+  .hueco.sobre .caja, .hueco:focus-visible .caja { border-color: var(--oro); background: color-mix(in srgb, var(--oro) 14%, transparent); transform: scale(1.02); }
+  .hueco.lleno .caja { border: 1.5px solid var(--acierto); background: color-mix(in srgb, var(--acierto) 28%, var(--shell)); color: var(--claro); font-weight: 600; animation: encaja .35s cubic-bezier(.2,1.4,.4,1); }
+  .hueco.lleno::before { background: var(--oro); }
+  @keyframes encaja { from { transform: scale(.85); } }
+  .hueco.mal .caja { border-color: var(--fallo); background: color-mix(in srgb, var(--fallo) 18%, transparent); animation: mjTemblor .4s; }
+  .bandeja { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; min-height: 70px; }
+  .tarjeta {
+    touch-action: none; min-height: 64px; padding: 12px 14px; border-radius: var(--r); text-align: left;
+    background: var(--papel); color: var(--tinta); font-weight: 600; font-size: .95rem; line-height: 1.25;
+    box-shadow: 0 12px 24px -14px rgba(0,0,0,.8); cursor: grab; position: relative;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+  }
+  .tarjeta::after { content: "⠿"; position: absolute; right: 8px; top: 6px; color: var(--tinta-suave); font-size: .8rem; }
+  .tarjeta:hover { transform: translateY(-2px); }
+  .tarjeta.sel { outline: 3px solid var(--oro); outline-offset: 2px; transform: translateY(-3px) rotate(-1deg); }
+  .tarjeta.fantasma { opacity: .25; }
+  .arrastre { position: fixed; z-index: 60; pointer-events: none; transform: rotate(-3deg) scale(1.04); box-shadow: 0 30px 50px -20px rgba(0,0,0,.9); cursor: grabbing; }
+  .pista { color: var(--claro-suave); font-size: .85rem; text-align: center; margin: 0; }
+  @media (max-width: 760px) {
+    .linea { grid-auto-flow: row; grid-auto-columns: auto; padding-top: 0; padding-left: 26px; gap: 8px; }
+    .linea::before { left: 10px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(180deg, var(--oro), var(--linea-clara)); }
+    .hueco { grid-template-columns: 92px 1fr; align-items: center; gap: 10px; }
+    .hueco::before { top: 50%; left: -21px; transform: translateY(-50%); }
+    .hueco .caja { min-height: 54px; }
+    .bandeja { grid-template-columns: 1fr 1fr; }
+    .tarjeta { min-height: 56px; font-size: .86rem; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+<main class="mj-zona" id="zona">
+  <div class="tablero">
+    <div class="cab-ronda"><h2 id="tituloRonda"></h2><span id="subRonda"></span></div>
+    <div class="linea" id="linea" role="list"></div>
+    <p class="pista" id="pista"></p>
+    <div class="bandeja" id="bandeja"></div>
+  </div>
+</main>
+<script>
+const DATOS = /*__DATOS__*/null;
+</script>
+<script>
+/*__COMUN_JS__*/
+</script>
+<script>
+(function () {
+  'use strict';
+  const J = MJ.JUEGO, T = MJ.T;
+  const $linea = document.getElementById('linea'), $bandeja = document.getElementById('bandeja');
+  const TIEMPO = J.tiempoRonda || 60;
+  let s = null, reloj = 0, ultimo = 0;
+
+  function nuevo() {
+    s = { ronda: 0, puntos: 0, racha: 0, aciertos: 0, fallos: 0, restante: TIEMPO, sel: null, colocados: 0, fin: false };
+    MJ.hud([{ id: 'ronda', etiqueta: T.ronda, valor: `1/${J.rondas.length}` }, { id: 'tiempo', etiqueta: T.temps, valor: TIEMPO }, { id: 'puntos', etiqueta: T.puntos, valor: 0 }]);
+    pintarRonda();
+  }
+  function pintarRonda() {
+    const r = J.rondas[s.ronda];
+    s.colocados = 0; s.sel = null; s.restante = TIEMPO;
+    document.getElementById('tituloRonda').textContent = r.titulo || `${T.ronda} ${s.ronda + 1}`;
+    document.getElementById('subRonda').textContent = `${T.ronda} ${s.ronda + 1}/${J.rondas.length}`;
+    document.getElementById('pista').textContent = MJ.esTactil() ? T.pistaCronoTactil : T.pistaCronoTeclado;
+    const orden = r.eventos.slice().sort((a, b) => a.orden - b.orden);
+    $linea.innerHTML = orden.map((e, i) => `<button class="hueco" role="listitem" data-orden="${e.orden}" data-i="${i}"><span class="fecha">${MJ.esc(e.fecha)}</span><span class="caja">${MJ.esc(T.deixaAqui)}</span></button>`).join('');
+    $bandeja.innerHTML = MJ.azar(r.eventos).map((e) => `<button class="tarjeta" data-orden="${e.orden}">${MJ.esc(e.texto)}</button>`).join('');
+    MJ.hudSet('ronda', `${s.ronda + 1}/${J.rondas.length}`);
+    MJ.hudSet('tiempo', TIEMPO);
+    enlazar();
+  }
+
+  // ---------- Colocar ----------
+  function colocar(tarjeta, hueco) {
+    if (!tarjeta || !hueco || hueco.classList.contains('lleno') || MJ.estado() !== 'jugando') return false;
+    if (Number(tarjeta.dataset.orden) === Number(hueco.dataset.orden)) {
+      s.racha++; s.aciertos++; s.colocados++;
+      const g = 100 + (s.racha - 1) * 25;
+      s.puntos += g;
+      hueco.classList.add('lleno');
+      hueco.querySelector('.caja').textContent = tarjeta.textContent;
+      hueco.setAttribute('aria-label', hueco.querySelector('.fecha').textContent + ': ' + tarjeta.textContent);
+      tarjeta.remove();
+      MJ.sfx.acierto();
+      if (s.racha >= 3) MJ.flash(`${T.ratxa} ×${s.racha}`, true);
+      MJ.hudSet('puntos', MJ.fmt(s.puntos));
+      if (s.colocados === J.rondas[s.ronda].eventos.length) finRonda();
+      else { const sig = $bandeja.querySelector('.tarjeta'); if (sig && document.activeElement === hueco) sig.focus({ preventScroll: true }); }
+      return true;
+    }
+    s.racha = 0; s.fallos++;
+    s.restante = Math.max(0, s.restante - 3);
+    hueco.classList.remove('mal'); void hueco.offsetWidth; hueco.classList.add('mal');
+    setTimeout(() => hueco.classList.remove('mal'), 450);
+    tarjeta.classList.add('temblor'); setTimeout(() => tarjeta.classList.remove('temblor'), 450);
+    MJ.sfx.fallo();
+    return false;
+  }
+  function finRonda() {
+    const bonus = Math.round(s.restante * 5);
+    s.puntos += bonus;
+    MJ.hudSet('puntos', MJ.fmt(s.puntos));
+    MJ.flash(`+${bonus} ${T.temps.toLowerCase()}`, true);
+    if (s.ronda + 1 < J.rondas.length) {
+      s.ronda++;
+      detenerReloj();
+      setTimeout(() => { if (MJ.estado() === 'jugando' && !s.fin) { pintarRonda(); iniciarReloj(); } }, 900);
+    } else terminar(true);
+  }
+  function terminar(victoria) {
+    if (s.fin) return;
+    s.fin = true; detenerReloj();
+    MJ.fin({ puntos: s.puntos, victoria, titulo: victoria ? J.textoVictoria : J.textoDerrota, resumen: [[T.encerts, s.aciertos], [T.errors, s.fallos]] });
+  }
+
+  // ---------- Reloj ----------
+  function tic() {
+    const t = performance.now();
+    s.restante -= (t - ultimo) / 1000; ultimo = t;
+    MJ.hudSet('tiempo', Math.max(0, Math.ceil(s.restante)));
+    if (s.restante <= 0) terminar(false);
+  }
+  function iniciarReloj() { detenerReloj(); ultimo = performance.now(); reloj = setInterval(tic, 200); }
+  function detenerReloj() { clearInterval(reloj); }
+
+  // ---------- Interacción ----------
+  function seleccionar(t) {
+    if (s.sel) s.sel.classList.remove('sel');
+    s.sel = s.sel === t ? null : t;
+    if (s.sel) { s.sel.classList.add('sel'); MJ.sfx.tic(); }
+  }
+  function huecoEn(x, y) { const el = document.elementFromPoint(x, y); return el && el.closest ? el.closest('.hueco:not(.lleno)') : null; }
+  function enlazar() {
+    $linea.querySelectorAll('.hueco').forEach((h) => h.addEventListener('click', () => { if (s.sel) { const t = s.sel; seleccionar(s.sel); colocar(t, h); } }));
+    $bandeja.querySelectorAll('.tarjeta').forEach((t) => {
+      let x0 = 0, y0 = 0, clon = null, dx = 0, dy = 0, activo = false, sobre = null;
+      t.addEventListener('pointerdown', (e) => {
+        if (MJ.estado() !== 'jugando') return;
+        activo = true; x0 = e.clientX; y0 = e.clientY;
+        const r = t.getBoundingClientRect(); dx = x0 - r.left; dy = y0 - r.top;
+        try { t.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      t.addEventListener('pointermove', (e) => {
+        if (!activo) return;
+        if (!clon && Math.hypot(e.clientX - x0, e.clientY - y0) > 8) {
+          const r = t.getBoundingClientRect();
+          clon = t.cloneNode(true); clon.classList.add('arrastre'); clon.classList.remove('sel');
+          clon.style.width = r.width + 'px'; document.body.appendChild(clon);
+          t.classList.add('fantasma');
+        }
+        if (clon) {
+          clon.style.left = e.clientX - dx + 'px'; clon.style.top = e.clientY - dy + 'px';
+          const h = huecoEn(e.clientX, e.clientY);
+          if (h !== sobre) { if (sobre) sobre.classList.remove('sobre'); sobre = h; if (sobre) sobre.classList.add('sobre'); }
+        }
+      });
+      const soltar = (e, cancelado) => {
+        if (!activo) return; activo = false;
+        if (clon) {
+          clon.remove(); clon = null; t.classList.remove('fantasma');
+          if (sobre) sobre.classList.remove('sobre');
+          const h = cancelado ? null : huecoEn(e.clientX, e.clientY);
+          sobre = null;
+          if (h) { if (s.sel === t) seleccionar(t); colocar(t, h); }
+        } else if (!cancelado) seleccionar(t);
+      };
+      t.addEventListener('pointerup', (e) => soltar(e, false));
+      t.addEventListener('pointercancel', (e) => soltar(e, true));
+      t.addEventListener('click', (e) => e.preventDefault());
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); seleccionar(t); if (s.sel) { const h = $linea.querySelector('.hueco:not(.lleno)'); if (h) h.focus({ preventScroll: true }); } }
+      });
+    });
+    $linea.addEventListener('keydown', (e) => {
+      const hs = [...$linea.querySelectorAll('.hueco:not(.lleno)')];
+      const i = hs.indexOf(document.activeElement);
+      if (i < 0) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { hs[(i + 1) % hs.length].focus({ preventScroll: true }); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { hs[(i - 1 + hs.length) % hs.length].focus({ preventScroll: true }); e.preventDefault(); }
+      else if (e.key === 'Escape' && s.sel) { const t = s.sel; seleccionar(t); t.focus({ preventScroll: true }); e.stopPropagation(); }
+    });
+  }
+
+  MJ.iniciar({
+    preparar: () => { detenerReloj(); nuevo(); },
+    empezar: () => { iniciarReloj(); const t = $bandeja.querySelector('.tarjeta'); if (t && !MJ.esTactil()) t.focus({ preventScroll: true }); },
+    pausar: detenerReloj,
+    reanudar: iniciarReloj,
+  });
+  nuevo();
+
+  window.__minijuego = Object.assign(window.__minijuego || {}, {
+    juego: 'cronologia',
+    info: () => ({ ronda: s.ronda, puntos: s.puntos, racha: s.racha, aciertos: s.aciertos, fallos: s.fallos, restante: Math.round(s.restante), fin: s.fin, pendientes: $bandeja.querySelectorAll('.tarjeta').length }),
+    colocar: (textoTarjeta, orden) => {
+      const t = [...$bandeja.querySelectorAll('.tarjeta')].find((x) => x.textContent === textoTarjeta);
+      const h = $linea.querySelector(`.hueco[data-orden="${orden}"]`);
+      return colocar(t, h);
+    },
+  });
+})();
+</script>
+</body>
+</html>

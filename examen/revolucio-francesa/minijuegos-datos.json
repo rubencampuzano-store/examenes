@@ -1,0 +1,615 @@
+{
+  "textos": {
+    "jugar": "Juga",
+    "pausa": "Pausa",
+    "continuar": "Continua",
+    "reiniciar": "Torna a començar",
+    "record": "Rècord",
+    "tambienTactil": "També es pot jugar amb pantalla tàctil.",
+    "victoria": "Victòria!",
+    "finPartida": "Fi de la partida",
+    "guanyes": "Guanyes",
+    "nuevoRecord": "Nou rècord!",
+    "repetir": "Repeteix",
+    "volver": "Torna a l'examen",
+    "vidas": "Vides",
+    "porta": "Porta",
+    "ai": "Ai!",
+    "encerts": "Encerts",
+    "errors": "Errors",
+    "objetos": "Objectes",
+    "ronda": "Ronda",
+    "temps": "Temps",
+    "pistaCronoTactil": "Arrossega cada fet fins a la seva data, o toca el fet i després el forat.",
+    "pistaCronoTeclado": "Arrossega cada fet fins a la seva data. Amb teclat: Tab per triar, Enter per agafar i fletxes per moure't.",
+    "deixaAqui": "Deixa'l aquí",
+    "ratxa": "Ratxa",
+    "millorRatxa": "Millor ratxa",
+    "parelles": "Parelles",
+    "moviments": "Moviments",
+    "cartaTapada": "Carta tapada",
+    "restants": "restants",
+    "tempsEsgotat": "Temps esgotat!",
+    "triaTactil": "Toca la porta o el botó amb la resposta correcta",
+    "triaTeclat": "Tria la resposta amb 1, 2 o 3 (o fes-hi clic)",
+    "rapidesa": "Rapidesa",
+    "musica": "Música",
+    "silenciarMusica": "Silencia la música",
+    "activarMusica": "Activa la música"
+  },
+  "carrera": {
+    "titulo": "L'Assalt a la Bastilla",
+    "subtitulo": "Corre pels carrers de París i esquiva les barricades. A cada porta et pararàs: tria la resposta correcta per continuar fins a la Bastilla.",
+    "objetivo": "la Bastilla",
+    "objeto": {
+      "plural": "Escarapel·les"
+    },
+    "textoVictoria": "Has pres la Bastilla!",
+    "textoDerrota": "La revolució haurà d'esperar...",
+    "vidas": 3,
+    "numPuertas": 8,
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Toca la meitat esquerra o dreta, o llisca, per canviar de carrer"
+        ],
+        [
+          "🎀",
+          "Recull escarapel·les i esquiva les barricades"
+        ],
+        [
+          "123",
+          "A cada porta et pararàs: toca la porta o el botó amb la resposta correcta"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Canvia de carrer (també amb A i D)"
+        ],
+        [
+          "🎀",
+          "Recull escarapel·les i esquiva les barricades"
+        ],
+        [
+          "123",
+          "A cada porta et pararàs: tria la resposta amb 1, 2 o 3"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "puertas": [
+      {
+        "pregunta": "Any de la presa de la Bastilla?",
+        "opciones": [
+          "1789",
+          "1792",
+          "1804"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui va proposar la divisió de poders?",
+        "opciones": [
+          "Montesquieu",
+          "Rousseau",
+          "Voltaire"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quin estament era el 95% de la població?",
+        "opciones": [
+          "Noblesa",
+          "Clergat",
+          "Tercer Estat"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Qui va convocar els Estats Generals?",
+        "opciones": [
+          "Lluís XIV",
+          "Lluís XVI",
+          "Napoleó"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Quin sufragi va fixar la Constitució de 1791?",
+        "opciones": [
+          "Censatari",
+          "Universal",
+          "Per estaments"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui tenia el poder durant el Terror?",
+        "opciones": [
+          "Robespierre",
+          "Napoleó",
+          "Lluís XVI"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "On van detenir Lluís XVI quan fugia?",
+        "opciones": [
+          "Versalles",
+          "Varennes",
+          "Valmy"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Any en què Napoleó es fa coronar emperador?",
+        "opciones": [
+          "1799",
+          "1804",
+          "1815"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "On va ser derrotat definitivament Napoleó?",
+        "opciones": [
+          "Waterloo",
+          "Valmy",
+          "Almansa"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui cobrava el delme?",
+        "opciones": [
+          "L'Església",
+          "El rei",
+          "Els burgesos"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quin tractat dona Gibraltar a la Gran Bretanya?",
+        "opciones": [
+          "Utrecht",
+          "Viena",
+          "Versalles"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Revolucions del 1848: la Primavera dels...",
+        "opciones": [
+          "Pobles",
+          "Reis",
+          "Nobles"
+        ],
+        "correcta": 0
+      }
+    ],
+    "premio": {
+      "objetivo": 2600,
+      "tope": 300
+    },
+    "sonido": {
+      "preset": "revolucion",
+      "volumenMusica": 0.55,
+      "musica": {
+        "archivo": "audio/marsellesa.mp3",
+        "titulo": "La Marseillaise",
+        "interprete": "United States Navy Band",
+        "anio": "c. 1987",
+        "licencia": "Domini públic",
+        "fuente": "https://commons.wikimedia.org/wiki/File:La_Marseillaise.ogg"
+      }
+    }
+  },
+  "cronologia": {
+    "titulo": "La Línia del Temps",
+    "subtitulo": "Col·loca cada fet a la seva data abans que s'acabi el temps. Quatre rondes, del 1679 al 1848.",
+    "textoVictoria": "Cronologia completa!",
+    "textoDerrota": "S'ha acabat el temps",
+    "tiempoRonda": 45,
+    "instrucciones": {
+      "tactil": [
+        [
+          "☝",
+          "Arrossega cada fet fins a la seva data"
+        ],
+        [
+          "2×",
+          "O toca el fet i després el forat"
+        ],
+        [
+          "⏱",
+          "Cada error resta 3 segons"
+        ]
+      ],
+      "teclado": [
+        [
+          "🖱",
+          "Arrossega cada fet amb el ratolí fins a la seva data"
+        ],
+        [
+          "⇥",
+          "Tab per triar un fet i Enter per agafar-lo"
+        ],
+        [
+          "←→",
+          "Tria el forat amb les fletxes i prem Enter"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "titulo": "De l'Antic Règim a la Il·lustració",
+        "eventos": [
+          {
+            "texto": "Habeas corpus a Anglaterra",
+            "fecha": "1679",
+            "orden": 1679
+          },
+          {
+            "texto": "Bill of Rights",
+            "fecha": "1689",
+            "orden": 1689
+          },
+          {
+            "texto": "Tractat d'Utrecht",
+            "fecha": "1713",
+            "orden": 1713
+          },
+          {
+            "texto": "Publicació de l'Enciclopèdia",
+            "fecha": "1751-1772",
+            "orden": 1751
+          },
+          {
+            "texto": "El contracte social de Rousseau",
+            "fecha": "1762",
+            "orden": 1762
+          }
+        ]
+      },
+      {
+        "titulo": "Cap a la revolució",
+        "eventos": [
+          {
+            "texto": "Motí del te de Boston",
+            "fecha": "1773",
+            "orden": 1773
+          },
+          {
+            "texto": "Declaració d'Independència dels EUA",
+            "fecha": "4/7/1776",
+            "orden": 1776.5
+          },
+          {
+            "texto": "Constitució dels EUA",
+            "fecha": "1787",
+            "orden": 1787
+          },
+          {
+            "texto": "Obertura dels Estats Generals",
+            "fecha": "5/5/1789",
+            "orden": 1789.34
+          },
+          {
+            "texto": "Presa de la Bastilla",
+            "fecha": "14/7/1789",
+            "orden": 1789.53
+          }
+        ]
+      },
+      {
+        "titulo": "De la revolució al Consolat",
+        "eventos": [
+          {
+            "texto": "Declaració de Drets de l'Home i del Ciutadà",
+            "fecha": "26/8/1789",
+            "orden": 1789.65
+          },
+          {
+            "texto": "Fugida de Varennes",
+            "fecha": "1791",
+            "orden": 1791
+          },
+          {
+            "texto": "Execució de Lluís XVI",
+            "fecha": "21/1/1793",
+            "orden": 1793.05
+          },
+          {
+            "texto": "Directori",
+            "fecha": "1795",
+            "orden": 1795
+          },
+          {
+            "texto": "Cop d'estat de Brumari",
+            "fecha": "1799",
+            "orden": 1799
+          }
+        ]
+      },
+      {
+        "titulo": "L'Imperi i l'Europa liberal",
+        "eventos": [
+          {
+            "texto": "Napoleó, coronat emperador",
+            "fecha": "1804",
+            "orden": 1804
+          },
+          {
+            "texto": "Invasió d'Espanya",
+            "fecha": "1808",
+            "orden": 1808
+          },
+          {
+            "texto": "Waterloo i Congrés de Viena",
+            "fecha": "1815",
+            "orden": 1815
+          },
+          {
+            "texto": "Revolució liberal a França",
+            "fecha": "1830",
+            "orden": 1830
+          },
+          {
+            "texto": "Primavera dels Pobles",
+            "fecha": "1848",
+            "orden": 1848
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 4500,
+      "tope": 300
+    }
+  },
+  "parejas": {
+    "titulo": "El Saló de Madame Geoffrin",
+    "subtitulo": "Al saló s'hi reuneixen els grans noms del segle XVIII. Uneix cada personatge amb la seva idea o obra.",
+    "textoVictoria": "Saló complet!",
+    "etiquetaA": "Personatge",
+    "etiquetaB": "Idea o obra",
+    "instrucciones": {
+      "tactil": [
+        [
+          "☝",
+          "Toca dues cartes per girar-les"
+        ],
+        [
+          "=",
+          "Uneix cada personatge amb la seva idea o obra"
+        ],
+        [
+          "×2",
+          "Les parelles seguides sumen ratxa"
+        ]
+      ],
+      "teclado": [
+        [
+          "↑↓←→",
+          "Mou-te per les cartes amb les fletxes"
+        ],
+        [
+          "⏎",
+          "Gira la carta amb Enter o espai"
+        ],
+        [
+          "×2",
+          "Les parelles seguides sumen ratxa"
+        ]
+      ]
+    },
+    "parejas": [
+      {
+        "a": "Montesquieu",
+        "b": "Divisió de poders"
+      },
+      {
+        "a": "Rousseau",
+        "b": "Sobirania nacional"
+      },
+      {
+        "a": "Locke",
+        "b": "Drets naturals"
+      },
+      {
+        "a": "Diderot i D'Alembert",
+        "b": "L'Enciclopèdia"
+      },
+      {
+        "a": "Robespierre",
+        "b": "El Terror"
+      },
+      {
+        "a": "Olympe de Gouges",
+        "b": "Drets de la Dona"
+      },
+      {
+        "a": "Carles III",
+        "b": "Despotisme il·lustrat"
+      },
+      {
+        "a": "Napoleó",
+        "b": "Codi Civil"
+      }
+    ],
+    "premio": {
+      "objetivo": 2000,
+      "tope": 300
+    }
+  },
+  "clasifica": {
+    "titulo": "Privilegiat o Tercer Estat?",
+    "subtitulo": "Envia cada targeta al seu bàndol tan ràpid com puguis. Tres rondes de 30 segons.",
+    "textoVictoria": "Classificació perfecta!",
+    "textoDerrota": "Cal repassar una mica...",
+    "tiempoRonda": 30,
+    "instrucciones": {
+      "tactil": [
+        [
+          "⇆",
+          "Llisca la targeta cap al seu bàndol"
+        ],
+        [
+          "☝",
+          "O fes servir els botons de sota"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Envia la targeta a l'esquerra o a la dreta"
+        ],
+        [
+          "🖱",
+          "També pots arrossegar-la o usar els botons"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "izquierda": "Privilegiats",
+        "derecha": "Tercer Estat",
+        "tarjetas": [
+          {
+            "texto": "Noblesa",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Alt clergat",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "No pagaven impostos",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Lleis i tribunals especials",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Pagesos",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Artesans",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Burgesos rics",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Pagaven el delme",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "Absolutisme",
+        "derecha": "Liberalisme",
+        "tarjetas": [
+          {
+            "texto": "Dret diví",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "El rei concentra tots els poders",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Súbdits sense drets",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Santa Aliança",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Divisió de poders",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Sobirania nacional",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Constitució",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Igualtat davant la llei",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "Revolució (1789-1799)",
+        "derecha": "Napoleó (1799-1815)",
+        "tarjetas": [
+          {
+            "texto": "Jurament del Jeu de Paume",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Presa de la Bastilla",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "El Terror",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "El Directori",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Codi Civil",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Consolat",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Coronació com a emperador",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Waterloo",
+            "lado": "derecha"
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 5000,
+      "tope": 300
+    }
+  }
+}

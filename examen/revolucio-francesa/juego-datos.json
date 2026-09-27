@@ -1,0 +1,1517 @@
+{
+  "meta": {
+    "id": "revolucio-francesa-t1",
+    "titulo": "De serfs a ciutadans",
+    "subtitulo": "Crisi i revolució: de l'Antic Règim a la Primavera dels Pobles",
+    "intro": "Comences com a serf de l'Antic Règim. Respon bé, supera els 10 nivells i converteix-te en líder de la Revolució!",
+    "idioma": "ca",
+    "icono": "🏰",
+    "eyebrow": "Tema 1 · 1700 — 1848",
+    "tituloPartido": [
+      "De serfs",
+      "a ciutadans"
+    ]
+  },
+  "tema": {
+    "colores": {
+      "fondo": "#0f1733",
+      "superficie": "#efe3c6",
+      "texto": "#1d1a16",
+      "textoSuave": "#5b5244",
+      "textoClaro": "#efe3c6",
+      "acento": "#b3202a",
+      "oro": "#c9a44c",
+      "acierto": "#2f7d4a",
+      "fallo": "#b3202a"
+    },
+    "fuentes": {
+      "display": "'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif",
+      "texto": "'Hanken Grotesk', 'Segoe UI', system-ui, sans-serif",
+      "mono": "'DM Mono', ui-monospace, Consolas, monospace"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;700&display=swap",
+    "duotono": [
+      "#0f1733",
+      "#efe3c6"
+    ],
+    "motivo": {
+      "patron": "guilloche",
+      "sello": "République Française",
+      "monograma": "RF"
+    },
+    "numeracion": "romana",
+    "confeti": [
+      "#1f3b7a",
+      "#efe3c6",
+      "#b3202a",
+      "#c9a44c"
+    ],
+    "imagenes": {
+      "portada": {
+        "archivo": "imagenes/portada.jpg",
+        "titulo": "La presa de la Bastilla",
+        "autor": "Jean-Pierre Houël",
+        "anio": "1789",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Prise_de_la_Bastille.jpg"
+      }
+    }
+  },
+  "textos": {
+    "jugar": "Comença la revolució",
+    "continuar": "Continua la revolució",
+    "niveles": "Nivells",
+    "logros": "Assoliments",
+    "apuntes": "Apunts",
+    "puntos": "punts",
+    "preguntas": "preguntes",
+    "estrellas": "estrelles",
+    "nivelesSuperados": "nivells superats",
+    "sinRango": "Súbdit sense rang",
+    "siguienteRango": "Proper rang",
+    "rangoMaximo": "Has arribat al rang màxim. Vive la République!",
+    "reiniciar": "Reinicia el progrés",
+    "confirmarReinicio": "Segur que vols esborrar tot el progrés i tornar a ser súbdit?",
+    "bloqueado": "Supera el nivell anterior per desbloquejar-lo",
+    "mejor": "millor",
+    "ayudaMapa": "Del segle XVIII al 1848. Aprova cada nivell amb un 60% per obrir el següent.",
+    "dificultad": {
+      "facil": "Fàcil",
+      "media": "Mitjana",
+      "dificil": "Difícil"
+    },
+    "salir": "Surt",
+    "confirmarSalir": "Vols sortir? Perdràs aquesta partida.",
+    "siguiente": "Següent",
+    "verResultado": "Veure resultat",
+    "mensajesAcierto": [
+      "Liberté!",
+      "Correcte, ciutadà!",
+      "Égalité!",
+      "Això és pensar com un il·lustrat!",
+      "Vive la Révolution!",
+      "Encert digne de l'Enciclopèdia!"
+    ],
+    "mensajesFallo": [
+      "Uf! Això et porta directe a la Bastilla...",
+      "Ni el Rei Sol ho hauria encertat!",
+      "Gairebé! Consulta els quaderns de queixes...",
+      "Error! Però els revolucionaris no es rendeixen.",
+      "Aquesta no és. Torna-ho a provar al proper nivell!"
+    ],
+    "laCorrectaEra": "La correcta era",
+    "nivelPerfecto": "Nivell perfecte! Fraternité!",
+    "nivelSuperado": "Nivell superat!",
+    "nivelNoSuperado": "Gairebé ho tens!",
+    "aciertos": "encerts",
+    "nuevoRecord": "Nou rècord!",
+    "necesitas": "Necessites un 60% d'encerts per superar el nivell. Repassa i torna-ho a provar!",
+    "desbloqueado": "Nou nivell desbloquejat",
+    "nuevoRango": "Nou rang",
+    "repetir": "Repeteix",
+    "siguienteNivel": "Següent nivell",
+    "repasa": "Repassa aquestes preguntes",
+    "consigue": "Aconsegueix el",
+    "delTotal": "dels punts totals",
+    "logroDesbloqueado": "Assoliment desbloquejat",
+    "inicio": "Inici",
+    "nivel": "Nivell",
+    "indice": "Índex",
+    "rangoActual": "Rang actual",
+    "selloAcierto": "Correcte",
+    "selloFallo": "Incorrecte",
+    "silenciar": "Silencia el so",
+    "activarSonido": "Activa el so",
+    "creditos": "Crèdits de les imatges",
+    "textoCreditos": "Totes les imatges són obres de domini públic o CC0 de Wikimedia Commons. S'hi indica l'autor, l'any i la llicència declarada a Commons.",
+    "fuenteImagen": "Veure a Wikimedia Commons",
+    "moneda": "lliures",
+    "serie": "Nº"
+  },
+  "rangos": [
+    {
+      "nombre": "Serf",
+      "icono": "🌾",
+      "umbral": 0.1,
+      "descripcion": "Treballes la terra d'un senyor. Aconsegueix el 10% de les lliures."
+    },
+    {
+      "nombre": "Tercer Estat",
+      "icono": "🔨",
+      "umbral": 0.3,
+      "descripcion": "Formes part del 95% de la població. Aconsegueix el 30% de les lliures."
+    },
+    {
+      "nombre": "Ciutadà",
+      "icono": "🎀",
+      "umbral": 0.5,
+      "descripcion": "Ja no ets súbdit: tens drets! Aconsegueix el 50% de les lliures."
+    },
+    {
+      "nombre": "Revolucionari",
+      "icono": "⚔️",
+      "umbral": 0.75,
+      "descripcion": "Llibertat, igualtat i fraternitat. Aconsegueix el 75% de les lliures."
+    },
+    {
+      "nombre": "Líder de la Revolució",
+      "icono": "🏛️",
+      "umbral": 0.95,
+      "descripcion": "Domines tot el tema. Aconsegueix el 95% de les lliures."
+    }
+  ],
+  "logrosEspeciales": {
+    "primerNivel": {
+      "nombre": "Adéu, Bastilla!",
+      "icono": "🏰",
+      "descripcion": "Supera el teu primer nivell"
+    },
+    "perfecto": {
+      "nombre": "Jurament del Jeu de Paume",
+      "icono": "✋",
+      "descripcion": "Aconsegueix 3 estrelles en un nivell"
+    },
+    "todos": {
+      "nombre": "Ciutadà de ple dret",
+      "icono": "📜",
+      "descripcion": "Supera tots els nivells"
+    },
+    "maestro": {
+      "nombre": "Liberté, Égalité, Fraternité",
+      "icono": "🏆",
+      "descripcion": "3 estrelles a tots els nivells"
+    }
+  },
+  "niveles": [
+    {
+      "id": "antic-regim",
+      "titulo": "Com era l'Antic Règim?",
+      "resumen": "Agricultura de subsistència, estaments i comerç triangular",
+      "preguntas": [
+        {
+          "texto": "Quins eren els estaments privilegiats de l'Antic Règim?",
+          "opciones": [
+            "La noblesa i el clergat",
+            "La burgesia i la noblesa",
+            "Els pagesos i els artesans",
+            "El clergat i la burgesia"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "La noblesa i el clergat eren els privilegiats: no pagaven impostos i tenien lleis i tribunals especials.",
+          "fuente": "1. Com era l'Antic Règim? > Una societat estamental"
+        },
+        {
+          "texto": "Què era el delme?",
+          "opciones": [
+            "Un impost reial sobre el comerç",
+            "El 10% de la collita que els pagesos pagaven a l'Església",
+            "Una renda que els nobles pagaven al rei",
+            "Un tribut que cobraven els gremis"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "L'Església rebia els delmes, un impost del 10% de la collita dels pagesos.",
+          "fuente": "1. Com era l'Antic Règim? > Una societat estamental"
+        },
+        {
+          "texto": "Quina era la principal activitat econòmica de l'Antic Règim?",
+          "opciones": [
+            "El comerç colonial",
+            "La indústria",
+            "L'agricultura",
+            "La banca"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "L'agricultura era la principal activitat, de subsistència i orientada a l'autoconsum.",
+          "fuente": "1. Com era l'Antic Règim? > L'agricultura era de subsistència"
+        },
+        {
+          "texto": "Quin sistema de conreu s'utilitzava?",
+          "opciones": [
+            "Rotació biennal sense guaret",
+            "Regadiu intensiu",
+            "Monocultiu de blat de moro",
+            "Rotació triennal amb guaret"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Els camps es dividien en tres àrees (blat de tardor, cereals de primavera i guaret), i el bestiar fertilitzava el guaret.",
+          "fuente": "1. Com era l'Antic Règim? > L'agricultura era de subsistència"
+        },
+        {
+          "texto": "Què diferenciava els estaments entre si?",
+          "opciones": [
+            "La riquesa",
+            "El naixement (la \"sang\")",
+            "El nivell d'estudis",
+            "La professió"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Les diferències eren de naixement, no econòmiques: un burgès ric continuava sent del Tercer Estat.",
+          "fuente": "1. Com era l'Antic Règim? > Una societat estamental"
+        },
+        {
+          "texto": "Quina seqüència descriu una crisi de subsistència?",
+          "opciones": [
+            "Males collites → alça del preu del blat → fam i epidèmies → revoltes",
+            "Bones collites → baixada de preus → emigració",
+            "Guerra → més impostos → Il·lustració",
+            "Més comerç → manufactures → burgesia rica"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Els anys de mal temps provocaven males collites, pujava el preu del blat i venien fam, epidèmies i revoltes populars.",
+          "fuente": "1. Com era l'Antic Règim? > L'agricultura era de subsistència"
+        },
+        {
+          "texto": "Quins tres continents unia el comerç triangular?",
+          "opciones": [
+            "Europa, Àsia i Amèrica",
+            "Àfrica, Àsia i Oceania",
+            "Europa, Àfrica i Amèrica",
+            "Amèrica, Àsia i Europa"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Europa venia manufactures a Àfrica a canvi d'esclaus, que es venien a les plantacions americanes; d'Amèrica arribaven matèries primeres.",
+          "fuente": "1. Com era l'Antic Règim? > El comerç triangular i el tràfic d'esclaus"
+        },
+        {
+          "texto": "Per què va créixer la població europea al segle XVIII?",
+          "opciones": [
+            "Per l'arribada d'immigrants d'Amèrica",
+            "Per la industrialització de les ciutats",
+            "Perquè es va abolir la servitud",
+            "Perquè no hi va haver grans pandèmies ni guerres i la natalitat era alta"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Sense mortalitat catastròfica (pandèmies i guerres), l'alta natalitat va fer augmentar la població.",
+          "fuente": "1. Com era l'Antic Règim? > La població i la producció van augmentar"
+        },
+        {
+          "texto": "Quina contradicció vivia la burgesia al segle XVIII?",
+          "opciones": [
+            "Tenia poder polític però no econòmic",
+            "Era privilegiada però no tenia terres",
+            "Tenia poder econòmic però era desigual davant la llei",
+            "Pagava el delme però no els impostos reials"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Els negocis la van enriquir, però com a membre del Tercer Estat no tenia els drets dels privilegiats.",
+          "fuente": "1. Com era l'Antic Règim? > La burgesia va tenir més poder i influència"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/antic-regim.jpg",
+        "titulo": "Caricatura dels tres estaments",
+        "autor": "Anònim",
+        "anio": "1789",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:R%C3%A9volution_fran%C3%A7aise._Ancien_R%C3%A9gime._Caricature_sur_les_Trois-Ordres_Le_Tiers-Etat_portant_sur_son_dos_le_Clerg%C3%A9_et_la,_G.23830.jpg"
+      },
+      "epoca": "Segle XVIII"
+    },
+    {
+      "id": "illustracio",
+      "titulo": "Noves maneres de pensar: la Il·lustració",
+      "resumen": "Raó, Enciclopèdia, Montesquieu, Rousseau i liberalisme",
+      "preguntas": [
+        {
+          "texto": "Quins dos instruments utilitzaven els il·lustrats per analitzar la realitat?",
+          "opciones": [
+            "La fe i la tradició",
+            "La raó i l'observació",
+            "La revelació i la superstició",
+            "L'autoritat del rei i de l'Església"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "La raó i l'observació són les eines bàsiques del mètode científic que utilitzaven els il·lustrats.",
+          "fuente": "2. La Il·lustració > La Il·lustració va néixer del racionalisme"
+        },
+        {
+          "texto": "Qui van dirigir l'Enciclopèdia?",
+          "opciones": [
+            "Voltaire i Rousseau",
+            "Locke i Montesquieu",
+            "Diderot i D'Alembert",
+            "James Cook i Edward Jenner"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "L'Enciclopèdia va ser dirigida per Diderot i D'Alembert.",
+          "fuente": "2. La Il·lustració > L'Enciclopèdia"
+        },
+        {
+          "texto": "Qui va proposar la divisió de poders?",
+          "opciones": [
+            "Montesquieu",
+            "Rousseau",
+            "Voltaire",
+            "Locke"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Montesquieu va proposar separar el poder legislatiu, l'executiu i el judicial.",
+          "fuente": "2. La Il·lustració > Quina nova societat proposaven els il·lustrats?"
+        },
+        {
+          "texto": "Què és la sobirania nacional segons Rousseau?",
+          "opciones": [
+            "El poder ve directament de Déu",
+            "El poder pertany a la noblesa",
+            "El poder és d'un parlament hereditari",
+            "El poder emana dels ciutadans i s'expressa amb el vot"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Rousseau va plantejar que el poder emana del consentiment dels ciutadans, expressat mitjançant el vot.",
+          "fuente": "2. La Il·lustració > Quina nova societat proposaven els il·lustrats?"
+        },
+        {
+          "texto": "Segons Locke, quins drets naturals ha de respectar l'Estat per ser legítim?",
+          "opciones": [
+            "La vida, la llibertat i la propietat",
+            "El vot, la premsa i la reunió",
+            "L'educació, la feina i la sanitat",
+            "La religió, la família i l'herència"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Per a Locke, l'Estat només és legítim si respecta els drets naturals a la vida, la llibertat i la propietat.",
+          "fuente": "2. La Il·lustració > Quina nova societat proposaven els il·lustrats?"
+        },
+        {
+          "texto": "Què defensava la fisiocràcia?",
+          "opciones": [
+            "Que la riquesa venia dels metalls preciosos",
+            "Que l'Estat havia de controlar tots els preus",
+            "Que el comerç colonial era l'única font de riquesa",
+            "Que l'agricultura era la principal font de riquesa"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "La fisiocràcia considerava l'agricultura la principal riquesa d'un país i demanava que l'Estat no intervingués en l'economia.",
+          "fuente": "2. La Il·lustració > Quina nova societat proposaven els il·lustrats?"
+        },
+        {
+          "texto": "Qui organitzaven els salons il·lustrats?",
+          "opciones": [
+            "Els reis absoluts",
+            "Dones de l'alta societat",
+            "Els bisbes",
+            "Els gremis d'artesans"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Dones com Madame de Geoffrin o Claudine de Tencin organitzaven vetllades on es debatien les noves idees.",
+          "fuente": "2. La Il·lustració > Dones i salons il·lustrats"
+        },
+        {
+          "texto": "Quina afirmació sobre l'Enciclopèdia és correcta?",
+          "opciones": [
+            "La va escriure només Voltaire",
+            "Es va publicar entre 1751 i 1772 en 35 volums",
+            "La va promoure el rei de França",
+            "Es va escriure en llatí per als clergues"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Es va publicar entre 1751 i 1772, en 35 volums, amb uns 140 especialistes; la monarquia i l'Església la van censurar.",
+          "fuente": "2. La Il·lustració > L'Enciclopèdia"
+        },
+        {
+          "texto": "Què diferencia el liberalisme econòmic del mercantilisme?",
+          "opciones": [
+            "El liberalisme defensa la llibertat econòmica i la propietat privada; el mercantilisme, que la riquesa ve del comerç i dels metalls preciosos",
+            "Són el mateix sistema amb noms diferents",
+            "El mercantilisme defensa la lliure iniciativa i el liberalisme, acumular or",
+            "El liberalisme vol que l'Estat controli l'economia i el mercantilisme, no"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Els il·lustrats es van oposar al mercantilisme i van defensar la lliure iniciativa, la propietat privada i la llibertat econòmica.",
+          "fuente": "2. La Il·lustració > Quina nova societat proposaven els il·lustrats?"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/illustracio.jpg",
+        "titulo": "Lectura al saló de Madame Geoffrin",
+        "autor": "Anicet Charles Gabriel Lemonnier",
+        "anio": "1812",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Anicet-Charles-Gabriel_Lemonnier_-_In_the_Salon_of_Madame_Geoffrin_in_1755_-_WGA12652.jpg"
+      },
+      "epoca": "Segle XVIII"
+    },
+    {
+      "id": "alternatives-absolutisme",
+      "titulo": "Absolutisme, despotisme i parlamentarisme",
+      "resumen": "Monarquia absoluta, reformes des de dalt i la revolució americana",
+      "preguntas": [
+        {
+          "texto": "D'on provenia l'autoritat del rei en una monarquia absoluta?",
+          "opciones": [
+            "Del poble",
+            "De Déu",
+            "Del parlament",
+            "De l'exèrcit"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "La monarquia absoluta era de dret diví: l'autoritat del rei venia directament de Déu.",
+          "fuente": "3. Alternativa a la monarquia absoluta > Els reis tenien un poder absolut"
+        },
+        {
+          "texto": "Quin rei va ser el prototip de monarca absolut?",
+          "opciones": [
+            "Carles III d'Espanya",
+            "Frederic II de Prússia",
+            "Lluís XIV de França, el Rei Sol",
+            "George Washington"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Lluís XIV (1643-1715), conegut com el Rei Sol, és el model de monarca absolut.",
+          "fuente": "3. Alternativa a la monarquia absoluta > Els reis tenien un poder absolut"
+        },
+        {
+          "texto": "Quin era el lema del despotisme il·lustrat?",
+          "opciones": [
+            "\"Tot per al poble, però sense el poble\"",
+            "\"Llibertat, igualtat i fraternitat\"",
+            "\"Un rei, una llei\"",
+            "\"El poder emana del poble\""
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Els reis il·lustrats feien reformes pensant en el poble, però sense deixar-lo participar en el poder.",
+          "fuente": "3. Alternativa a la monarquia absoluta > El Despotisme Il·lustrat"
+        },
+        {
+          "texto": "Quan es va proclamar la Declaració d'Independència dels Estats Units?",
+          "opciones": [
+            "El 14 de juliol de 1789",
+            "El 4 de juliol de 1776",
+            "L'any 1783",
+            "L'any 1787"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Els colons van declarar la independència el 4 de juliol de 1776 (Independence Day).",
+          "fuente": "3. Alternativa a la monarquia absoluta > La independència dels Estats Units"
+        },
+        {
+          "texto": "Què garantia l'habeas corpus anglès (1679)?",
+          "opciones": [
+            "El dret de vot de les dones",
+            "El poder absolut del rei",
+            "Les llibertats individuals",
+            "Una religió oficial"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "L'habeas corpus garantia les llibertats individuals a Anglaterra.",
+          "fuente": "3. Alternativa a la monarquia absoluta > Ja existien règims parlamentaris"
+        },
+        {
+          "texto": "Quina va ser la primera constitució liberal escrita?",
+          "opciones": [
+            "La francesa de 1791",
+            "La Bill of Rights de 1689",
+            "La Constitució jacobina de 1793",
+            "La dels Estats Units de 1787"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "La Constitució dels EUA (1787), amb la seva Declaració de Drets, va ser la primera constitució liberal escrita.",
+          "fuente": "3. Alternativa a la monarquia absoluta > La independència dels Estats Units"
+        },
+        {
+          "texto": "Per què es van enfrontar les tretze colònies amb la Gran Bretanya?",
+          "opciones": [
+            "Pel monopoli comercial, els impostos i la manca de representació al Parlament britànic",
+            "Per una invasió espanyola",
+            "Perquè la Gran Bretanya va prohibir l'esclavitud",
+            "Per la mort del rei britànic"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Les tensions (com el Motí del te de Boston, 1773) venien del monopoli comercial, els impostos i la manca de representació.",
+          "fuente": "3. Alternativa a la monarquia absoluta > La independència dels Estats Units"
+        },
+        {
+          "texto": "Què tenien en comú el despotisme il·lustrat i l'absolutisme?",
+          "opciones": [
+            "Tots dos tenien un parlament escollit",
+            "Tots dos acceptaven la sobirania nacional",
+            "Tots dos abolien els privilegis socials",
+            "Cap dels dos renunciava al poder absolut del rei"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Els dèspotes il·lustrats van fer reformes, però sense qüestionar el seu poder absolut ni els privilegis socials.",
+          "fuente": "3. Alternativa a la monarquia absoluta > El Despotisme Il·lustrat"
+        },
+        {
+          "texto": "Qui podia votar segons la Constitució dels Estats Units?",
+          "opciones": [
+            "Tots els homes adults",
+            "Els propietaris blancs més rics",
+            "Tots els ciutadans, inclosos dones i esclaus",
+            "Només els membres del Congrés"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Només votaven els propietaris blancs rics; les dones, els petits propietaris, els no propietaris i la població negra i índia no votaven.",
+          "fuente": "3. Alternativa a la monarquia absoluta > La independència dels Estats Units"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/alternatives-absolutisme.jpg",
+        "titulo": "Retrat de Lluís XIV",
+        "autor": "Hyacinthe Rigaud",
+        "anio": "1701",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Rigaud_Louis_XIV_1701.jpg"
+      },
+      "epoca": "1679 — 1787"
+    },
+    {
+      "id": "borbons",
+      "titulo": "Els Borbons al tron espanyol",
+      "resumen": "Guerra de Successió, Utrecht, Nova Planta i Carles III",
+      "preguntas": [
+        {
+          "texto": "Per què va començar la Guerra de Successió?",
+          "opciones": [
+            "Perquè Carles II va morir sense descendència",
+            "Per una invasió francesa",
+            "Per una revolta pagesa",
+            "Per la independència dels EUA"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El 1700 Carles II va morir sense fills i es van enfrontar dos candidats al tron: Felip de Borbó i Carles d'Habsburg.",
+          "fuente": "4. Els Borbons > La Guerra de Successió"
+        },
+        {
+          "texto": "Qui va ser el primer rei Borbó d'Espanya?",
+          "opciones": [
+            "Carles III",
+            "Felip V",
+            "Ferran VI",
+            "Carles d'Habsburg"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Felip de Borbó, net de Lluís XIV, va regnar com a Felip V (1700-1746).",
+          "fuente": "4. Els Borbons > La Guerra de Successió"
+        },
+        {
+          "texto": "Quins territoris va obtenir la Gran Bretanya amb el Tractat d'Utrecht?",
+          "opciones": [
+            "Nàpols i Sicília",
+            "Flandes i Luxemburg",
+            "Sardenya i el Milanesat",
+            "Gibraltar i Menorca"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "La Gran Bretanya va obtenir Gibraltar i Menorca, dos enclavaments d'interès geoestratègic.",
+          "fuente": "4. Els Borbons > La Guerra de Successió"
+        },
+        {
+          "texto": "A quin candidat va donar suport la majoria de la Corona d'Aragó?",
+          "opciones": [
+            "A Felip de Borbó",
+            "A Carles d'Habsburg",
+            "A Lluís XIV",
+            "A Carles II"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "La Corona d'Aragó temia perdre els seus furs i institucions, i va donar suport a l'arxiduc Carles; Castella, a Felip V.",
+          "fuente": "4. Els Borbons > La Guerra de Successió"
+        },
+        {
+          "texto": "Què van fer els Decrets de Nova Planta?",
+          "opciones": [
+            "Suprimir les lleis i institucions pròpies de la Corona d'Aragó",
+            "Crear noves Corts a Catalunya",
+            "Abolir l'esclavitud a Amèrica",
+            "Repartir terres als pagesos"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Entre 1701 i 1716 van suprimir les lleis i institucions d'Aragó, València, Catalunya i Mallorca.",
+          "fuente": "4. Els Borbons > L'entronització dels Borbons i de l'absolutisme"
+        },
+        {
+          "texto": "Quin rei és el màxim exponent del despotisme il·lustrat a Espanya?",
+          "opciones": [
+            "Felip V",
+            "Ferran VI",
+            "Carles III",
+            "Carles IV"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Carles III (1759-1788) va impulsar un programa reformista sense renunciar al seu poder.",
+          "fuente": "4. Els Borbons > Després es van emprendre reformes"
+        },
+        {
+          "texto": "Què va ser el motí de Squillace (1766)?",
+          "opciones": [
+            "Una batalla de la Guerra de Successió",
+            "Un tractat amb França",
+            "Una expedició a Amèrica",
+            "Una revolta contra la pujada del preu del blat i dels impostos"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Va ser un motí popular contra l'augment del preu del blat i dels impostos.",
+          "fuente": "4. Els Borbons > Després es van emprendre reformes"
+        },
+        {
+          "texto": "Quina d'aquestes mesures NO la va prendre Carles III?",
+          "opciones": [
+            "L'expulsió dels jesuïtes",
+            "El comerç lliure amb Amèrica",
+            "Els Decrets de Nova Planta",
+            "La colonització de Sierra Morena"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Els Decrets de Nova Planta són de Felip V. Les altres tres són reformes del regnat de Carles III.",
+          "fuente": "4. Els Borbons > Després es van emprendre reformes"
+        },
+        {
+          "texto": "Per què els aliats internacionals van abandonar Carles d'Habsburg?",
+          "opciones": [
+            "Perquè va ser nomenat emperador d'Alemanya i temien el poder dels Àustries",
+            "Perquè va perdre la batalla d'Almansa",
+            "Perquè es va aliar amb França",
+            "Perquè Catalunya es va rendir"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "En ser nomenat emperador, els seus aliats van témer la puixança dels Àustries: volien l'equilibri europeu.",
+          "fuente": "4. Els Borbons > La Guerra de Successió"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/borbons.jpg",
+        "titulo": "Retrat de Felip V",
+        "autor": "Hyacinthe Rigaud",
+        "anio": "1700-1704",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Hyacinthe_Rigaud_-_Philippe_V,_roi_d%27Espagne_(1683-1746)_-_Google_Art_Project.jpg"
+      },
+      "epoca": "1700 — 1788"
+    },
+    {
+      "id": "any-1789",
+      "titulo": "1789, l'any del Tercer Estat",
+      "resumen": "Estats Generals, Assemblea Nacional i presa de la Bastilla",
+      "preguntas": [
+        {
+          "texto": "Quan va ser la presa de la Bastilla?",
+          "opciones": [
+            "El 5 de maig de 1789",
+            "El 14 de juliol de 1789",
+            "El 4 d'agost de 1789",
+            "El 20 de setembre de 1792"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "El poble de París va assaltar la Bastilla, símbol de l'absolutisme, el 14 de juliol de 1789.",
+          "fuente": "5. La Revolució francesa > I va acabar en revolució"
+        },
+        {
+          "texto": "Quin percentatge de la població era el Tercer Estat?",
+          "opciones": [
+            "El 50%",
+            "El 75%",
+            "El 95%",
+            "El 5%"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El Tercer Estat era el 95% de la població; els privilegiats només eren el 5%.",
+          "fuente": "5. La Revolució francesa > El malestar de la majoria de la població"
+        },
+        {
+          "texto": "Quin rei va convocar els Estats Generals el 1789?",
+          "opciones": [
+            "Lluís XIV",
+            "Lluís XVI",
+            "Lluís XVIII",
+            "Carles X"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Lluís XVI els va convocar el 5 de maig de 1789.",
+          "fuente": "5. La Revolució francesa > La reivindicació política"
+        },
+        {
+          "texto": "Per què es van convocar els Estats Generals?",
+          "opciones": [
+            "Per abolir la monarquia",
+            "Per declarar la guerra als EUA",
+            "Per escollir un successor al tron",
+            "Perquè l'Estat no podia pagar els deutes i calia que els privilegiats paguessin impostos"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Era l'únic organisme que podia aprovar una reforma fiscal, i el rei necessitava diners.",
+          "fuente": "5. La Revolució francesa > La reivindicació política"
+        },
+        {
+          "texto": "Què eren els quaderns de queixes?",
+          "opciones": [
+            "Documents amb les queixes i peticions de cada poble per presentar al rei",
+            "Llibres de comptes de l'Estat",
+            "Diaris dels jacobins",
+            "Les lleis de la Constitució"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Recollien les queixes dels estaments de cada poble per presentar-les al rei a l'obertura dels Estats Generals.",
+          "fuente": "5. La Revolució francesa > La reivindicació política"
+        },
+        {
+          "texto": "Per què el Tercer Estat perdia sempre les votacions als Estats Generals?",
+          "opciones": [
+            "Perquè no tenia dret a vot",
+            "Perquè es votava per estament i els privilegiats sumaven dos vots contra un",
+            "Perquè el rei vetava les seves propostes",
+            "Perquè tenia menys diputats"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Amb el vot per estament, noblesa i clergat sempre imposaven la seva voluntat. Per això el Tercer Estat volia votar per persona.",
+          "fuente": "5. La Revolució francesa > I va acabar en revolució"
+        },
+        {
+          "texto": "Què es van comprometre a fer els diputats al Jurament del Jeu de Paume?",
+          "opciones": [
+            "Jurar fidelitat al rei",
+            "No separar-se fins aprovar una Constitució",
+            "Declarar la guerra a Àustria",
+            "Tancar totes les esglésies"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Reunits en una sala de Versalles, es van comprometre a mantenir-se reunits fins a aprovar una Constitució.",
+          "fuente": "5. La Revolució francesa > I va acabar en revolució"
+        },
+        {
+          "texto": "Quina etapa de la Revolució va impulsar la burgesia radical amb el suport de les classes populars?",
+          "opciones": [
+            "La monarquia constitucional",
+            "La república conservadora",
+            "El Consolat",
+            "La república social"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "La república social (1792-1794) va democratitzar el sistema i la societat amb lleis socials.",
+          "fuente": "5. La Revolució francesa > Les etapes de la Revolució francesa"
+        },
+        {
+          "texto": "Quin tipus de sufragi es va establir a la república social (1792-1794)?",
+          "opciones": [
+            "Censatari",
+            "Només per a nobles",
+            "Universal per a homes i dones",
+            "Universal masculí"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Es va democratitzar el sistema polític amb el sufragi universal masculí. Les dones continuaven sense votar.",
+          "fuente": "5. La Revolució francesa > Les etapes de la Revolució francesa"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/any-1789.jpg",
+        "titulo": "El Jurament del Jeu de Paume",
+        "autor": "Jacques-Louis David",
+        "anio": "1790-1792",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Jacques_Louis_David_-_Le_serment_du_Jeu_de_Paume_-_Google_Art_Project.jpg"
+      },
+      "epoca": "1789"
+    },
+    {
+      "id": "monarquia-constitucional",
+      "titulo": "La monarquia constitucional",
+      "resumen": "Fi dels privilegis, Declaració de Drets i Constitució de 1791",
+      "preguntas": [
+        {
+          "texto": "Quin decret va abolir els privilegis i els drets senyorials?",
+          "opciones": [
+            "El decret del 4 d'agost de 1789",
+            "El del 14 de juliol de 1789",
+            "El del 21 de gener de 1793",
+            "El del 5 de maig de 1789"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El decret del 4 d'agost de 1789 va posar fi als privilegis i als drets senyorials de noblesa i clero.",
+          "fuente": "6. La monarquia constitucional > L'Assemblea va impulsar mesures revolucionàries"
+        },
+        {
+          "texto": "Quan es va aprovar la Declaració de Drets de l'Home i del Ciutadà?",
+          "opciones": [
+            "El 4 d'agost de 1789",
+            "El 14 de juliol de 1789",
+            "El 26 d'agost de 1789",
+            "El 20 de setembre de 1792"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Es va aprovar el 26 d'agost de 1789 i definia els drets dels nous ciutadans.",
+          "fuente": "6. La monarquia constitucional > L'Assemblea va impulsar mesures revolucionàries"
+        },
+        {
+          "texto": "On va ser detingut Lluís XVI quan intentava fugir de França?",
+          "opciones": [
+            "A Versalles",
+            "A Varennes",
+            "A Valmy",
+            "A Waterloo"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "El juny de 1791 va ser reconegut i detingut a Varennes, i obligat a tornar a París.",
+          "fuente": "6. La monarquia constitucional > Les forces contrarevolucionàries"
+        },
+        {
+          "texto": "Quin tipus de sufragi va establir la Constitució de 1791?",
+          "opciones": [
+            "Sufragi censatari",
+            "Sufragi universal masculí",
+            "Sufragi universal",
+            "No hi havia eleccions"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Només votaven els homes majors de 25 anys amb un cert nivell de riquesa.",
+          "fuente": "6. La monarquia constitucional > La primera Constitució liberal (1791)"
+        },
+        {
+          "texto": "Quin poder conservava el rei amb la Constitució de 1791?",
+          "opciones": [
+            "Tots els poders",
+            "El poder judicial",
+            "Cap poder",
+            "El dret de vetar les lleis"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Hi havia separació de poders, però el rei mantenia la prerrogativa del dret de vet.",
+          "fuente": "6. La monarquia constitucional > La primera Constitució liberal (1791)"
+        },
+        {
+          "texto": "A qui excloïa la Declaració de Drets de l'Home i del Ciutadà?",
+          "opciones": [
+            "Als burgesos",
+            "Als pagesos",
+            "A les dones i els esclaus",
+            "Als soldats"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Definia els nous ciutadans, però excloïa les dones i els esclaus.",
+          "fuente": "6. La monarquia constitucional > L'Assemblea va impulsar mesures revolucionàries"
+        },
+        {
+          "texto": "Com s'anomenaven els republicans moderats?",
+          "opciones": [
+            "Jacobins",
+            "Girondins",
+            "Realistes",
+            "Constitucionalistes"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Dins dels republicans, els girondins eren els moderats i els jacobins, els radicals.",
+          "fuente": "6. La monarquia constitucional > Les diferents opcions polítiques"
+        },
+        {
+          "texto": "Què va establir la Constitució civil del clergat?",
+          "opciones": [
+            "El catolicisme com a religió oficial i obligatòria",
+            "El doble de delme per a l'Església",
+            "Nous privilegis per al clergat",
+            "Que l'Església jurés la Constitució; els seus béns es van expropiar i vendre"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "L'Església va haver de jurar la Constitució i els seus béns es van vendre per aconseguir diners per a l'Estat.",
+          "fuente": "6. La monarquia constitucional > La primera Constitució liberal (1791)"
+        },
+        {
+          "texto": "Per què Lluís XVI va passar a ser considerat un traïdor a la pàtria?",
+          "opciones": [
+            "Perquè va intentar fugir per encapçalar la contrarevolució",
+            "Perquè va signar la Constitució",
+            "Perquè va convocar els Estats Generals",
+            "Perquè va crear la Guàrdia Nacional"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Amb la fugida de Varennes (1791) volia encapçalar la contrarevolució amb el suport de les monarquies absolutistes.",
+          "fuente": "6. La monarquia constitucional > Les forces contrarevolucionàries"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/monarquia-constitucional.jpg",
+        "titulo": "Declaració de Drets de l'Home i del Ciutadà",
+        "autor": "Jean-Jacques-François Le Barbier",
+        "anio": "1789",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Jean-Jacques_Le_Barbier_-_D%C3%A9claration_des_droits_de_l%27homme_et_du_citoyen_-_P708_-_Mus%C3%A9e_Carnavalet.jpg"
+      },
+      "epoca": "1789 — 1792"
+    },
+    {
+      "id": "republica",
+      "titulo": "La república i el Terror",
+      "resumen": "Sans-culottes, Convenció, jacobins i Directori",
+      "preguntas": [
+        {
+          "texto": "Com s'anomenaven les classes populars de París?",
+          "opciones": [
+            "Girondins",
+            "Sans-culottes",
+            "Termidorians",
+            "Realistes"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Els sans-culottes eren els grups més humils; el nom ve de no portar culottes, els pantalons de les classes altes.",
+          "fuente": "7. La república > La proclamació de la república"
+        },
+        {
+          "texto": "Qui tenia el poder al Comitè de Salvació Pública?",
+          "opciones": [
+            "Napoleó",
+            "Lluís XVI",
+            "Voltaire",
+            "Robespierre"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El govern dictatorial jacobí va quedar en mans del Comitè de Salvació Pública, amb el poder en la persona de Robespierre.",
+          "fuente": "7. La república > La instauració del Terror"
+        },
+        {
+          "texto": "Quan va ser executat Lluís XVI?",
+          "opciones": [
+            "El 21 de gener de 1793",
+            "El 14 de juliol de 1789",
+            "El 4 d'agost de 1789",
+            "L'any 1815"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Va ser guillotinat el 21 de gener de 1793; Maria Antonieta, el 16 d'octubre.",
+          "fuente": "7. La república > L'execució de Lluís XVI i Maria Antonieta"
+        },
+        {
+          "texto": "Què simbolitzava el capell frigi dels sans-culottes?",
+          "opciones": [
+            "El poble en armes",
+            "La llibertat",
+            "La monarquia",
+            "L'Església"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El capell frigi simbolitzava la llibertat; la pica, el poble en armes; l'escarapel·la tricolor, la França revolucionària.",
+          "fuente": "7. La república > La proclamació de la república"
+        },
+        {
+          "texto": "Què va fer la Convenció Nacional el setembre de 1792?",
+          "opciones": [
+            "Proclamar la república",
+            "Coronar Napoleó",
+            "Restaurar l'absolutisme",
+            "Aprovar el Codi Civil"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La Convenció, escollida per sufragi universal masculí, va proclamar la república i va abolir la monarquia.",
+          "fuente": "7. La república > La proclamació de la república"
+        },
+        {
+          "texto": "Què era la lleva en massa?",
+          "opciones": [
+            "Un nou impost",
+            "Una festa revolucionària",
+            "La incorporació obligatòria dels ciutadans a l'exèrcit",
+            "El repartiment de terres"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Els jacobins van crear un exèrcit basat en la incorporació obligatòria dels ciutadans, que va frenar l'amenaça exterior.",
+          "fuente": "7. La república > La instauració del Terror"
+        },
+        {
+          "texto": "Quina novetat tenia la Constitució de 1793?",
+          "opciones": [
+            "La defensa dels drets socials (feina, ensenyament, assistència pública)",
+            "El sufragi censatari",
+            "El dret de vet del rei",
+            "El dret diví dels reis"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La Constitució i la Declaració de Drets de 1793 defensaven els drets socials.",
+          "fuente": "7. La república > La instauració del Terror"
+        },
+        {
+          "texto": "Què va ser la reacció termidoriana?",
+          "opciones": [
+            "Una revolta dels sans-culottes",
+            "La coronació de Napoleó",
+            "Una invasió austríaca",
+            "Un cop d'estat dels republicans moderats (1794) contra els jacobins"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "La burgesia rebutjava les lleis socials i el Terror, i els republicans moderats van fer un cop d'estat el 1794.",
+          "fuente": "7. La república > El cop d'estat que va portar al Directori"
+        },
+        {
+          "texto": "Com era el Directori (1795)?",
+          "opciones": [
+            "Una dictadura d'una sola persona",
+            "Un govern de cinc membres que va reforçar el liberalisme econòmic",
+            "Un govern dels jacobins",
+            "Una monarquia absoluta"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "El Directori, format per cinc membres, va impulsar una societat burgesa, però va patir molta inestabilitat.",
+          "fuente": "7. La república > El cop d'estat que va portar al Directori"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/republica.jpg",
+        "titulo": "La jornada del 10 d'agost de 1792",
+        "autor": "Jacques Bertaux",
+        "anio": "1793",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Jacques_Bertaux_-_La_Journ%C3%A9e_du_10_ao%C3%BBt_(1792).jpg"
+      },
+      "epoca": "1792 — 1799"
+    },
+    {
+      "id": "napoleo",
+      "titulo": "Napoleó i la fi de la Revolució",
+      "resumen": "Consolat, Codi Civil, Imperi i Waterloo",
+      "preguntas": [
+        {
+          "texto": "Com es diu el cop d'estat amb què Napoleó va arribar al poder el 1799?",
+          "opciones": [
+            "Cop de Brumari",
+            "Reacció termidoriana",
+            "Assalt a les Tulleries",
+            "Fugida de Varennes"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El cop de Brumari (1799) va posar fi al Directori i a la Revolució.",
+          "fuente": "8. Com va acabar la Revolució? > Napoleó va agafar el poder"
+        },
+        {
+          "texto": "En quin any es va fer coronar emperador Napoleó?",
+          "opciones": [
+            "1799",
+            "1804",
+            "1812",
+            "1815"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "El 1804 Napoleó es va fer coronar emperador pel Papa.",
+          "fuente": "8. Com va acabar la Revolució? > Un imperi a la conquesta d'Europa"
+        },
+        {
+          "texto": "On va ser derrotat definitivament Napoleó?",
+          "opciones": [
+            "A Valmy",
+            "A Wagram",
+            "A Almansa",
+            "A Waterloo"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "Va ser derrotat a Waterloo (1815) i confinat a l'illa de Santa Helena.",
+          "fuente": "8. Com va acabar la Revolució? > Un imperi a la conquesta d'Europa"
+        },
+        {
+          "texto": "Qui va ser nomenat rei d'Espanya després de la invasió de 1808?",
+          "opciones": [
+            "Felip V",
+            "Carles IV",
+            "Josep Bonaparte",
+            "Lluís XVIII"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Josep Bonaparte, germà de Napoleó, va ser nomenat rei d'Espanya.",
+          "fuente": "8. Com va acabar la Revolució? > Un imperi a la conquesta d'Europa"
+        },
+        {
+          "texto": "Com era el Consolat (1799-1804)?",
+          "opciones": [
+            "Una Constitució sense declaració de drets, amb un executiu molt fort i censura",
+            "Un règim amb sufragi universal",
+            "Una divisió de poders equilibrada",
+            "Un govern de cinc membres"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La nova Constitució no tenia declaració de drets, l'executiu predominava, les llibertats eren limitades i hi havia censura.",
+          "fuente": "8. Com va acabar la Revolució? > Un govern personalista i autoritari"
+        },
+        {
+          "texto": "Què eren els liceus creats per Napoleó?",
+          "opciones": [
+            "Tribunals militars",
+            "Escoles públiques per formar funcionaris",
+            "Presons per a opositors",
+            "Esglésies laiques"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Es van fundar els liceus per educar els funcionaris i crear una elit professional preparada.",
+          "fuente": "8. Com va acabar la Revolució? > Una nova França"
+        },
+        {
+          "texto": "Què confirmaven els codis de Napoleó (Civil, de Comerç i Penal)?",
+          "opciones": [
+            "La igualtat davant la llei i el dret de propietat",
+            "La igualtat total entre homes i dones",
+            "Els drets socials dels treballadors",
+            "Els privilegis de la noblesa"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Confirmaven la igualtat davant la llei, el dret de propietat, la llibertat individual i l'accés lliure als càrrecs públics.",
+          "fuente": "8. Com va acabar la Revolució? > Una nova França"
+        },
+        {
+          "texto": "Com tractava el Codi Civil napoleònic les dones?",
+          "opciones": [
+            "Els reconeixia els mateixos drets que als homes",
+            "Els donava el dret de vot",
+            "Restringia al mínim els seus drets: havien d'obeir el marit",
+            "Les deixava administrar els béns de la família"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "La dona casada havia d'obeir el marit, necessitava la seva autorització per treballar i el marit administrava els béns.",
+          "fuente": "8. Com va acabar la Revolució? > Una nova França"
+        },
+        {
+          "texto": "Per què va començar el declivi de l'Imperi napoleònic després del 1812?",
+          "opciones": [
+            "Per la impossibilitat d'ocupar Rússia, les dificultats a Espanya i una coalició encapçalada per la Gran Bretanya",
+            "Per una revolució jacobina a París",
+            "Perquè Napoleó va abdicar voluntàriament",
+            "Per un pacte d'amistat amb Àustria"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Rússia, Espanya i la coalició europea encapçalada per la Gran Bretanya, que va arribar a ocupar París el 1814.",
+          "fuente": "8. Com va acabar la Revolució? > Un imperi a la conquesta d'Europa"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/napoleo.jpg",
+        "titulo": "Bonaparte travessant el Gran Sant Bernat",
+        "autor": "Jacques-Louis David",
+        "anio": "1802",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Jacques_Louis_David_-_Bonaparte_franchissant_le_Grand_Saint-Bernard,_20_mai_1800_-_Google_Art_ProjectFXD.jpg"
+      },
+      "epoca": "1799 — 1815"
+    },
+    {
+      "id": "herencia",
+      "titulo": "L'herència de la Revolució",
+      "resumen": "Ciutadania, drets de les dones, democràcia i Estat",
+      "preguntas": [
+        {
+          "texto": "Qui va redactar la Declaració de Drets de la Dona i de la Ciutadana (1791)?",
+          "opciones": [
+            "Claire Lacombe",
+            "Olympe de Gouges",
+            "Maria Antonieta",
+            "Madame de Geoffrin"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Olympe de Gouges, escriptora i militant feminista, la va redactar el 1791. Va ser guillotinada el 1793.",
+          "fuente": "9. Les bases del món contemporani > La ciutadania i la sobirania popular"
+        },
+        {
+          "texto": "Quin lema sintetitza els principis de la Revolució?",
+          "opciones": [
+            "Llibertat, igualtat i fraternitat",
+            "Tot per al poble, però sense el poble",
+            "Déu, pàtria i rei",
+            "Ordre i progrés"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "\"Llibertat, igualtat i fraternitat\" resumeix els principis bàsics de la Revolució.",
+          "fuente": "9. Les bases del món contemporani > La importància de l'Estat"
+        },
+        {
+          "texto": "Amb la Revolució, les persones van passar de ser...",
+          "opciones": [
+            "ciutadans a súbdits",
+            "pagesos a nobles",
+            "burgesos a privilegiats",
+            "súbdits a ciutadans"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "Van passar de súbdits sotmesos al rei a ciutadans amb drets i deures, iguals davant la llei.",
+          "fuente": "9. Les bases del món contemporani > La ciutadania i la sobirania popular"
+        },
+        {
+          "texto": "Què va fundar Claire Lacombe el 1791?",
+          "opciones": [
+            "L'Enciclopèdia",
+            "El club dels jacobins",
+            "La Societat de Republicanes Revolucionàries",
+            "La Guàrdia Nacional"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Claire Lacombe, actriu francesa, va fundar aquest club patriòtic de dones.",
+          "fuente": "9. Les bases del món contemporani > La ciutadania i la sobirania popular"
+        },
+        {
+          "texto": "Què es va instaurar el 1790 per facilitar el comerç a tota França?",
+          "opciones": [
+            "Un sistema únic de pesos i mesures",
+            "Una moneda europea",
+            "Noves duanes interiors",
+            "Els gremis"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Es va crear un sistema únic de pesos i mesures (litre, gram, metre) i es van eliminar les duanes interiors.",
+          "fuente": "9. Les bases del món contemporani > La importància de l'Estat"
+        },
+        {
+          "texto": "Quin és l'antecedent dels partits polítics actuals?",
+          "opciones": [
+            "Els gremis",
+            "Els clubs creats durant la Revolució",
+            "Els salons il·lustrats",
+            "Els Estats Generals"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Els ciutadans amb idees semblants s'agrupaven en clubs per participar en la política i influir en l'Assemblea.",
+          "fuente": "9. Les bases del món contemporani > Els nous sistemes polítics"
+        },
+        {
+          "texto": "Què va comportar la separació entre l'Església i l'Estat?",
+          "opciones": [
+            "Un Estat laic, llibertat de culte i ensenyament públic",
+            "Una religió oficial obligatòria",
+            "Que l'Església controlés tota l'educació",
+            "La prohibició de totes les religions"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "L'Estat va deixar de tenir religió oficial i l'educació va passar a ser un dret garantit per l'Estat.",
+          "fuente": "9. Les bases del món contemporani > La importància de l'Estat"
+        },
+        {
+          "texto": "Quins sistemes de l'època revolucionària són precedents dels règims contraris a la democràcia?",
+          "opciones": [
+            "La monarquia parlamentària i la república",
+            "La Convenció i l'Assemblea Nacional",
+            "Els clubs i els salons",
+            "La dictadura dels jacobins i el sistema autoritari de Napoleó"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Els jacobins van concentrar tot el poder, i Napoleó va limitar la divisió de poders amb un gran protagonisme del cap de l'Estat.",
+          "fuente": "9. Les bases del món contemporani > Els nous sistemes polítics"
+        },
+        {
+          "texto": "Per què el sufragi censatari era discriminatori?",
+          "opciones": [
+            "Perquè només votaven els nobles",
+            "Perquè discriminava per religió",
+            "Perquè discriminava els homes per la seva riquesa i les dones pel gènere",
+            "Perquè només votaven els majors de 60 anys"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Restringia el vot als ciutadans propietaris: excloïa els homes sense riquesa i totes les dones.",
+          "fuente": "9. Les bases del món contemporani > La ciutadania i la sobirania popular"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/herencia.jpg",
+        "titulo": "Retrat d'Olympe de Gouges",
+        "autor": "Alexander Kucharsky",
+        "anio": "finals del segle XVIII",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Marie-Olympe-de-Gouges.jpg"
+      },
+      "epoca": "1789 — 1799"
+    },
+    {
+      "id": "sistemes-liberals",
+      "titulo": "La consolidació dels sistemes liberals",
+      "resumen": "Congrés de Viena, Restauració i revolucions de 1830 i 1848",
+      "preguntas": [
+        {
+          "texto": "Quin congrés va reorganitzar Europa el 1815?",
+          "opciones": [
+            "El Tractat d'Utrecht",
+            "El Congrés de Viena",
+            "Els Estats Generals",
+            "La Convenció Nacional"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Al Congrés de Viena, les potències que van vèncer Napoleó van reorganitzar Europa rebutjant la Revolució.",
+          "fuente": "10. Els sistemes liberals > Del rebuig a la Revolució"
+        },
+        {
+          "texto": "Com s'anomenen les revolucions de 1848?",
+          "opciones": [
+            "La Primavera dels Pobles",
+            "La Restauració",
+            "El Terror",
+            "El despotisme il·lustrat"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El moviment iniciat a París el 1848 es va estendre per Europa i es coneix com la Primavera dels Pobles.",
+          "fuente": "10. Els sistemes liberals > Les revolucions liberals del 1830 i el 1848"
+        },
+        {
+          "texto": "Qui va pintar \"La llibertat guiant el poble\" (1830)?",
+          "opciones": [
+            "Jacques-Louis David",
+            "Denis Diderot",
+            "Eugène Delacroix",
+            "Voltaire"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El quadre d'Eugène Delacroix mostra la unió de diferents sectors socials a les jornades de juliol del 1830 a París.",
+          "fuente": "10. Els sistemes liberals > Les revolucions liberals del 1830 i el 1848"
+        },
+        {
+          "texto": "Què era la Santa Aliança?",
+          "opciones": [
+            "Un pacte de monarques absoluts per intervenir contra les revolucions liberals",
+            "Una aliança de països liberals",
+            "Un tractat de pau amb Napoleó",
+            "Un partit polític francès"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Era un tractat d'ajuda mútua que permetia intervenir en qualsevol país on l'ordre absolutista fos desafiat.",
+          "fuente": "10. Els sistemes liberals > La remodelació d'Europa"
+        },
+        {
+          "texto": "Quin país va mantenir el règim parlamentari durant la Restauració?",
+          "opciones": [
+            "Rússia",
+            "Àustria",
+            "Prússia",
+            "El Regne Unit"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "El Regne Unit va ser una excepció perquè va mantenir el seu règim parlamentari.",
+          "fuente": "10. Els sistemes liberals > Del rebuig a la Revolució"
+        },
+        {
+          "texto": "Què va passar a França el 1830?",
+          "opciones": [
+            "Carles X va ser destronat i es va establir una monarquia constitucional amb sufragi censatari",
+            "Napoleó va tornar al poder",
+            "Es va proclamar la república social",
+            "Es va restaurar l'absolutisme"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La nova monarquia constitucional va suprimir els privilegis nobiliaris: era l'expressió del liberalisme moderat.",
+          "fuente": "10. Els sistemes liberals > Les revolucions liberals del 1830 i el 1848"
+        },
+        {
+          "texto": "Què era la \"Carta atorgada\" de Lluís XVIII?",
+          "opciones": [
+            "Una constitució democràtica",
+            "Un document que concedia llibertats molt restringides i dues cambres consultives",
+            "Una declaració d'independència",
+            "Un tractat de pau amb Rússia"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Lluís XVIII va fer unes concessions mínimes que diferenciaven el seu règim de l'absolutisme tradicional.",
+          "fuente": "10. Els sistemes liberals > Del rebuig a la Revolució"
+        },
+        {
+          "texto": "Quines dues característiques van tenir les revolucions de 1848?",
+          "opciones": [
+            "Absolutista i religiosa",
+            "Només econòmica",
+            "Contingut democràtic i nacionalista",
+            "Colonial i militar"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Demanaven democràcia (sobirania popular, sufragi universal masculí) i la independència dels pobles sotmesos als imperis.",
+          "fuente": "10. Els sistemes liberals > Les revolucions liberals del 1830 i el 1848"
+        },
+        {
+          "texto": "Quines demandes socials es van reclamar el 1848?",
+          "opciones": [
+            "El dret de vaga i la jornada laboral de 10 hores",
+            "Tornar a cobrar el delme",
+            "Restaurar els gremis",
+            "El sufragi censatari"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Les classes populars van incorporar demandes socials com el dret a la vaga i la jornada de 10 hores.",
+          "fuente": "10. Els sistemes liberals > Les revolucions liberals del 1830 i el 1848"
+        }
+      ],
+      "imagen": {
+        "archivo": "imagenes/sistemes-liberals.jpg",
+        "titulo": "La Llibertat guiant el poble",
+        "autor": "Eugène Delacroix",
+        "anio": "1830",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Eug%C3%A8ne_Delacroix_-_Le_28_Juillet._La_Libert%C3%A9_guidant_le_peuple.jpg"
+      },
+      "epoca": "1815 — 1848"
+    }
+  ]
+}

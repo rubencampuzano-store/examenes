@@ -1,0 +1,23 @@
+# Material original de cada tema (fotos o escaneos del libro): tiene derechos de autor, no se publica.
+# Solo afecta a la raíz de cada tema; las imágenes libres de imagenes/ sí se suben.
+examen/*/*.jpg
+examen/*/*.JPG
+examen/*/*.jpeg
+examen/*/*.JPEG
+examen/*/*.png
+examen/*/*.PNG
+examen/*/*.heic
+examen/*/*.HEIC
+examen/*/*.webp
+examen/*/*.pdf
+examen/*/*.PDF
+
+# Copias de versiones anteriores del juego
+examen/*/index_v*.html
+
+# Archivos intermedios que genera el skill al descargar imágenes y audio
+examen/*/imagenes/creditos.json
+examen/*/audio/*.credito.json
+
+# Ajustes locales de Claude Code (permisos de esta máquina)
+.claude/settings.local.json

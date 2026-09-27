@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minijuego</title>
+<style>
+/*__COMUN_CSS__*/
+  .mj-zona { display: grid; place-items: center; padding: 14px; overflow: auto; }
+  .rejilla {
+    width: min(620px, 100%, calc((100vh - 120px) * .75)); width: min(620px, 100%, calc((100dvh - 120px) * .75));
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1.6vw, 12px);
+    perspective: 1000px;
+  }
+  .carta { aspect-ratio: 3 / 4; position: relative; border-radius: var(--r); transform-style: preserve-3d; transition: transform .45s cubic-bezier(.3,.8,.3,1); cursor: pointer; }
+  .carta.abierta, .carta.hecha { transform: rotateY(180deg); }
+  .cara { position: absolute; inset: 0; border-radius: inherit; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; overflow: hidden; }
+  .dorso {
+    background: var(--shell-2); border: 1px solid color-mix(in srgb, var(--oro) 45%, transparent);
+    box-shadow: 0 10px 20px -12px rgba(0,0,0,.8);
+  }
+  .dorso::before { content: ""; position: absolute; inset: 6px; border: 1px solid color-mix(in srgb, var(--oro) 35%, transparent); border-radius: 3px; background-image: var(--patron); opacity: .6; }
+  .dorso svg { width: 58%; position: relative; opacity: .95; }
+  .frente {
+    transform: rotateY(180deg); background: var(--papel); color: var(--tinta);
+    padding: 8px 6px; text-align: center; align-content: center; gap: 4px;
+    font-weight: 700; font-size: clamp(.64rem, 2.3vw, .95rem); line-height: 1.15; hyphens: auto; overflow-wrap: anywhere;
+  }
+  .frente small { font-family: var(--f-mono); font-weight: 400; font-size: clamp(.5rem, 1.5vw, .62rem); letter-spacing: .12em; text-transform: uppercase; color: var(--acento); }
+  .frente.tipo-a { font-family: var(--f-display); font-size: clamp(.72rem, 2.6vw, 1.08rem); font-style: italic; }
+  .carta.hecha .frente { background: color-mix(in srgb, var(--oro) 35%, var(--papel)); box-shadow: 0 0 0 2px var(--oro) inset; }
+  .carta.hecha { animation: pulso .5s ease; }
+  @keyframes pulso { 50% { transform: rotateY(180deg) scale(1.06); } }
+  .carta.error .frente { box-shadow: 0 0 0 2px var(--fallo) inset; }
+</style>
+</head>
+<body>
+<main class="mj-zona" id="zona"><div class="rejilla" id="rejilla" role="grid"></div></main>
+<script>
+const DATOS = /*__DATOS__*/null;
+</script>
+<script>
+/*__COMUN_JS__*/
+</script>
+<script>
+(function () {
+  'use strict';
+  const J = MJ.JUEGO, T = MJ.T;
+  const $r = document.getElementById('rejilla');
+  let s = null, reloj = 0, ultimo = 0;
+  const dorso = MJ.sello((DATOS.tema.motivo && DATOS.tema.motivo.sello) || DATOS.meta.titulo, (DATOS.tema.motivo && DATOS.tema.motivo.monograma) || '?', 'var(--acento)');
+
+  function nuevo() {
+    const cartas = [];
+    J.parejas.forEach((p, i) => { cartas.push({ par: i, tipo: 'a', texto: p.a }); cartas.push({ par: i, tipo: 'b', texto: p.b }); });
+    s = { cartas: MJ.azar(cartas), abiertas: [], hechas: 0, movimientos: 0, combo: 0, mejorCombo: 0, puntos: 0, seg: 0, bloqueo: false, fin: false };
+    MJ.hud([{ id: 'parelles', etiqueta: T.parelles, valor: `0/${J.parejas.length}` }, { id: 'mov', etiqueta: T.moviments, valor: 0 }, { id: 'tiempo', etiqueta: T.temps, valor: '0:00' }]);
+    $r.innerHTML = s.cartas.map((c, i) => `
+      <button class="carta" data-i="${i}" role="gridcell" aria-label="${MJ.esc(T.cartaTapada)}" tabindex="${i === 0 ? 0 : -1}">
+        <span class="cara dorso">${dorso}</span>
+        <span class="cara frente tipo-${c.tipo}"><small>${MJ.esc(c.tipo === 'a' ? J.etiquetaA : J.etiquetaB)}</small>${MJ.esc(c.texto)}</span>
+      </button>`).join('');
+    $r.querySelectorAll('.carta').forEach((b) => b.addEventListener('click', () => girar(Number(b.dataset.i))));
+  }
+  const btn = (i) => $r.querySelector(`.carta[data-i="${i}"]`);
+  function girar(i) {
+    if (MJ.estado() !== 'jugando' || s.bloqueo) return;
+    const c = s.cartas[i], b = btn(i);
+    if (c.hecha || s.abiertas.includes(i)) return;
+    b.classList.add('abierta'); b.setAttribute('aria-label', c.texto);
+    MJ.sfx.tic();
+    s.abiertas.push(i);
+    if (s.abiertas.length < 2) return;
+    s.movimientos++; MJ.hudSet('mov', s.movimientos);
+    const [x, y] = s.abiertas, cx = s.cartas[x], cy = s.cartas[y];
+    if (cx.par === cy.par) {
+      cx.hecha = cy.hecha = true; s.hechas++; s.combo++; s.mejorCombo = Math.max(s.mejorCombo, s.combo);
+      s.puntos += 100 + (s.combo - 1) * 50;
+      [x, y].forEach((k) => { btn(k).classList.remove('abierta'); btn(k).classList.add('hecha'); });
+      s.abiertas = [];
+      MJ.sfx.acierto();
+      if (s.combo >= 2) MJ.flash(`${T.ratxa} ×${s.combo}`, true);
+      MJ.hudSet('parelles', `${s.hechas}/${J.parejas.length}`);
+      if (s.hechas === J.parejas.length) setTimeout(terminar, 500);
+    } else {
+      s.combo = 0; s.bloqueo = true;
+      [x, y].forEach((k) => btn(k).classList.add('error'));
+      MJ.sfx.fallo();
+      setTimeout(() => {
+        [x, y].forEach((k) => { const bb = btn(k); if (bb) { bb.classList.remove('abierta', 'error'); bb.setAttribute('aria-label', T.cartaTapada); } });
+        s.abiertas = []; s.bloqueo = false;
+      }, 850);
+    }
+  }
+  function terminar() {
+    if (s.fin) return;
+    s.fin = true; detener();
+    const bonusTiempo = Math.max(0, 600 - Math.round(s.seg) * 5);
+    const bonusMov = Math.max(0, (J.parejas.length * 2 - s.movimientos) * 40 + J.parejas.length * 40);
+    MJ.fin({
+      puntos: s.puntos + bonusTiempo + bonusMov, victoria: true, titulo: J.textoVictoria,
+      resumen: [[T.moviments, s.movimientos], [T.temps, fmtT(s.seg)], [T.millorRatxa, s.mejorCombo], [T.parelles, J.parejas.length]],
+    });
+  }
+  const fmtT = (sg) => `${Math.floor(sg / 60)}:${String(Math.floor(sg % 60)).padStart(2, '0')}`;
+  function tic() { const t = performance.now(); s.seg += (t - ultimo) / 1000; ultimo = t; MJ.hudSet('tiempo', fmtT(s.seg)); }
+  function arrancar() { detener(); ultimo = performance.now(); reloj = setInterval(tic, 250); }
+  function detener() { clearInterval(reloj); }
+
+  // Teclado: flechas para moverse por la rejilla (4 columnas)
+  $r.addEventListener('keydown', (e) => {
+    const b = e.target.closest('.carta'); if (!b) return;
+    const i = Number(b.dataset.i), n = s.cartas.length;
+    const mov = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 4, ArrowUp: -4 }[e.key];
+    if (mov) {
+      const j = Math.max(0, Math.min(n - 1, i + mov));
+      b.tabIndex = -1; const nb = btn(j); nb.tabIndex = 0; nb.focus({ preventScroll: true }); e.preventDefault();
+    }
+  });
+
+  MJ.iniciar({
+    preparar: () => { detener(); nuevo(); },
+    empezar: () => { arrancar(); if (!MJ.esTactil()) btn(0).focus({ preventScroll: true }); },
+    pausar: detener,
+    reanudar: arrancar,
+  });
+  nuevo();
+
+  window.__minijuego = Object.assign(window.__minijuego || {}, {
+    juego: 'parejas',
+    info: () => ({ hechas: s.hechas, movimientos: s.movimientos, puntos: s.puntos, fin: s.fin, bloqueo: s.bloqueo }),
+    cartas: () => s.cartas.map((c) => ({ par: c.par, hecha: !!c.hecha })),
+    girar,
+  });
+})();
+</script>
+</body>
+</html>
