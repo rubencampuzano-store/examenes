@@ -80,6 +80,9 @@ const DATOS = /*__DATOS__*/null;
   const V0 = 17, VMAX = 31;
   // Escena 3D (metros)
   const CARRIL = 2.2, CALLE = CARRIL * 3, ACERA = 1.8, VISTA = 190, PASO_FAROLA = 20;
+  // Llegada: la calle desemboca en una plaza (6 m antes de la meta) y la Bastilla está 22 m después de la meta.
+  // El corredor se detiene 12 m antes del centro de la muralla, al final del puente levadizo.
+  const BASTILLA_TRAS_META = 22, PLAZA_ANTES_META = 6, PARADA_BASTILLA = 16, DURACION_LLEGADA = 3.4;
 
   // ---------- WebGL ----------
   let renderer = null;
@@ -162,7 +165,9 @@ const DATOS = /*__DATOS__*/null;
     if (s.invul > 0) s.invul -= dt;
     if (s.sacudida > 0) s.sacudida -= dt;
     actualizarChispas(dt);
+    actualizarFuegos(dt);
     if (s.fase === 'eligiendo') { s.tEspera += dt; return; }
+    if (s.fase === 'llegada') { actualizarLlegada(dt); return; }
     if (s.v < s.vObjetivo) s.v = Math.min(s.vObjetivo, s.v + (s.vObjetivo / ARRANQUE) * dt);
     s.dist += s.v * dt;
     sonidoCarrera();
@@ -196,7 +201,7 @@ const DATOS = /*__DATOS__*/null;
         }
         s.fase = 'corre'; s.elegida = null; s.puertaActual = null;
       } else if (o.tipo === 'meta' && z < 2) {
-        o.hecho = true; terminar(true);
+        o.hecho = true; llegar(); return;
       }
     }
     for (const o of s.objs) if (o.pos - s.dist <= -6 && o.malla) quitarMalla(o);
@@ -251,6 +256,24 @@ const DATOS = /*__DATOS__*/null;
     }).join('');
   }
   $po.addEventListener('click', (e) => { const b = e.target.closest('button[data-i]'); if (b) elegir(Number(b.dataset.i)); });
+  // Llegada a la Bastilla: el corredor frena ante el puente levadizo, la cámara se eleva para mostrar
+  // la fortaleza, se iza la bandera tricolor y hay fuegos artificiales; después, el resultado.
+  function llegar() {
+    s.fase = 'llegada'; s.tLlegada = 0; s.carril = 1;
+    $preg.classList.remove('ver');
+    MJ.sonido.redoble(false); MJ.sonido.atenuar(false);
+    MJ.sfx.aclamacion();
+  }
+  function actualizarLlegada(dt) {
+    s.tLlegada += dt;
+    const bast = s.meta.pos + BASTILLA_TRAS_META, destino = bast - PARADA_BASTILLA;
+    const antes = s.dist;
+    s.dist += (destino - s.dist) * Math.min(1, dt * 2.2);
+    s.v = (s.dist - antes) / Math.max(dt, 1e-3);
+    s.x += (1 - s.x) * Math.min(1, dt * 3);
+    if (s.tLlegada > .7 && Math.floor(s.tLlegada / .45) !== s.ultimoFuego) { s.ultimoFuego = Math.floor(s.tLlegada / .45); lanzarFuego(); }
+    if (s.tLlegada >= (MJ.reducido() ? 1.2 : DURACION_LLEGADA)) terminar(true);
+  }
   function terminar(victoria) {
     if (s.fin) return;
     s.fin = true;
@@ -269,6 +292,7 @@ const DATOS = /*__DATOS__*/null;
     shell: MJ.color('--shell') || '#0f1733', papel: MJ.color('--papel') || '#efe3c6', tinta: MJ.color('--tinta') || '#1d1a16',
     acento: MJ.color('--acento') || '#b3202a', oro: MJ.color('--oro') || '#c9a44c', azul: (J.colores && J.colores.azul) || '#1f3b7a',
   };
+  let bandera, multitud, fuegos;
   let escena, camara, luna, luzCalida, farolasLuz = [], grupoPista, suelo, aceras = [], edificios = [], farolas = [], bastilla, corredor, chispasPts;
   const texturas = {};
 
@@ -427,7 +451,7 @@ const DATOS = /*__DATOS__*/null;
     MAT.hierro = new THREE.MeshStandardMaterial({ color: 0x222325, roughness: .6, metalness: .6 });
     MAT.pizarra = new THREE.MeshStandardMaterial({ color: 0x3a3f4a, roughness: .7, metalness: .1, flatShading: true });
     MAT.ladrillo = new THREE.MeshStandardMaterial({ color: 0x6a4a3a, roughness: .9 });
-    MAT.piedra = new THREE.MeshStandardMaterial({ color: 0x4a4a52, roughness: .95, flatShading: true });
+    MAT.piedra = new THREE.MeshStandardMaterial({ color: 0x7a746a, roughness: .95, flatShading: true });
     MAT.poste = new THREE.MeshStandardMaterial({ color: new THREE.Color(C.papel).multiplyScalar(.6), roughness: .8 });
     MAT.escarapela = new THREE.MeshStandardMaterial({ map: texturas.escarapela, emissive: 0xffffff, emissiveMap: texturas.escarapela, emissiveIntensity: .35, roughness: .5 });
     MAT.cantoEscarapela = new THREE.MeshStandardMaterial({ color: new THREE.Color(C.azul), roughness: .5 });
@@ -532,7 +556,7 @@ const DATOS = /*__DATOS__*/null;
           rot.position.set(hacia * (fondoE / 2 + .55), 3.85, ancho / 2 - .8); casa.add(rot);
         }
         casa.position.x = lado * (CALLE / 2 + ACERA + fondoE / 2);
-        casa.userData = { pos: pos + ancho / 2 };
+        casa.userData = { pos: pos + ancho / 2, ancho };
         escena.add(casa); edificios.push(casa); casasLado.push(casa);
         pos += ancho;
       }
@@ -554,19 +578,52 @@ const DATOS = /*__DATOS__*/null;
     }
     // La Bastilla: torres almenadas al fondo de la calle
     bastilla = new THREE.Group();
-    const muro = new THREE.Mesh(new THREE.BoxGeometry(30, 16, 8), MAT.piedra); muro.position.y = 8; bastilla.add(muro);
+    const muro = new THREE.Mesh(new THREE.BoxGeometry(34, 16, 8), MAT.piedra); muro.position.y = 8; bastilla.add(muro);
     // Almenas y ventanas instanciadas: una sola llamada de dibujo para cada grupo
-    const almenas = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1.2, 1), MAT.piedra, 40);
-    const ventanas = new THREE.InstancedMesh(new THREE.PlaneGeometry(.6, 1.1), new THREE.MeshBasicMaterial({ color: 0xffb060 }), 15);
+    // Seis torres; la puerta queda entre las dos centrales
+    const TORRES = [-15.5, -10.3, -5.2, 5.2, 10.3, 15.5];
+    const almenas = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1.2, 1), MAT.piedra, TORRES.length * 8);
+    const ventanas = new THREE.InstancedMesh(new THREE.PlaneGeometry(.6, 1.1), new THREE.MeshBasicMaterial({ color: 0xffb060 }), TORRES.length * 3);
     const m4 = new THREE.Matrix4();
-    for (let i = 0; i < 5; i++) {
-      const tx = -14 + i * 7, altoT = i % 2 ? 22 : 20;
+    for (let i = 0; i < TORRES.length; i++) {
+      const tx = TORRES[i], altoT = i % 2 ? 22 : 20;
       const torre = new THREE.Mesh(new THREE.CylinderGeometry(3, 3.2, altoT, 12), MAT.piedra); torre.position.set(tx, altoT / 2, 2); bastilla.add(torre);
       for (let a = 0; a < 8; a++) almenas.setMatrixAt(i * 8 + a, m4.makeTranslation(tx + Math.cos(a / 8 * Math.PI * 2) * 2.9, altoT + .6, 2 + Math.sin(a / 8 * Math.PI * 2) * 2.9));
       for (let v = 0; v < 3; v++) ventanas.setMatrixAt(i * 3 + v, m4.makeTranslation(tx, 6 + v * 5, 5.25));
     }
     bastilla.add(almenas, ventanas);
+    // Puerta en arco con el puente levadizo bajado sobre el foso
+    const puerta = new THREE.Mesh(new THREE.BoxGeometry(4.2, 6, .4), new THREE.MeshStandardMaterial({ color: 0x120c08, roughness: 1 }));
+    puerta.position.set(0, 3, 4.05); bastilla.add(puerta);
+    const arco = new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.1, .4, 16, 1, false, 0, Math.PI), puerta.material);
+    arco.rotation.set(Math.PI / 2, 0, -Math.PI / 2); arco.position.set(0, 6, 4.05); bastilla.add(arco);
+    const foso = new THREE.Mesh(new THREE.PlaneGeometry(40, 4), new THREE.MeshStandardMaterial({ color: 0x0e1c26, roughness: .15, metalness: .6 }));
+    foso.rotation.x = -Math.PI / 2; foso.position.set(0, .02, 7.5); bastilla.add(foso);
+    const puente = new THREE.Mesh(new THREE.BoxGeometry(4, .3, 6.2), MAT.maderaOscura); puente.position.set(0, .15, 7.2); puente.receiveShadow = true; bastilla.add(puente);
+    for (const lado of [-1, 1]) { const cad = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, 8, 5), MAT.hierro); cad.position.set(lado * 1.9, 3.6, 6.4); cad.rotation.x = .8; bastilla.add(cad); }
+    // Plaza empedrada entre el final de la calle y el foso
+    const largoPlaza = BASTILLA_TRAS_META + PLAZA_ANTES_META - 9.5;
+    const texPlaza = textura(texLosas(), true); texPlaza.repeat.set(24, largoPlaza / 3.6);
+    const plaza = new THREE.Mesh(new THREE.PlaneGeometry(90, largoPlaza), new THREE.MeshStandardMaterial({ map: texPlaza, roughness: .92 }));
+    plaza.rotation.x = -Math.PI / 2; plaza.position.set(0, .012, 9.5 + largoPlaza / 2); plaza.receiveShadow = true; bastilla.add(plaza);
+    // Bandera tricolor que se iza en la torre central al llegar
+    const mastil = new THREE.Mesh(new THREE.CylinderGeometry(.08, .08, 8, 6), MAT.hierro); mastil.position.set(0, 20, 2); bastilla.add(mastil);  // sobre la puerta
+    bandera = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.6, 10, 3), new THREE.MeshStandardMaterial({ map: textura(texBandera()), side: THREE.DoubleSide, emissive: 0xffffff, emissiveMap: textura(texBandera()), emissiveIntensity: .5 }));
+    bandera.userData.base = bandera.geometry.attributes.position.array.slice();
+    bandera.position.set(1.35, 16.9, 2); bastilla.add(bandera);
+    // Multitud de revolucionarios en la plaza (una sola geometría: una llamada de dibujo)
+    multitud = new THREE.Mesh(geometriaMultitud(), MAT.soldado); multitud.castShadow = true; bastilla.add(multitud);
+    // Luz cálida de antorchas ante la puerta
+    const antorcha = new THREE.PointLight(0xffa050, 60, 30, 2); antorcha.position.set(0, 5, 10); bastilla.add(antorcha);
+    for (const lado of [-1, 1]) { const h = new THREE.Sprite(MAT.brillo); h.scale.set(2.4, 2.4, 1); h.position.set(lado * 3, 5.5, 4.4); bastilla.add(h); }
     escena.add(bastilla);
+    // Fuegos artificiales (colores de la bandera y dorado)
+    const nf = 240, pf = new Float32Array(nf * 3).fill(-999), cf = new Float32Array(nf * 3);
+    const gf = new THREE.BufferGeometry(); gf.setAttribute('position', new THREE.BufferAttribute(pf, 3)); gf.setAttribute('color', new THREE.BufferAttribute(cf, 3));
+    fuegos = new THREE.Points(gf, new THREE.PointsMaterial({ size: .55, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+    fuegos.userData = { vel: new Float32Array(nf * 3), vida: new Float32Array(nf), siguiente: 0 };
+    fuegos.frustumCulled = false;
+    escena.add(fuegos);
     // Corredor y chispas
     corredor = crearCorredor(); escena.add(corredor);
     const nc = 80; const pc = new Float32Array(nc * 3).fill(-999);
@@ -623,6 +680,7 @@ const DATOS = /*__DATOS__*/null;
     const pos = p.telaGeo.attributes.position, base = p.telaBase;
     for (let i = 0; i < pos.count; i++) { const x = base[i * 3]; pos.array[i * 3 + 2] = Math.sin(t * 7 + x * 6) * .07 * (x + .43); }
     pos.needsUpdate = true;
+    if (s.fase === 'llegada' && !corriendo) { p.bD.rotation.x = -2.7; p.bI.rotation.x = -2.5 + Math.sin(t * 8) * .25; }
     corredor.visible = !(s.invul > 0 && Math.floor(s.invul * 12) % 2);
   }
 
@@ -676,6 +734,62 @@ const DATOS = /*__DATOS__*/null;
     }
     geoSoldado[pose] = fusionar(partes);
     return geoSoldado[pose];
+  }
+  function geometriaMultitud() {
+    const r = aleatorio(2024), partes = [];
+    const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+    const ropas = [0x2a3c7a, 0x6a4a30, 0x5a5a5a, 0x7a2a22, 0x3a4a2a, 0x8a7a5a];
+    for (let i = 0; i < 26; i++) {
+      const lado = i % 2 ? 1 : -1;
+      const x = lado * (4.5 + r() * 24), z = 12 + r() * 12, rot = -lado * (.4 + r() * .5) + Math.PI;
+      const m = new THREE.Matrix4().compose(new THREE.Vector3(x, 0, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, rot, 0)), new THREE.Vector3(1, .9 + r() * .2, 1));
+      const ropa = ropas[Math.floor(r() * ropas.length)], brazoArriba = r() < .5;
+      const pieza = (geo, pos, color, rotE) => {
+        const g = geo; g.applyMatrix4(new THREE.Matrix4().compose(new THREE.Vector3(...pos), new THREE.Quaternion().setFromEuler(new THREE.Euler(...(rotE || [0, 0, 0]))), new THREE.Vector3(1, 1, 1)));
+        g.applyMatrix4(m); partes.push({ geo: g, p: [0, 0, 0], c: color });
+      };
+      pieza(B(.34, .8, .22), [0, .4, 0], 0x3a2e24);                 // piernas
+      pieza(B(.46, .62, .28), [0, 1.1, 0], ropa);                   // chaqueta
+      pieza(new THREE.SphereGeometry(.15, 8, 6), [0, 1.56, 0], 0xe0b890);
+      if (r() < .6) pieza(new THREE.ConeGeometry(.16, .3, 8), [0, 1.78, .03], 0xb3202a, [.5, 0, 0]);   // gorro frigio
+      else pieza(new THREE.CylinderGeometry(.24, .24, .08, 3), [0, 1.72, 0], 0x161616);                // tricornio
+      pieza(B(.1, .5, .11), [-.28, brazoArriba ? 1.6 : 1.12, 0], ropa, [0, 0, brazoArriba ? -.3 : 0]);
+      pieza(B(.1, .5, .11), [.28, brazoArriba ? 1.6 : 1.12, 0], ropa, [0, 0, brazoArriba ? .3 : 0]);
+      if (r() < .45) { pieza(B(.05, 2.6, .05), [.34, 1.4, 0], 0x5a3a22); pieza(new THREE.ConeGeometry(.06, .3, 5), [.34, 2.85, 0], 0xa0a6ac); } // pica
+    }
+    return fusionar(partes);
+  }
+  function lanzarFuego() {
+    if (MJ.reducido() || !fuegos) return;
+    const d = fuegos.userData, pos = fuegos.geometry.attributes.position.array, col = fuegos.geometry.attributes.color.array;
+    const cols = [new THREE.Color(C.azul).multiplyScalar(1.6), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.4), new THREE.Color(C.oro)];
+    const c0 = cols[Math.floor(Math.random() * cols.length)];
+    const ox = bastilla.position.x + (Math.random() - .5) * 26, oy = 26 + Math.random() * 8, oz = bastilla.position.z + 2;
+    for (let i = 0; i < 40; i++) {
+      const k = d.siguiente; d.siguiente = (d.siguiente + 1) % d.vida.length;
+      const a = Math.random() * Math.PI * 2, b = Math.acos(Math.random() * 2 - 1), v = 5 + Math.random() * 3;
+      pos[k * 3] = ox; pos[k * 3 + 1] = oy; pos[k * 3 + 2] = oz;
+      d.vel[k * 3] = Math.sin(b) * Math.cos(a) * v; d.vel[k * 3 + 1] = Math.cos(b) * v; d.vel[k * 3 + 2] = Math.sin(b) * Math.sin(a) * v;
+      col[k * 3] = c0.r; col[k * 3 + 1] = c0.g; col[k * 3 + 2] = c0.b;
+      d.vida[k] = 1.4;
+    }
+    fuegos.geometry.attributes.color.needsUpdate = true;
+    MJ.sfx.canon();
+  }
+  function actualizarFuegos(dt) {
+    if (!fuegos) return;
+    const d = fuegos.userData, pos = fuegos.geometry.attributes.position.array, col = fuegos.geometry.attributes.color.array;
+    let activos = false;
+    for (let k = 0; k < d.vida.length; k++) {
+      if (d.vida[k] <= 0) continue;
+      activos = true;
+      d.vida[k] -= dt;
+      d.vel[k * 3 + 1] -= 3 * dt;
+      pos[k * 3] += d.vel[k * 3] * dt; pos[k * 3 + 1] += d.vel[k * 3 + 1] * dt; pos[k * 3 + 2] += d.vel[k * 3 + 2] * dt;
+      const f = 1 - dt * .9; col[k * 3] *= f; col[k * 3 + 1] *= f; col[k * 3 + 2] *= f;
+      if (d.vida[k] <= 0) pos[k * 3 + 1] = -999;
+    }
+    if (activos) { fuegos.geometry.attributes.position.needsUpdate = true; fuegos.geometry.attributes.color.needsUpdate = true; }
   }
   function crearSoldado(pose) {
     const m = new THREE.Mesh(geometriaSoldado(pose), MAT.soldado);
@@ -805,23 +919,38 @@ const DATOS = /*__DATOS__*/null;
     texturas.adoquines.offset.y = s.dist / CALLE;
     texturas.losas.offset.y = s.dist / 3.6;
     // Edificios y farolas: reciclar por delante
+    const inicioPlaza = s.meta ? s.meta.pos - PLAZA_ANTES_META : Infinity;
     for (const e of edificios) {
       while (e.userData.pos < s.dist - 16) e.userData.pos += e.userData.largoLado;
       e.position.z = -(e.userData.pos - s.dist);
+      e.visible = e.userData.pos + e.userData.ancho / 2 < inicioPlaza;   // la calle termina donde empieza la plaza
     }
+    // Las aceras también terminan al llegar a la plaza
+    const finAcera = Math.min(VISTA + 20, 20 + Math.max(0, inicioPlaza - s.dist));
+    aceras.forEach((a) => { a.scale.z = finAcera / (VISTA + 20); a.position.z = 20 - finAcera / 2; });
     const largoF = farolas.length * PASO_FAROLA;
     const cercanas = [];
     for (const f of farolas) {
       while (f.userData.pos < s.dist - 8) f.userData.pos += largoF;
       f.position.z = -(f.userData.pos - s.dist);
+      f.visible = f.userData.pos < inicioPlaza - 2;
       const zf = f.userData.pos - s.dist;
       if (zf > -2) cercanas.push({ f, zf });
     }
     cercanas.sort((a, b) => a.zf - b.zf);
     farolasLuz.forEach((l, i) => { const c = cercanas[i]; if (c) { c.f.userData.farol.getWorldPosition(l.position); l.position.y -= .3; } });
     // La Bastilla se acerca a medida que avanzas
-    const restante = Math.max(0, LARGO() - s.dist);
-    bastilla.position.set(0, 0, -Math.min(175, restante + 30));
+    // Mientras no se conoce la meta, la Bastilla espera al fondo; después está en su sitio real
+    const distBastilla = s.meta ? s.meta.pos + BASTILLA_TRAS_META - s.dist : Infinity;
+    bastilla.position.set(0, 0, -Math.min(175, distBastilla));
+    // Llegada: se iza la bandera y la multitud celebra
+    const kL = s.fase === 'llegada' ? Math.min(1, s.tLlegada / (MJ.reducido() ? .6 : 2.4)) : 0;
+    const suave = kL * kL * (3 - 2 * kL);
+    bandera.position.y = 16.9 + suave * 6.2;
+    const bp = bandera.geometry.attributes.position, bb = bandera.userData.base;
+    for (let i = 0; i < bp.count; i++) { const x = bb[i * 3]; bp.array[i * 3 + 2] = Math.sin(s.t * 6 + x * 3) * .12 * (x + 1.3); }
+    bp.needsUpdate = true;
+    multitud.position.y = s.fase === 'llegada' && !MJ.reducido() ? Math.abs(Math.sin(s.t * 7)) * .12 : 0;
     // Objetos de la pista
     for (const o of s.objs) {
       const z = o.pos - s.dist;
@@ -850,9 +979,10 @@ const DATOS = /*__DATOS__*/null;
     const cz = camara.aspect < 1 ? 8.8 : 6.6, cy = camara.aspect < 1 ? 3.9 : 3.3;
     const objetivoX = xCorr * .55;
     camara.position.x += (objetivoX - camara.position.x) * Math.min(1, (dt || 1) * 5);
-    camara.position.y = cy; camara.position.z = cz;
+    // En la llegada la cámara se aleja y se eleva para mostrar la fortaleza entera
+    camara.position.y = cy + suave * 5; camara.position.z = cz + suave * 12;
     if (s.sacudida > 0 && !MJ.reducido()) { camara.position.x += (Math.random() - .5) * .25; camara.position.y += (Math.random() - .5) * .15; }
-    camara.lookAt(camara.position.x * .6, 1.4, -12);
+    camara.lookAt(camara.position.x * .6, 1.4 + suave * 8, -12);
     luzCalida.position.set(xCorr, 3.2, 2);
     luna.position.set(xCorr - 12, 22, 8); luna.target.position.set(xCorr, 0, -6);
     renderer.render(escena, camara);
@@ -914,14 +1044,14 @@ const DATOS = /*__DATOS__*/null;
     empezar: arrancar,
     pausar: () => cancelAnimationFrame(rafId),
     reanudar: () => { arrancar(); if (s.fase === 'eligiendo') MJ.sonido.redoble(true); },
-    sonidoFin: (victoria) => (victoria ? MJ.sfx.aclamacion() : MJ.sfx.tamborLento()),
+    sonidoFin: (victoria) => (victoria ? MJ.sfx.fanfarria() : MJ.sfx.tamborLento()),  // la aclamación ya sonó al llegar
   });
   nuevo();
   montarEscena(); new ResizeObserver(medir).observe(zona); medir();
 
   // Gancho de pruebas (mismo que la versión 1)
   window.__minijuego = Object.assign(window.__minijuego || {}, {
-    juego: 'carrera-v2', webgl: !!renderer,
+    juego: 'carrera-v2', webgl: !!renderer, llegada: () => ({ fase: s.fase, t: s.tLlegada, dist: s.dist, meta: s.meta && s.meta.pos, bandera: bandera && bandera.position.y }),
     info: () => ({ vidas: s.vidas, puntos: Math.round(s.puntos), carril: s.carril, aciertos: s.aciertos, fallos: s.fallos, dist: Math.round(s.dist * 10) / 10, fin: s.fin, pregunta: s.mostrada, objetos: s.objs.length, fase: s.fase, bonus: s.bonus, rapidesa: s.rapidesa, panel: $preg.classList.contains('ver') }),
     mover, elegir, puertaEn, centroPuerta, sonido: () => MJ.sonido.estado(),
     escena: () => renderer ? { mallas: grupoPista.children.length, edificios: edificios.length, farolas: farolas.length, sombras: renderer.shadowMap.enabled, dpr: renderer.getPixelRatio(), llamadas: renderer.info.render.calls, triangulos: renderer.info.render.triangles } : null,
