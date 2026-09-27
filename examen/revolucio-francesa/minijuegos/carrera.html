@@ -1062,8 +1062,11 @@ const MJ = (function () {
     // bandera pequeña
     if (semilla > .5) { g.fillStyle = C.acento; g.fillRect(x + w * .75, y - h * .35, w * .16, h * .22); g.fillStyle = '#3b2716'; g.fillRect(x + w * .74, y - h * .38, Math.max(1, w * .02), h * .55); }
   }
-  function escarapela(pt, r, t) {
-    const y = pt.y - r * 2.2 - Math.sin(t * 5 + pt.x) * r * .3;
+  // El balanceo usa una fase fija por objeto (su posición en la pista), no la posición en pantalla:
+  // así no salta de un fotograma a otro al acercarse. Radio mínimo para que no parpadee a lo lejos.
+  function escarapela(pt, r, t, fase) {
+    r = Math.max(1.6, r);
+    const y = pt.y - r * 2.2 - (MJ.reducido() ? 0 : Math.sin(t * 3 + fase) * r * .18);
     g.fillStyle = C.azul; g.beginPath(); g.arc(pt.x, y, r, 0, Math.PI * 2); g.fill();
     g.fillStyle = '#ffffff'; g.beginPath(); g.arc(pt.x, y, r * .66, 0, Math.PI * 2); g.fill();
     g.fillStyle = C.acento; g.beginPath(); g.arc(pt.x, y, r * .36, 0, Math.PI * 2); g.fill();
@@ -1131,10 +1134,13 @@ const MJ = (function () {
     if (s) {
       const orden = s.objs.filter((o) => !o.hecho || o.tipo === 'puerta').map((o) => ({ o, z: o.pos - s.dist })).filter((e) => e.z < VISIBLE && e.z > -3).sort((a, b) => b.z - a.z);
       for (const { o, z } of orden) {
+        // Fundido al aparecer por el fondo, en lugar de surgir de golpe
+        g.globalAlpha = Math.max(0, Math.min(1, (VISIBLE - z) / 18));
         if (o.tipo === 'obst' && !o.hecho) { const pt = proy(z, o.carril); barricada(pt, anchoCarrilCerca() * pt.p * .78, o.v); }
-        else if (o.tipo === 'moneda' && !o.hecho) { const pt = proy(z, o.carril); escarapela(pt, anchoCarrilCerca() * pt.p * .13, s.t); }
+        else if (o.tipo === 'moneda' && !o.hecho) { const pt = proy(z, o.carril); escarapela(pt, anchoCarrilCerca() * pt.p * .13, s.t, o.pos * 1.3); }
         else if (o.tipo === 'puerta' && !o.pasada) puerta(o, z);
       }
+      g.globalAlpha = 1;
       jugador();
       // Parado: las puertas activas se redibujan encima del corredor para que su bandera no tape los carteles
       if (s.fase === 'eligiendo' && s.puertaActual) puerta(s.puertaActual, s.puertaActual.pos - s.dist, true);
