@@ -71,7 +71,7 @@ const DATOS = /*__DATOS__*/null;
   const $preg = document.getElementById('pregunta'), $pt = document.getElementById('pregTexto'), $po = document.getElementById('pregOpciones'), $pn = document.getElementById('pregNota');
   if (!MJ.esTactil()) document.getElementById('ayuda').style.display = 'none';
 
-  // ---------- Constantes de juego (idénticas a la versión 1) ----------
+  // ---------- Constantes de juego ----------
   const GENERA = 150;      // metros por delante que se generan
   const PARADA = 7;        // metros antes de la puerta en que el corredor se detiene
   const ARRANQUE = .8;     // segundos para recuperar la velocidad tras elegir
@@ -92,10 +92,10 @@ const DATOS = /*__DATOS__*/null;
   } catch (e) { renderer = null; }
   if (!renderer) {
     cv.remove();
-    zona.insertAdjacentHTML('beforeend', `<div class="sin-webgl"><div><b>${MJ.esc(T.sinWebgl || 'Aquest dispositiu no pot mostrar gràfics 3D.')}</b><a href="carrera.html">${MJ.esc(T.versioClassica || 'Juga a la versió clàssica')} →</a></div></div>`);
+    zona.insertAdjacentHTML('beforeend', `<div class="sin-webgl"><div><b>${MJ.esc(T.sinWebgl || 'Aquest dispositiu no pot mostrar gràfics 3D.')}</b>${T.sinWebglAyuda ? `<span>${MJ.esc(T.sinWebglAyuda)}</span>` : ''}</div></div>`);
   }
 
-  // ---------- Estado (idéntico a la versión 1) ----------
+  // ---------- Estado ----------
   let s = null;
   function nuevo() {
     if (s) limpiarEscena();
@@ -115,7 +115,7 @@ const DATOS = /*__DATOS__*/null;
   }
   const LARGO = () => 40 + (s.preguntas.length + 1) * HUECO;
 
-  // ---------- Generación de pista (idéntica a la versión 1) ----------
+  // ---------- Generación de pista ----------
   function generar() {
     while (s.genPos < s.dist + GENERA + 20 && !s.meta) {
       const i = s.puertasGeneradas;
@@ -147,7 +147,7 @@ const DATOS = /*__DATOS__*/null;
     }
   }
 
-  // ---------- Actualización (idéntica a la versión 1, salvo las chispas en 3D) ----------
+  // ---------- Actualización ----------
   function mover(dir) {
     if (MJ.estado() !== 'jugando' || s.fase !== 'corre') return;
     const n = Math.max(0, Math.min(2, s.carril + dir));
@@ -1015,7 +1015,7 @@ const DATOS = /*__DATOS__*/null;
   // window.__sinBucle: solo para pruebas automáticas (avanzan el juego a mano con avanzar())
   function arrancar() { cancelAnimationFrame(rafId); if (window.__sinBucle) return; ultimo = performance.now(); rafId = requestAnimationFrame(bucle); }
 
-  // ---------- Controles (idénticos a la versión 1) ----------
+  // ---------- Controles ----------
   document.addEventListener('keydown', (e) => {
     if (s && s.fase === 'eligiendo' && ['1', '2', '3'].includes(e.key)) { elegir(Number(e.key) - 1); e.preventDefault(); return; }
     if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { mover(-1); e.preventDefault(); }
@@ -1049,7 +1049,7 @@ const DATOS = /*__DATOS__*/null;
   nuevo();
   montarEscena(); new ResizeObserver(medir).observe(zona); medir();
 
-  // Gancho de pruebas (mismo que la versión 1)
+  // Gancho de pruebas
   window.__minijuego = Object.assign(window.__minijuego || {}, {
     juego: 'carrera-v2', webgl: !!renderer, llegada: () => ({ fase: s.fase, t: s.tLlegada, dist: s.dist, meta: s.meta && s.meta.pos, bandera: bandera && bandera.position.y }),
     info: () => ({ vidas: s.vidas, puntos: Math.round(s.puntos), carril: s.carril, aciertos: s.aciertos, fallos: s.fallos, dist: Math.round(s.dist * 10) / 10, fin: s.fin, pregunta: s.mostrada, objetos: s.objs.length, fase: s.fase, bonus: s.bonus, rapidesa: s.rapidesa, panel: $preg.classList.contains('ver') }),

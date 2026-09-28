@@ -44,7 +44,7 @@
     "activat": "Activat",
     "desactivat": "Desactivat",
     "sinWebgl": "Aquest dispositiu no pot mostrar gràfics 3D.",
-    "versioClassica": "Juga a la versió clàssica"
+    "sinWebglAyuda": "Prova-ho amb un altre navegador o activa l'acceleració gràfica."
   },
   "carrera": {
     "titulo": "L'Assalt a la Bastilla",

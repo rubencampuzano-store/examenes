@@ -19,7 +19,8 @@ const js = readFileSync(join(aqui, 'comun.js'), 'utf8');
 
 const errores = [], avisos = [];
 const req = (c, m) => { if (!c) errores.push(m); };
-const JUEGOS = ['carrera', 'cronologia', 'parejas', 'clasifica'];
+// Minijuegos DOM que se montan desde su plantilla. La carrera (datos "carrera") solo existe en 3D: ver más abajo.
+const JUEGOS = ['cronologia', 'parejas', 'clasifica'];
 
 const TEXTOS = ['jugar', 'pausa', 'continuar', 'reiniciar', 'record', 'tambienTactil', 'victoria', 'finPartida', 'guanyes', 'nuevoRecord',
   'repetir', 'volver', 'vidas', 'porta', 'ai', 'encerts', 'errors', 'objetos', 'ronda', 'temps', 'pistaCronoTactil', 'pistaCronoTeclado',
@@ -84,7 +85,7 @@ if (comunes(mini.clasifica, 'clasifica')) {
 // ---------- Sonido: preset y música grabada (se incrusta como data URI) ----------
 const PRESETS = ['revolucion', 'antiguedad', 'medieval', 'naturaleza', 'tecnologia'];
 const MIME_AUDIO = { '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.ogg': 'audio/ogg', '.opus': 'audio/ogg' };
-for (const id of JUEGOS) {
+for (const id of ['carrera', ...JUEGOS]) {
   const so = mini[id] && mini[id].sonido;
   if (!so) continue;
   if (so.preset) req(PRESETS.includes(so.preset), `${id}.sonido.preset debe ser uno de: ${PRESETS.join(', ')}`);
@@ -129,12 +130,12 @@ for (const id of JUEGOS) {
   if (kb > 3072) avisos.push(`${id}.html pesa ${(kb / 1024).toFixed(2)} MB (límite recomendado 3 MB)`);
   console.log(`OK  ${ruta}  (${kb.toFixed(0)} KB)`);
 }
-// ---------- Carrera v2 (3D con Three.js incrustado) ----------
-// Usa los mismos datos que "carrera" y guarda su récord por separado (id carrera-v2).
+// ---------- Carrera 3D (Three.js incrustado) ----------
+// Datos de la sección "carrera". Archivo e id "carrera-v2" por compatibilidad con los enlaces y récords ya guardados.
 const rutaV2 = join(aqui, 'carrera3d.html'), rutaThree = join(aqui, 'vendor', 'three.min.js');
 if (mini.carrera && existsSync(rutaV2)) {
   if (!existsSync(rutaThree)) {
-    avisos.push('carrera-v2 no generada: falta minijuegos/vendor/three.min.js (three@0.159.0/build/three.min.js)');
+    errores.push('carrera-v2 no generada: falta minijuegos/vendor/three.min.js (three@0.159.0/build/three.min.js)');
   } else {
     // Se quita el aviso de "build obsoleta" que Three.js r159 muestra en la consola al cargarse
     const three = readFileSync(rutaThree, 'utf8').replace(/^console\.warn\('[^']*'\),/, '0,');
@@ -155,4 +156,5 @@ if (mini.carrera && existsSync(rutaV2)) {
   }
 }
 
+if (errores.length) { console.error('ERRORES (' + errores.length + '):\n - ' + errores.join('\n - ')); process.exit(1); }
 if (avisos.length) console.log('AVISOS:\n - ' + avisos.join('\n - '));

@@ -1,6 +1,6 @@
 # Esquema de `minijuegos-datos.json`
 
-`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera,cronologia,parejas,clasifica}.html`.
+`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera-v2,cronologia,parejas,clasifica}.html` (la carrera solo existe en 3D).
 El tema visual, `meta` y algunos textos (`puntos`, `moneda`, `selloAcierto`, `selloFallo`, `silenciar`, `activarSonido`) se toman de `juego-datos.json`.
 Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemplo completo: `examen/revolucio-francesa/minijuegos-datos.json`.
 
@@ -22,7 +22,7 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
   //   instrucciones: { "tactil": [["icono o tecla", "texto"], ...], "teclado": [[...], ...] }
   //   premio: { "objetivo": puntos que dan el premio completo, "tope": lliures máximas (300 recomendado) }
 
-  "carrera": {                // correr por 3 carriles hacia un objetivo; en cada puerta el corredor SE DETIENE
+  "carrera": {                // datos de la carrera 3D (carrera-v2.html). Correr por 3 carriles hacia un objetivo; en cada puerta el corredor SE DETIENE
                               // y no sigue hasta que se elige (1/2/3, tocar la puerta o el botón del panel).
                               // La pregunta solo aparece al pararse. Sin límite de tiempo; bonus de rapidez
                               // (+100 si responde en <= 2 s, baja hasta 0 a los 10 s). Fallo = -1 vida.
@@ -32,7 +32,8 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
       "musica": { "archivo": "audio/marsellesa.mp3", "titulo": "La Marseillaise", "interprete": "United States Navy Band",
                   "anio": "c. 1987", "licencia": "Domini públic", "fuente": "https://commons.wikimedia.org/wiki/File:La_Marseillaise.ogg" }
     },
-    "objetivo": "la Bastilla",            // texto sobre la silueta del horizonte
+    "objetivo": "la Bastilla",            // meta del recorrido (nombre del lugar)
+    "sufijo3d": " 3D",                   // opcional: se añade al título
     "objeto": { "plural": "Escarapel·les" },
     "vidas": 3,
     "numPuertas": 8,                      // se eligen al azar de "puertas" en cada partida
@@ -67,16 +68,15 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
 - **cronologia**: si el tema no es histórico, usa secuencias de un proceso (fases de la mitosis, pasos de un método) con `orden` 1, 2, 3… y `fecha` como etiqueta del paso.
 - **parejas**: concepto ↔ definición, autor ↔ obra, término ↔ ejemplo.
 - **clasifica**: dos categorías excluyentes por ronda (vertebrado/invertebrado, metal/no metal…).
-- El personaje y los objetos dibujados de `carrera` son genéricos (figura con bandera, barricadas, insignias) y usan los colores del tema.
 
 ## Carrera 3D (`carrera-v2.html`)
-Versión 3D de `carrera` con Three.js (plantilla `minijuegos/carrera3d.html`). **Usa los mismos datos** que `carrera` (no necesita sección propia) y se genera automáticamente junto a los demás minijuegos. Opcional: `carrera.sufijo3d` (por defecto " 3D") para su título.
-- Misma mecánica, controles, sonido, pausa y contrato de resultado; récord propio con id `carrera-v2`.
-- Escena generada por código (sin imágenes externas): calle de adoquines, edificios con ventanas iluminadas, farolas, luna y estrellas, la meta al fondo, corredor low-poly animado, barricadas, escarapelas y puertas con carteles (se eligen también tocando la puerta 3D).
+Única versión de la carrera, con Three.js (plantilla `minijuegos/carrera3d.html`). Usa la sección `carrera` de los datos. El archivo y el id se llaman `carrera-v2` para no romper enlaces ni récords guardados.
+- Controles: ← → / A D o deslizar/tocar para cambiar de carril; en las puertas, 1/2/3, tocar la puerta 3D o los botones del panel.
+- Escena generada por código (sin imágenes externas): calle de adoquines con casas del París de 1789, faroles colgados, luna y estrellas, corredor low-poly animado, barricadas con soldados del rey, escarapelas, puertas con carteles y, al final, la plaza con la Bastilla (bandera, multitud y fuegos artificiales).
 - Three.js r159 incrustado desde `minijuegos/vendor/three.min.js` (licencia MIT en `vendor/THREE-LICENSE.txt`): funciona sin internet. Peso ≈ 1,4 MB con música.
-- Rendimiento: resolución limitada y **calidad automática** (si baja de ~40 fps quita sombras y luego resolución). Sin WebGL muestra un aviso con enlace a `carrera.html`.
+- Rendimiento: resolución limitada y **calidad automática** (si baja de ~40 fps quita sombras y luego resolución). Sin WebGL muestra un aviso.
 - La escena está pensada para la Revolución francesa (París nocturno y la Bastilla). Para otros temas, el texto `carrera.objetivo` se sigue mostrando, pero los edificios y la fortaleza son los mismos: adaptar la escena de `carrera3d.html` si el tema lo pide.
-- Textos opcionales: `sinWebgl`, `versioClassica`.
+- Textos opcionales: `sinWebgl`, `sinWebglAyuda`.
 
 ## Sonido
 Tres canales independientes: **música**, **ambiente** y **efectos** (este último comparte preferencia con el examen). En la cabecera hay botón de música y de efectos; en el **menú de pausa** hay un interruptor por cada canal que tenga el juego (los minijuegos sin `sonido` solo muestran Efectes). Cada preferencia se guarda en `localStorage` (`…:musica`, `…:ambiente`, `…:sonido`).
