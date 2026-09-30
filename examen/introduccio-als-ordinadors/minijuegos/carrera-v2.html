@@ -696,7 +696,10 @@ const MJ = (function () {
   // Deslizar o tocar dentro de un elemento. onDir('izq'|'der'|'arriba'|'abajo'), onToque(x, y, rect)
   function gestos(el, { onDir, onToque, umbral = 28 }) {
     let x0 = 0, y0 = 0, t0 = 0, activo = false, disparado = false;
-    el.addEventListener('pointerdown', (e) => { activo = true; disparado = false; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); try { el.setPointerCapture(e.pointerId); } catch (_) {} });
+    el.addEventListener('pointerdown', (e) => {
+      // Sobre un botón no hay gesto: capturar el puntero desviaría su clic hacia la zona y el botón no respondería
+      if (e.target.closest('button, a, input, select, textarea')) return;
+      activo = true; disparado = false; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); try { el.setPointerCapture(e.pointerId); } catch (_) {} });
     el.addEventListener('pointermove', (e) => {
       if (!activo || disparado) return;
       const dx = e.clientX - x0, dy = e.clientY - y0;
