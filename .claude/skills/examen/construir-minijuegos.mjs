@@ -2,7 +2,7 @@
 // Uso: node construir-minijuegos.mjs <juego-datos.json> <minijuegos-datos.json> <carpeta-salida>
 // Toma meta, tema y algunos textos del examen (juego-datos.json) y el contenido de cada minijuego de minijuegos-datos.json.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { dirname, join, extname } from 'node:path';
+import { dirname, join, extname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const [, , rutaExamen, rutaMini, salida] = process.argv;
@@ -117,9 +117,15 @@ const escJSON = (o) => JSON.stringify(o).replace(/</g, '\\u003c').split(String.f
 const escHTML = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 
 mkdirSync(salida, { recursive: true });
+// Portada con todos los temas: la raíz del proyecto es la carpeta que contiene examen/ (salida = examen/<tema>/minijuegos)
+let portada = null;
+for (let d = resolve(salida), k = 0; k < 5; k++, d = dirname(d)) {
+  if (existsSync(join(d, 'examen')) && existsSync(join(d, 'index.html'))) { portada = (relative(resolve(salida), d).replace(/\\/g, '/') || '.') + '/index.html'; break; }
+}
+if (!portada) avisos.push('no se encuentra la portada (index.html junto a la carpeta examen/): los minijuegos no tendrán botón para volver a ella');
 for (const id of JUEGOS) {
   const plantilla = readFileSync(join(aqui, `${id}.html`), 'utf8');
-  const datos = { meta: examen.meta, tema, textos, juego: Object.assign({ id }, mini[id]) };
+  const datos = { meta: examen.meta, tema, textos, portada, juego: Object.assign({ id }, mini[id]) };
   for (const m of ['/*__COMUN_CSS__*/', '/*__COMUN_JS__*/', '/*__DATOS__*/null']) if (!plantilla.includes(m)) { console.error(`${id}.html no contiene ${m}`); process.exit(1); }
   const html = plantilla
     .replace('/*__COMUN_CSS__*/', () => css)
@@ -142,7 +148,7 @@ if (mini.carrera && existsSync(rutaV2)) {
     // Se quita el aviso de "build obsoleta" que Three.js r159 muestra en la consola al cargarse
     const three = readFileSync(rutaThree, 'utf8').replace(/^console\.warn\('[^']*'\),/, '0,');
     const plantilla = readFileSync(rutaV2, 'utf8');
-    const datos = { meta: examen.meta, tema, textos, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d ?? ' 3D') }) };
+    const datos = { meta: examen.meta, tema, textos, portada, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d ?? ' 3D') }) };
     for (const m of ['/*__COMUN_CSS__*/', '/*__COMUN_JS__*/', '/*__DATOS__*/null', '/*__THREE__*/']) if (!plantilla.includes(m)) { console.error(`carrera3d.html no contiene ${m}`); process.exit(1); }
     const html = plantilla
       .replace('/*__COMUN_CSS__*/', () => css)

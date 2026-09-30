@@ -16,6 +16,7 @@ const MJ = (function () {
   const moneda = T.moneda || T.puntos;
 
   const ICON = {
+    volver: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
     estrella: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>',
     sonido: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11"/></svg>',
     mudo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>',
@@ -330,6 +331,7 @@ const MJ = (function () {
   function montar() {
     document.body.insertAdjacentHTML('afterbegin', `
       <header class="mj-top">
+        ${D.portada ? `<a class="mj-volver" href="${esc(D.portada)}" target="_top" aria-label="${esc(T.volverExamenes || T.volver)}" title="${esc(T.volverExamenes || T.volver)}">${ICON.volver}<span>${esc(T.volverExamenes || T.volver)}</span></a>` : ''}
         <div class="mj-titulo"><b>${esc(JUEGO.titulo)}</b><span class="eyebrow">${esc(D.meta.titulo)}</span></div>
         <div class="mj-hud" id="mjHud"></div>
         <button class="mj-icon" id="mjPausa" aria-label="${esc(T.pausa)}" title="${esc(T.pausa)}">${ICON.pausa}</button>
@@ -457,7 +459,7 @@ const MJ = (function () {
       <div class="mj-resumen">${(r.resumen || []).concat([[T.puntos, fmt(puntos)], [T.record, fmt(Math.max(prev.record, puntos))]]).map(([k, v]) => `<div><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}</div>
       <div class="mj-billete"><span class="eyebrow">${esc(T.guanyes)}</span><span><b>+${fmt(lliures)}</b> <em>${esc(moneda)}</em></span></div>
       ${nuevoRecord && prev.partidas ? `<p style="color:var(--acento);font-family:var(--f-display);font-size:1.15rem">${esc(T.nuevoRecord)}</p>` : ''}
-      <div class="mj-acciones"><button class="btn" id="mjRepetir">↻ ${esc(T.repetir)}</button>${embebido ? `<button class="btn fantasma" id="mjVolver">${esc(T.volver)}</button>` : ''}</div>
+      <div class="mj-acciones"><button class="btn" id="mjRepetir">↻ ${esc(T.repetir)}</button>${embebido ? `<button class="btn fantasma" id="mjVolver">${esc(T.volver)}</button>` : ''}${D.portada ? `<a class="btn fantasma" id="mjPortada" href="${esc(D.portada)}" target="_top">${esc(T.volverExamenes || T.volver)}</a>` : ''}</div>
       ${creditoMusica()}
     </div>`);
     $('#mjRepetir', c).addEventListener('click', () => { cerrarCapa(); fondoIniciar(); cuentaAtras(); });

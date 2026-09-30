@@ -59,6 +59,10 @@
   .mj-icon { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--linea-clara); color: var(--claro-suave); }
   .mj-icon:hover { color: var(--claro); }
   .mj-icon svg { width: 18px; height: 18px; }
+  .mj-volver { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--linea-clara); color: var(--claro-suave); font-family: var(--f-mono); font-size: .8rem; text-decoration: none; white-space: nowrap; }
+  .mj-volver:hover, .mj-volver:focus-visible { color: var(--claro); border-color: var(--claro-suave); }
+  .mj-volver svg { width: 18px; height: 18px; flex: none; }
+  .mj-acciones a.btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
   .mj-zona { position: relative; z-index: 1; flex: 1; min-height: 0; }
 
   /* Botones */
@@ -146,11 +150,16 @@
   @keyframes mjTemblor { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); } }
   .temblor { animation: mjTemblor .4s; }
 
+  @media (max-width: 900px) {
+    .mj-volver { width: 40px; padding: 0; justify-content: center; }
+    .mj-volver span { display: none; }
+  }
   @media (max-width: 480px) {
     .mj-top { padding: 8px 12px; gap: 6px; }
     .mj-titulo { visibility: hidden; }
     .mj-dato { min-width: 44px; padding: 3px 7px; }
     .mj-icon { width: 36px; height: 36px; }
+    .mj-volver { width: 36px; height: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }

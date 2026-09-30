@@ -44,7 +44,8 @@
     "activat": "Activat",
     "desactivat": "Desactivat",
     "sinWebgl": "Aquest dispositiu no pot mostrar gràfics 3D.",
-    "sinWebglAyuda": "Prova-ho amb un altre navegador o activa l'acceleració gràfica."
+    "sinWebglAyuda": "Prova-ho amb un altre navegador o activa l'acceleració gràfica.",
+    "volverExamenes": "Tornar als exàmens"
   },
   "carrera": {
     "titulo": "L'Assalt a la Bastilla",

@@ -14,6 +14,7 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
     "cartaTapada", "restants", "tempsEsgotat",
     "triaTactil", "triaTeclat", "rapidesa",  // carrera: indicación al pararse ante las puertas y nombre del bonus
     "musica", "silenciarMusica", "activarMusica",  // opcionales: crédito y botón de música
+    "volverExamenes",  // opcional: botón para volver a la portada con todos los temas (barra superior y ventana final); sin él se usa "volver"
     "audio", "ambiente", "efectos", "detalleAmbiente", "detalleEfectos", "activat", "desactivat"  // opcionales: interruptores del menú de pausa
   },
 
