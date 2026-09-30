@@ -76,7 +76,7 @@ Las fotos del material **nunca** se usan en el juego (tienen copyright). Se usan
    Commons limita las peticiones: haz pocas búsquedas y espaciadas. Si un tema no tiene obras adecuadas (p. ej. matemáticas), usa menos imágenes: el motor se ve bien solo con sus motivos SVG.
 2. Escribe `<carpeta>/imagenes-lista.json`: `[{ "clave": "portada", "archivo": "File:…", "lado": 960 }, { "clave": "<id del nivel>", "archivo": "File:…", "lado": 500 }]`. La clave de cada nivel es su `id`.
 3. Ejecuta `node "<ruta del skill>/imagenes.mjs" "<carpeta>/imagenes-lista.json" "<carpeta>/imagenes"`. Solo descarga imágenes con licencia libre y escribe `imagenes/creditos.json`. Sustituye las RECHAZADAS por otras.
-4. Mira cada imagen descargada (Read) para confirmar que encaja con su apartado.
+4. Mira cada imagen descargada (Read) para confirmar que encaja con su apartado. Revisa sobre todo los **márgenes de escaneo** (papel claro o marco alrededor de grabados y cuadros): en la portada se ven como franjas en los lados de la tarjeta. Recórtalos hasta dentro del marco (p. ej. con Python/PIL: `Image.open(p).crop((izq, sup, ancho - der, alto - inf)).save(p, quality=86)`) antes de montar el juego; si se vuelve a ejecutar `imagenes.mjs`, hay que repetir el recorte.
 5. En el JSON, cada imagen lleva `titulo`, `autor` y `anio` **revisados a mano** (los de Commons traen ruido) y `licencia` y `fuente` copiados de `creditos.json`.
 6. Presupuesto: `index.html` <= 3 MB (unas 11 imágenes: portada a 960 px y niveles a 500 px).
 
