@@ -101,6 +101,8 @@ const DATOS = /*__DATOS__*/null;
   let s = null;
   function nuevo() {
     if (s) limpiarEscena();
+    // El reciclado solo adelanta edificios y farolas: al volver a empezar (dist = 0) vuelven a su posición inicial
+    for (const e of edificios.concat(farolas)) if (e.userData.pos0 != null) e.userData.pos = e.userData.pos0;
     s = {
       dist: 0, v: V0, carril: 1, x: 1, vidas: VIDAS, puntos: 0, monedas: 0, aciertos: 0, fallos: 0,
       objs: [], genPos: 40, puertaSig: 0, puertasGeneradas: 0, invul: 0, sacudida: 0, t: 0,
@@ -1324,14 +1326,15 @@ const DATOS = /*__DATOS__*/null;
     sonidoFin: (victoria) => (victoria ? MJ.sfx.fanfarria() : MJ.sfx.tamborLento()),  // la aclamación ya sonó al llegar
   });
   nuevo();
-  montarEscena(); new ResizeObserver(medir).observe(zona); medir();
+  montarEscena(); for (const e of edificios.concat(farolas)) e.userData.pos0 = e.userData.pos;
+  new ResizeObserver(medir).observe(zona); medir();
 
   // Gancho de pruebas
   window.__minijuego = Object.assign(window.__minijuego || {}, {
     juego: 'carrera-v2', webgl: !!renderer, llegada: () => ({ fase: s.fase, t: s.tLlegada, dist: s.dist, meta: s.meta && s.meta.pos, bandera: bandera && bandera.position.y }),
     info: () => ({ vidas: s.vidas, puntos: Math.round(s.puntos), carril: s.carril, aciertos: s.aciertos, fallos: s.fallos, dist: Math.round(s.dist * 10) / 10, fin: s.fin, pregunta: s.mostrada, objetos: s.objs.length, fase: s.fase, bonus: s.bonus, rapidesa: s.rapidesa, panel: $preg.classList.contains('ver') }),
     mover, elegir, puertaEn, centroPuerta, sonido: () => MJ.sonido.estado(),
-    escena: () => renderer ? { mallas: grupoPista.children.length, edificios: edificios.length, farolas: farolas.length, sombras: renderer.shadowMap.enabled, dpr: renderer.getPixelRatio(), llamadas: renderer.info.render.calls, triangulos: renderer.info.render.triangles } : null,
+    escena: () => renderer ? { mallas: grupoPista.children.length, edificios: edificios.length, farolas: farolas.length, cerca: edificios.concat(farolas).filter((e) => e.visible && e.position.z > -VISTA).length, sombras: renderer.shadowMap.enabled, dpr: renderer.getPixelRatio(), llamadas: renderer.info.render.calls, triangulos: renderer.info.render.triangles } : null,
     avanzar: (seg, piloto) => {
       for (let t = 0; t < seg && !s.fin; t += 1 / 60) {
         if (piloto) piloto(s);
