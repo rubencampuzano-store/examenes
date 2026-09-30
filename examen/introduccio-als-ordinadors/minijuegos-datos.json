@@ -24,10 +24,6 @@
     "pistaCronoTeclado": "Arrossega cada fet fins a la seva data. Amb teclat: Tab per triar, Enter per agafar i fletxes per moure't.",
     "deixaAqui": "Deixa'l aquí",
     "ratxa": "Ratxa",
-    "millorRatxa": "Millor ratxa",
-    "parelles": "Parelles",
-    "moviments": "Moviments",
-    "cartaTapada": "Carta tapada",
     "restants": "restants",
     "tempsEsgotat": "Temps esgotat!",
     "triaTactil": "Toca la porta o el botó amb la resposta correcta",
@@ -359,81 +355,6 @@
     ],
     "premio": {
       "objetivo": 3500,
-      "tope": 300
-    }
-  },
-  "parejas": {
-    "titulo": "El taller de components",
-    "subtitulo": "Uneix cada component de l'ordinador amb la seva funció.",
-    "textoVictoria": "Taller complet!",
-    "etiquetaA": "Component",
-    "etiquetaB": "Funció",
-    "instrucciones": {
-      "tactil": [
-        [
-          "☝",
-          "Toca dues cartes per girar-les"
-        ],
-        [
-          "=",
-          "Uneix cada component amb la seva funció"
-        ],
-        [
-          "×2",
-          "Les parelles seguides sumen ratxa"
-        ]
-      ],
-      "teclado": [
-        [
-          "↑↓←→",
-          "Mou-te per les cartes amb les fletxes"
-        ],
-        [
-          "⏎",
-          "Gira la carta amb Enter o espai"
-        ],
-        [
-          "×2",
-          "Les parelles seguides sumen ratxa"
-        ]
-      ]
-    },
-    "parejas": [
-      {
-        "a": "CPU",
-        "b": "Cervell de l'ordinador"
-      },
-      {
-        "a": "RAM",
-        "b": "Memòria temporal"
-      },
-      {
-        "a": "ROM",
-        "b": "Només de lectura"
-      },
-      {
-        "a": "SSD",
-        "b": "Guarda programes i fitxers"
-      },
-      {
-        "a": "GPU",
-        "b": "Processa gràfics i vídeo"
-      },
-      {
-        "a": "Dissipador",
-        "b": "Evita que la CPU s'escalfi"
-      },
-      {
-        "a": "Bateria CMOS",
-        "b": "Manté l'hora i la BIOS"
-      },
-      {
-        "a": "Bus",
-        "b": "Per on circula la informació"
-      }
-    ],
-    "premio": {
-      "objetivo": 2000,
       "tope": 300
     }
   },

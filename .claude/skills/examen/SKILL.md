@@ -100,11 +100,10 @@ Diseña una dirección visual propia del tema (época, lugar, disciplina) con `f
 4. Opcional: si el usuario quiere verlo en el móvil, ofrece publicarlo como artifact privado (pide confirmación antes).
 
 ## Paso 8 — Minijuegos
-Cuatro minijuegos temáticos en archivos separados (de momento no están integrados en `index.html`). Controles pensados para ordenador, móvil y tablet.
+Tres minijuegos temáticos en archivos separados (de momento no están integrados en `index.html`). Controles pensados para ordenador, móvil y tablet.
 1. Escribe `<carpeta>/minijuegos-datos.json` siguiendo **exactamente** `esquema-minijuegos.md`, con contenido sacado solo de `apuntes.md`:
    - `carrera`: 10-12 preguntas de respuesta muy corta (≤ 14 caracteres, 3 opciones), un "objetivo" propio del tema y la `escena` 3D más adecuada.
    - `cronologia`: 3-4 rondas de 5 hechos con su fecha (o pasos de un proceso si el tema no es histórico).
-   - `parejas`: 8 parejas concepto ↔ idea/obra/definición.
    - `clasifica`: 3 rondas de 8 tarjetas con dos categorías excluyentes.
    Títulos y textos ambientados en el tema (como en el Paso 6).
 2. Ejecuta:
@@ -112,7 +111,7 @@ Cuatro minijuegos temáticos en archivos separados (de momento no están integra
    node "<ruta del skill>/construir-minijuegos.mjs" "<carpeta>/juego-datos.json" "<carpeta>/minijuegos-datos.json" "<carpeta>/minijuegos"
    ```
 3. Corrige los ERRORES y revisa los AVISOS (textos demasiado largos para móvil).
-   La carrera se genera solo en 3D (`carrera-v2.html`, con los datos de `carrera`); necesita `minijuegos/vendor/three.min.js`. El escenario se elige con `carrera.escena`: `paris-1789` (por defecto: calles de París y llegada a la Bastilla) o `placa-base` (bus de datos de una placa base hasta la CPU; temas de informática y tecnología). Si ninguna escena encaja con el tema, **pregunta al usuario** si quiere usar una de las existentes, adaptar `carrera3d.html` con una escena nueva (añadiéndola también a `ESCENAS` en `construir-minijuegos.mjs`) u omitir la sección `carrera`.
+   La carrera se genera solo en 3D (`carrera.html`, con los datos de `carrera`); necesita `minijuegos/vendor/three.min.js`. El escenario se elige con `carrera.escena`: `paris-1789` (por defecto: calles de París y llegada a la Bastilla) o `placa-base` (bus de datos de una placa base hasta la CPU; temas de informática y tecnología). Si ninguna escena encaja con el tema, **pregunta al usuario** si quiere usar una de las existentes, adaptar `carrera3d.html` con una escena nueva (añadiéndola también a `ESCENAS` en `construir-minijuegos.mjs`) u omitir la sección `carrera`.
 4. Sonido de `carrera` (ver "Sonido" en `esquema-minijuegos.md`): elige el `preset` más cercano al tema y, si hay una grabación adecuada de dominio público o CC0 en Wikimedia Commons, descárgala y comprímela con
    `node "<ruta del skill>/audio.mjs" "File:Nombre.ogg" "<carpeta>/audio/nombre.mp3" 48`
    y añádela en `carrera.sonido.musica` con su crédito completo. Si no hay ninguna adecuada, deja solo el `preset` (ambiente y efectos sintetizados).

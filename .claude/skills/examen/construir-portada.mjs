@@ -20,7 +20,7 @@ const TX = {
   buit: 'Encara no hi ha cap tema.',
   peu: 'Imatges i música de domini públic (crèdits dins de cada joc).',
 };
-const NOMBRES_MINI = { 'carrera-v2': 'Carrera 3D', cronologia: 'Línia del temps', parejas: 'Parelles', clasifica: 'Classifica' };
+const NOMBRES_MINI = { carrera: 'Carrera 3D', cronologia: 'Línia del temps', clasifica: 'Classifica' };
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const temas = [];
@@ -36,7 +36,7 @@ for (const nombre of readdirSync(dirTemas).sort()) {
     const m = JSON.parse(readFileSync(rutaMini, 'utf8'));
     for (const id of Object.keys(NOMBRES_MINI)) {
       if (!existsSync(join(dir, 'minijuegos', `${id}.html`))) continue;
-      if (id === 'carrera-v2' && m.carrera) minis[id] = m.carrera.titulo + (m.carrera.sufijo3d ?? ' 3D');  // usa los datos de carrera
+      if (id === 'carrera' && m.carrera) minis[id] = m.carrera.titulo + (m.carrera.sufijo3d ?? ' 3D');  // usa los datos de carrera
       else if (m[id]) minis[id] = m[id].titulo || NOMBRES_MINI[id];
     }
   }

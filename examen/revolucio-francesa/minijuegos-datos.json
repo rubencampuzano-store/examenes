@@ -24,10 +24,6 @@
     "pistaCronoTeclado": "Arrossega cada fet fins a la seva data. Amb teclat: Tab per triar, Enter per agafar i fletxes per moure't.",
     "deixaAqui": "Deixa'l aquí",
     "ratxa": "Ratxa",
-    "millorRatxa": "Millor ratxa",
-    "parelles": "Parelles",
-    "moviments": "Moviments",
-    "cartaTapada": "Carta tapada",
     "restants": "restants",
     "tempsEsgotat": "Temps esgotat!",
     "triaTactil": "Toca la porta o el botó amb la resposta correcta",
@@ -387,81 +383,6 @@
     ],
     "premio": {
       "objetivo": 4500,
-      "tope": 300
-    }
-  },
-  "parejas": {
-    "titulo": "El Saló de Madame Geoffrin",
-    "subtitulo": "Al saló s'hi reuneixen els grans noms del segle XVIII. Uneix cada personatge amb la seva idea o obra.",
-    "textoVictoria": "Saló complet!",
-    "etiquetaA": "Personatge",
-    "etiquetaB": "Idea o obra",
-    "instrucciones": {
-      "tactil": [
-        [
-          "☝",
-          "Toca dues cartes per girar-les"
-        ],
-        [
-          "=",
-          "Uneix cada personatge amb la seva idea o obra"
-        ],
-        [
-          "×2",
-          "Les parelles seguides sumen ratxa"
-        ]
-      ],
-      "teclado": [
-        [
-          "↑↓←→",
-          "Mou-te per les cartes amb les fletxes"
-        ],
-        [
-          "⏎",
-          "Gira la carta amb Enter o espai"
-        ],
-        [
-          "×2",
-          "Les parelles seguides sumen ratxa"
-        ]
-      ]
-    },
-    "parejas": [
-      {
-        "a": "Montesquieu",
-        "b": "Divisió de poders"
-      },
-      {
-        "a": "Rousseau",
-        "b": "Sobirania nacional"
-      },
-      {
-        "a": "Locke",
-        "b": "Drets naturals"
-      },
-      {
-        "a": "Diderot i D'Alembert",
-        "b": "L'Enciclopèdia"
-      },
-      {
-        "a": "Robespierre",
-        "b": "El Terror"
-      },
-      {
-        "a": "Olympe de Gouges",
-        "b": "Drets de la Dona"
-      },
-      {
-        "a": "Carles III",
-        "b": "Despotisme il·lustrat"
-      },
-      {
-        "a": "Napoleó",
-        "b": "Codi Civil"
-      }
-    ],
-    "premio": {
-      "objetivo": 2000,
       "tope": 300
     }
   },

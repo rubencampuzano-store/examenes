@@ -20,11 +20,11 @@ const js = readFileSync(join(aqui, 'comun.js'), 'utf8');
 const errores = [], avisos = [];
 const req = (c, m) => { if (!c) errores.push(m); };
 // Minijuegos DOM que se montan desde su plantilla. La carrera (datos "carrera") solo existe en 3D: ver más abajo.
-const JUEGOS = ['cronologia', 'parejas', 'clasifica'];
+const JUEGOS = ['cronologia', 'clasifica'];
 
 const TEXTOS = ['jugar', 'pausa', 'continuar', 'reiniciar', 'record', 'tambienTactil', 'victoria', 'finPartida', 'guanyes', 'nuevoRecord',
   'repetir', 'volver', 'vidas', 'porta', 'ai', 'encerts', 'errors', 'objetos', 'ronda', 'temps', 'pistaCronoTactil', 'pistaCronoTeclado',
-  'deixaAqui', 'ratxa', 'millorRatxa', 'parelles', 'moviments', 'cartaTapada', 'restants', 'tempsEsgotat', 'triaTactil', 'triaTeclat', 'rapidesa'];
+  'deixaAqui', 'ratxa', 'restants', 'tempsEsgotat', 'triaTactil', 'triaTeclat', 'rapidesa'];
 for (const k of TEXTOS) req(mini.textos && mini.textos[k] != null, `textos.${k} falta`);
 
 function comunes(j, id) {
@@ -61,16 +61,6 @@ if (comunes(mini.cronologia, 'cronologia')) {
     if (new Set(ev.map((e) => e.orden)).size !== ev.length) errores.push(`cronologia.rondas[${i}] tiene valores de orden repetidos`);
     if (new Set(ev.map((e) => e.fecha)).size !== ev.length) errores.push(`cronologia.rondas[${i}] tiene fechas repetidas (el jugador no podría distinguir los huecos)`);
   });
-}
-// parejas
-if (comunes(mini.parejas, 'parejas')) {
-  const p = mini.parejas.parejas || [];
-  req(p.length === 8, 'parejas.parejas debe tener exactamente 8 parejas (rejilla 4×4)');
-  req(mini.parejas.etiquetaA && mini.parejas.etiquetaB, 'parejas necesita etiquetaA y etiquetaB');
-  const textos = p.flatMap((x) => [x.a, x.b]);
-  req(textos.every(Boolean), 'parejas: todas las parejas necesitan a y b');
-  if (new Set(textos).size !== textos.length) errores.push('parejas: hay textos repetidos');
-  textos.forEach((t) => { if (String(t).length > 32) avisos.push(`parejas: "${t}" es largo (>32) y puede no caber en móvil`); });
 }
 // clasifica
 if (comunes(mini.clasifica, 'clasifica')) {
@@ -139,16 +129,16 @@ for (const id of JUEGOS) {
   console.log(`OK  ${ruta}  (${kb.toFixed(0)} KB)`);
 }
 // ---------- Carrera 3D (Three.js incrustado) ----------
-// Datos de la sección "carrera". Archivo e id "carrera-v2" por compatibilidad con los enlaces y récords ya guardados.
+// Datos de la sección "carrera". Archivo carrera.html, id "carrera".
 const rutaV2 = join(aqui, 'carrera3d.html'), rutaThree = join(aqui, 'vendor', 'three.min.js');
 if (mini.carrera && existsSync(rutaV2)) {
   if (!existsSync(rutaThree)) {
-    errores.push('carrera-v2 no generada: falta minijuegos/vendor/three.min.js (three@0.159.0/build/three.min.js)');
+    errores.push('carrera no generada: falta minijuegos/vendor/three.min.js (three@0.159.0/build/three.min.js)');
   } else {
     // Se quita el aviso de "build obsoleta" que Three.js r159 muestra en la consola al cargarse
     const three = readFileSync(rutaThree, 'utf8').replace(/^console\.warn\('[^']*'\),/, '0,');
     const plantilla = readFileSync(rutaV2, 'utf8');
-    const datos = { meta: examen.meta, tema, textos, portada, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d ?? ' 3D') }) };
+    const datos = { meta: examen.meta, tema, textos, portada, juego: Object.assign({}, mini.carrera, { id: 'carrera', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d ?? ' 3D') }) };
     for (const m of ['/*__COMUN_CSS__*/', '/*__COMUN_JS__*/', '/*__DATOS__*/null', '/*__THREE__*/']) if (!plantilla.includes(m)) { console.error(`carrera3d.html no contiene ${m}`); process.exit(1); }
     const html = plantilla
       .replace('/*__COMUN_CSS__*/', () => css)
@@ -156,10 +146,10 @@ if (mini.carrera && existsSync(rutaV2)) {
       .replace('/*__THREE__*/', () => three)
       .replace('/*__DATOS__*/null', () => escJSON(datos))
       .replace('<title>Minijuego</title>', () => `<title>${escHTML(datos.juego.titulo)}</title>`);
-    const ruta = join(salida, 'carrera-v2.html');
+    const ruta = join(salida, 'carrera.html');
     writeFileSync(ruta, html, 'utf8');
     const kb = Buffer.byteLength(html) / 1024;
-    if (kb > 3072) avisos.push(`carrera-v2.html pesa ${(kb / 1024).toFixed(2)} MB (límite recomendado 3 MB)`);
+    if (kb > 3072) avisos.push(`carrera.html pesa ${(kb / 1024).toFixed(2)} MB (límite recomendado 3 MB)`);
     console.log(`OK  ${ruta}  (${kb.toFixed(0)} KB, 3D)`);
   }
 }

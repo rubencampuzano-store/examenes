@@ -1,6 +1,6 @@
 # Esquema de `minijuegos-datos.json`
 
-`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera-v2,cronologia,parejas,clasifica}.html` (la carrera solo existe en 3D).
+`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera,cronologia,clasifica}.html` (la carrera solo existe en 3D).
 El tema visual, `meta` y algunos textos (`puntos`, `moneda`, `selloAcierto`, `selloFallo`, `silenciar`, `activarSonido`) se toman de `juego-datos.json`.
 Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemplo completo: `examen/revolucio-francesa/minijuegos-datos.json`.
 
@@ -10,20 +10,20 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
   "textos": {                 // interfaz común (todas obligatorias)
     "jugar", "pausa", "continuar", "reiniciar", "record", "tambienTactil", "victoria", "finPartida", "guanyes",
     "nuevoRecord", "repetir", "volver", "vidas", "porta", "ai", "encerts", "errors", "objetos", "ronda", "temps",
-    "pistaCronoTactil", "pistaCronoTeclado", "deixaAqui", "ratxa", "millorRatxa", "parelles", "moviments",
-    "cartaTapada", "restants", "tempsEsgotat",
+    "pistaCronoTactil", "pistaCronoTeclado", "deixaAqui", "ratxa",
+    "restants", "tempsEsgotat",
     "triaTactil", "triaTeclat", "rapidesa",  // carrera: indicación al pararse ante las puertas y nombre del bonus
     "musica", "silenciarMusica", "activarMusica",  // opcionales: crédito y botón de música
     "volverExamenes",  // opcional: botón para volver a la portada con todos los temas (barra superior y ventana final); sin él se usa "volver"
     "audio", "ambiente", "efectos", "detalleAmbiente", "detalleEfectos", "activat", "desactivat"  // opcionales: interruptores del menú de pausa
   },
 
-  // Campos comunes a los 4 juegos:
+  // Campos comunes a los 3 juegos:
   //   titulo, subtitulo, textoVictoria, (textoDerrota),
   //   instrucciones: { "tactil": [["icono o tecla", "texto"], ...], "teclado": [[...], ...] }
   //   premio: { "objetivo": puntos que dan el premio completo, "tope": lliures máximas (300 recomendado) }
 
-  "carrera": {                // datos de la carrera 3D (carrera-v2.html). Correr por 3 carriles hacia un objetivo; en cada puerta el corredor SE DETIENE
+  "carrera": {                // datos de la carrera 3D (carrera.html). Correr por 3 carriles hacia un objetivo; en cada puerta el corredor SE DETIENE
                               // y no sigue hasta que se elige (1/2/3, tocar la puerta o el botón del panel).
                               // La pregunta solo aparece al pararse. Sin límite de tiempo; bonus de rapidez
                               // (+100 si responde en <= 2 s, baja hasta 0 a los 10 s). Fallo = -1 vida.
@@ -52,11 +52,6 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
     ]
   },
 
-  "parejas": {                // memoria 4×4
-    "etiquetaA": "Personatge", "etiquetaB": "Idea o obra",
-    "parejas": [ { "a": "Montesquieu", "b": "Divisió de poders" } ]   // exactamente 8; textos <= 32 caracteres
-  },
-
   "clasifica": {              // lanzar tarjetas a izquierda o derecha
     "tiempoRonda": 30,
     "rondas": [               // 3 rondas de 8 tarjetas, equilibradas entre los dos lados
@@ -69,16 +64,15 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
 ## Cómo adaptar a otros temas
 - **carrera**: el "objetivo" es el lugar o meta del tema (p. ej. "Troia", "el cim"). Las preguntas de las puertas deben tener respuestas muy cortas (años, nombres, una palabra).
 - **cronologia**: si el tema no es histórico, usa secuencias de un proceso (fases de la mitosis, pasos de un método) con `orden` 1, 2, 3… y `fecha` como etiqueta del paso.
-- **parejas**: concepto ↔ definición, autor ↔ obra, término ↔ ejemplo.
 - **clasifica**: dos categorías excluyentes por ronda (vertebrado/invertebrado, metal/no metal…).
 
-## Carrera 3D (`carrera-v2.html`)
-Única versión de la carrera, con Three.js (plantilla `minijuegos/carrera3d.html`). Usa la sección `carrera` de los datos. El archivo y el id se llaman `carrera-v2` para no romper enlaces ni récords guardados.
+## Carrera 3D (`carrera.html`)
+Única versión de la carrera, con Three.js (plantilla `minijuegos/carrera3d.html`). Usa la sección `carrera` de los datos.
 - Controles: ← → / A D o deslizar/tocar para cambiar de carril; en las puertas, 1/2/3, tocar la puerta 3D o los botones del panel.
 - Escena generada por código (sin imágenes externas): calle de adoquines con casas del París de 1789, faroles colgados, luna y estrellas, corredor low-poly animado, barricadas con soldados del rey, escarapelas, puertas con carteles y, al final, la plaza con la Bastilla (bandera, multitud y fuegos artificiales).
 - Three.js r159 incrustado desde `minijuegos/vendor/three.min.js` (licencia MIT en `vendor/THREE-LICENSE.txt`): funciona sin internet. Peso ≈ 1,4 MB con música.
 - Rendimiento: resolución limitada y **calidad automática** (si baja de ~40 fps quita sombras y luego resolución). Sin WebGL muestra un aviso.
-- La escena está pensada para la Revolución francesa (París nocturno y la Bastilla). Para otros temas, el texto `carrera.objetivo` se sigue mostrando, pero los edificios y la fortaleza son los mismos: adaptar la escena de `carrera3d.html` si el tema lo pide.
+- Escenarios (`carrera.escena`): `paris-1789` (por defecto) y `placa-base` (bus de datos de una placa base hasta la CPU). Otro tema necesita una escena nueva en `carrera3d.html` (y añadirla a `ESCENAS` en `construir-minijuegos.mjs`) u omitir `carrera`.
 - Textos opcionales: `sinWebgl`, `sinWebglAyuda`.
 
 ## Sonido

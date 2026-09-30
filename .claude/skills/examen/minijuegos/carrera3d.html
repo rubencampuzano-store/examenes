@@ -1317,7 +1317,7 @@ const DATOS = /*__DATOS__*/null;
     }
   });
 
-  if (!renderer) { window.__minijuego = { juego: 'carrera-v2', webgl: false }; return; }
+  if (!renderer) { window.__minijuego = { juego: 'carrera', webgl: false }; return; }
   MJ.iniciar({
     preparar: () => { nuevo(); camara && camara.position.set(0, 3.3, 6.6); dibujar(0); },
     empezar: arrancar,
@@ -1331,7 +1331,7 @@ const DATOS = /*__DATOS__*/null;
 
   // Gancho de pruebas
   window.__minijuego = Object.assign(window.__minijuego || {}, {
-    juego: 'carrera-v2', webgl: !!renderer, llegada: () => ({ fase: s.fase, t: s.tLlegada, dist: s.dist, meta: s.meta && s.meta.pos, bandera: bandera && bandera.position.y }),
+    juego: 'carrera', webgl: !!renderer, llegada: () => ({ fase: s.fase, t: s.tLlegada, dist: s.dist, meta: s.meta && s.meta.pos, bandera: bandera && bandera.position.y }),
     info: () => ({ vidas: s.vidas, puntos: Math.round(s.puntos), carril: s.carril, aciertos: s.aciertos, fallos: s.fallos, dist: Math.round(s.dist * 10) / 10, fin: s.fin, pregunta: s.mostrada, objetos: s.objs.length, fase: s.fase, bonus: s.bonus, rapidesa: s.rapidesa, panel: $preg.classList.contains('ver') }),
     mover, elegir, puertaEn, centroPuerta, sonido: () => MJ.sonido.estado(),
     escena: () => renderer ? { mallas: grupoPista.children.length, edificios: edificios.length, farolas: farolas.length, cerca: edificios.concat(farolas).filter((e) => e.visible && e.position.z > -VISTA).length, sombras: renderer.shadowMap.enabled, dpr: renderer.getPixelRatio(), llamadas: renderer.info.render.calls, triangulos: renderer.info.render.triangles } : null,
