@@ -36,7 +36,7 @@ for (const nombre of readdirSync(dirTemas).sort()) {
     const m = JSON.parse(readFileSync(rutaMini, 'utf8'));
     for (const id of Object.keys(NOMBRES_MINI)) {
       if (!existsSync(join(dir, 'minijuegos', `${id}.html`))) continue;
-      if (id === 'carrera-v2' && m.carrera) minis[id] = m.carrera.titulo + (m.carrera.sufijo3d || ' 3D');  // usa los datos de carrera
+      if (id === 'carrera-v2' && m.carrera) minis[id] = m.carrera.titulo + (m.carrera.sufijo3d ?? ' 3D');  // usa los datos de carrera
       else if (m[id]) minis[id] = m[id].titulo || NOMBRES_MINI[id];
     }
   }

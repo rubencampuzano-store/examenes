@@ -32,8 +32,10 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
       "musica": { "archivo": "audio/marsellesa.mp3", "titulo": "La Marseillaise", "interprete": "United States Navy Band",
                   "anio": "c. 1987", "licencia": "Domini públic", "fuente": "https://commons.wikimedia.org/wiki/File:La_Marseillaise.ogg" }
     },
+    "escena": "paris-1789",               // opcional: paris-1789 (por defecto) | placa-base (bus de datos hasta la CPU)
     "objetivo": "la Bastilla",            // meta del recorrido (nombre del lugar)
-    "sufijo3d": " 3D",                   // opcional: se añade al título
+    "sufijo3d": " 3D",                   // opcional: se añade al título (por defecto " 3D"; "" para no añadir nada)
+    "textoLlegada": "…",                  // opcional, solo placa-base: rótulo que se enciende al llegar (por defecto "Instrucció executada!")
     "objeto": { "plural": "Escarapel·les" },
     "vidas": 3,
     "numPuertas": 8,                      // se eligen al azar de "puertas" en cada partida

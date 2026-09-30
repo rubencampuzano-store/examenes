@@ -1,0 +1,596 @@
+{
+  "textos": {
+    "jugar": "Juga",
+    "pausa": "Pausa",
+    "continuar": "Continua",
+    "reiniciar": "Torna a començar",
+    "record": "Rècord",
+    "tambienTactil": "També es pot jugar amb pantalla tàctil.",
+    "victoria": "Victòria!",
+    "finPartida": "Fi de la partida",
+    "guanyes": "Guanyes",
+    "nuevoRecord": "Nou rècord!",
+    "repetir": "Repeteix",
+    "volver": "Torna a l'examen",
+    "vidas": "Vides",
+    "porta": "Porta",
+    "ai": "Ai!",
+    "encerts": "Encerts",
+    "errors": "Errors",
+    "objetos": "Objectes",
+    "ronda": "Ronda",
+    "temps": "Temps",
+    "pistaCronoTactil": "Arrossega cada fet fins a la seva data, o toca el fet i després el forat.",
+    "pistaCronoTeclado": "Arrossega cada fet fins a la seva data. Amb teclat: Tab per triar, Enter per agafar i fletxes per moure't.",
+    "deixaAqui": "Deixa'l aquí",
+    "ratxa": "Ratxa",
+    "millorRatxa": "Millor ratxa",
+    "parelles": "Parelles",
+    "moviments": "Moviments",
+    "cartaTapada": "Carta tapada",
+    "restants": "restants",
+    "tempsEsgotat": "Temps esgotat!",
+    "triaTactil": "Toca la porta o el botó amb la resposta correcta",
+    "triaTeclat": "Tria la resposta amb 1, 2 o 3 (o fes-hi clic)",
+    "rapidesa": "Rapidesa",
+    "musica": "Música",
+    "silenciarMusica": "Silencia la música",
+    "activarMusica": "Activa la música",
+    "audio": "So",
+    "ambiente": "Ambient",
+    "efectos": "Efectes",
+    "detalleAmbiente": "Brunzit electrònic",
+    "detalleEfectos": "Bits, virus, portes i fanfàrries",
+    "activat": "Activat",
+    "desactivat": "Desactivat",
+    "sinWebgl": "Aquest dispositiu no pot mostrar gràfics 3D.",
+    "sinWebglAyuda": "Prova-ho amb un altre navegador o activa l'acceleració gràfica."
+  },
+  "carrera": {
+    "titulo": "Viatge pel bus de dades",
+    "sufijo3d": "",
+    "escena": "placa-base",
+    "subtitulo": "Ets un paquet de dades. Corre pel bus de la placa base, esquiva els virus i tria la porta correcta fins arribar a la CPU.",
+    "objetivo": "la CPU",
+    "objeto": {
+      "plural": "Bits"
+    },
+    "textoVictoria": "Dades a la CPU! Instrucció executada!",
+    "textoDerrota": "Sistema penjat... Torna-ho a provar!",
+    "vidas": 3,
+    "numPuertas": 8,
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Toca la meitat esquerra o dreta, o llisca, per canviar de línia del bus"
+        ],
+        [
+          "01",
+          "Recull bits i esquiva els virus"
+        ],
+        [
+          "123",
+          "A cada porta et pararàs: toca la porta o el botó amb la resposta correcta"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Canvia de línia del bus (també amb A i D)"
+        ],
+        [
+          "01",
+          "Recull bits i esquiva els virus"
+        ],
+        [
+          "123",
+          "A cada porta et pararàs: tria la resposta amb 1, 2 o 3"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "puertas": [
+      {
+        "pregunta": "Quina memòria s'esborra en apagar?",
+        "opciones": [
+          "RAM",
+          "ROM",
+          "Disc dur"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quina memòria és només de lectura?",
+        "opciones": [
+          "RAM",
+          "ROM",
+          "SSD"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Quin és el cervell de l'ordinador?",
+        "opciones": [
+          "GPU",
+          "Ventilador",
+          "CPU"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "El teclat és un perifèric...",
+        "opciones": [
+          "d'entrada",
+          "de sortida",
+          "d'emmagatz."
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "La impressora és un perifèric...",
+        "opciones": [
+          "d'entrada",
+          "de sortida",
+          "de xarxa"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Qui tradueix alt nivell a llenguatge màquina?",
+        "opciones": [
+          "El ratolí",
+          "La BIOS",
+          "El compilador"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Nivell d'abstracció més baix?",
+        "opciones": [
+          "Lògica digital",
+          "Usuari",
+          "Assemblador"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Què s'activa primer en engegar?",
+        "opciones": [
+          "El SO",
+          "La font",
+          "L'escriptori"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "On s'ha de carregar un programa per executar-lo?",
+        "opciones": [
+          "ROM",
+          "Monitor",
+          "RAM"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Què processa els gràfics i el vídeo?",
+        "opciones": [
+          "GPU",
+          "SSD",
+          "CMOS"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quin d'aquests és un sistema operatiu?",
+        "opciones": [
+          "Java",
+          "Linux",
+          "MySQL"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Per on circula la informació entre CPU i memòria?",
+        "opciones": [
+          "La bateria",
+          "L'altaveu",
+          "El bus"
+        ],
+        "correcta": 2
+      }
+    ],
+    "premio": {
+      "objetivo": 2600,
+      "tope": 300
+    },
+    "sonido": {
+      "preset": "tecnologia",
+      "volumenMusica": 0.5,
+      "musica": {
+        "archivo": "audio/slay-the-evil.mp3",
+        "titulo": "Slay The Evil (8-bit Music for GameDev)",
+        "interprete": "HydroGene",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:8-bit_Music_for_GameDev_-_01._Slay_The_Evil.opus"
+      }
+    },
+    "textoLlegada": "Instrucció executada!"
+  },
+  "cronologia": {
+    "titulo": "Seqüències de l'ordinador",
+    "subtitulo": "Posa cada pas al seu lloc abans que s'acabi el temps: l'arrencada, els nivells d'abstracció i el camí de les dades.",
+    "textoVictoria": "Seqüències completes!",
+    "textoDerrota": "S'ha acabat el temps",
+    "tiempoRonda": 45,
+    "instrucciones": {
+      "tactil": [
+        [
+          "☝",
+          "Arrossega cada pas fins al seu lloc"
+        ],
+        [
+          "2×",
+          "O toca el pas i després el forat"
+        ],
+        [
+          "⏱",
+          "Cada error resta 3 segons"
+        ]
+      ],
+      "teclado": [
+        [
+          "🖱",
+          "Arrossega cada pas amb el ratolí fins al seu lloc"
+        ],
+        [
+          "⇥",
+          "Tab per triar un pas i Enter per agafar-lo"
+        ],
+        [
+          "←→",
+          "Tria el forat amb les fletxes i prem Enter"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "titulo": "L'arrencada",
+        "eventos": [
+          {
+            "texto": "S'activa la font d'alimentació",
+            "fecha": "Pas 1",
+            "orden": 1
+          },
+          {
+            "texto": "S'executa la ROM (BIOS) i es revisen els elements",
+            "fecha": "Pas 2",
+            "orden": 2
+          },
+          {
+            "texto": "S'executen instruccions del sistema operatiu",
+            "fecha": "Pas 3",
+            "orden": 3
+          },
+          {
+            "texto": "S'engega l'intèrpret de comandes (escriptori)",
+            "fecha": "Pas 4",
+            "orden": 4
+          },
+          {
+            "texto": "Obrim un programa i es carrega a la RAM",
+            "fecha": "Pas 5",
+            "orden": 5
+          }
+        ]
+      },
+      {
+        "titulo": "Nivells d'abstracció",
+        "eventos": [
+          {
+            "texto": "Lògica digital",
+            "fecha": "Nivell 0",
+            "orden": 0
+          },
+          {
+            "texto": "Màquina",
+            "fecha": "Nivell 2",
+            "orden": 2
+          },
+          {
+            "texto": "Software del sistema",
+            "fecha": "Nivell 3",
+            "orden": 3
+          },
+          {
+            "texto": "Llenguatge assemblador",
+            "fecha": "Nivell 4",
+            "orden": 4
+          },
+          {
+            "texto": "Llenguatge d'alt nivell",
+            "fecha": "Nivell 5",
+            "orden": 5
+          },
+          {
+            "texto": "Usuari",
+            "fecha": "Nivell 6",
+            "orden": 6
+          }
+        ]
+      },
+      {
+        "titulo": "El camí de les dades",
+        "eventos": [
+          {
+            "texto": "Activem el programa: es carrega a la RAM",
+            "fecha": "Pas 1",
+            "orden": 1
+          },
+          {
+            "texto": "Introduïm dades amb un perifèric d'entrada",
+            "fecha": "Pas 2",
+            "orden": 2
+          },
+          {
+            "texto": "La CPU executa les instruccions una a una",
+            "fecha": "Pas 3",
+            "orden": 3
+          },
+          {
+            "texto": "El programa envia les dades a un dispositiu de sortida",
+            "fecha": "Pas 4",
+            "orden": 4
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 3500,
+      "tope": 300
+    }
+  },
+  "parejas": {
+    "titulo": "El taller de components",
+    "subtitulo": "Uneix cada component de l'ordinador amb la seva funció.",
+    "textoVictoria": "Taller complet!",
+    "etiquetaA": "Component",
+    "etiquetaB": "Funció",
+    "instrucciones": {
+      "tactil": [
+        [
+          "☝",
+          "Toca dues cartes per girar-les"
+        ],
+        [
+          "=",
+          "Uneix cada component amb la seva funció"
+        ],
+        [
+          "×2",
+          "Les parelles seguides sumen ratxa"
+        ]
+      ],
+      "teclado": [
+        [
+          "↑↓←→",
+          "Mou-te per les cartes amb les fletxes"
+        ],
+        [
+          "⏎",
+          "Gira la carta amb Enter o espai"
+        ],
+        [
+          "×2",
+          "Les parelles seguides sumen ratxa"
+        ]
+      ]
+    },
+    "parejas": [
+      {
+        "a": "CPU",
+        "b": "Cervell de l'ordinador"
+      },
+      {
+        "a": "RAM",
+        "b": "Memòria temporal"
+      },
+      {
+        "a": "ROM",
+        "b": "Només de lectura"
+      },
+      {
+        "a": "SSD",
+        "b": "Guarda programes i fitxers"
+      },
+      {
+        "a": "GPU",
+        "b": "Processa gràfics i vídeo"
+      },
+      {
+        "a": "Dissipador",
+        "b": "Evita que la CPU s'escalfi"
+      },
+      {
+        "a": "Bateria CMOS",
+        "b": "Manté l'hora i la BIOS"
+      },
+      {
+        "a": "Bus",
+        "b": "Per on circula la informació"
+      }
+    ],
+    "premio": {
+      "objetivo": 2000,
+      "tope": 300
+    }
+  },
+  "clasifica": {
+    "titulo": "Entrada o sortida?",
+    "subtitulo": "Envia cada targeta al seu grup tan ràpid com puguis. Tres rondes de 30 segons.",
+    "textoVictoria": "Classificació perfecta!",
+    "textoDerrota": "Cal repassar una mica...",
+    "tiempoRonda": 30,
+    "instrucciones": {
+      "tactil": [
+        [
+          "⇆",
+          "Llisca la targeta cap al seu grup"
+        ],
+        [
+          "☝",
+          "O fes servir els botons de sota"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Envia la targeta a l'esquerra o a la dreta"
+        ],
+        [
+          "🖱",
+          "També pots arrossegar-la o usar els botons"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "izquierda": "Entrada",
+        "derecha": "Sortida",
+        "tarjetas": [
+          {
+            "texto": "Teclat",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Ratolí",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Escàner",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Micròfon",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Monitor",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Impressora",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Altaveus",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Plotter",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "Hardware",
+        "derecha": "Software",
+        "tarjetas": [
+          {
+            "texto": "Processador",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Memòria RAM",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Disc dur",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Targeta gràfica",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Sistema operatiu",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Compilador",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Programari d'aplicacions",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Linux",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "RAM",
+        "derecha": "ROM",
+        "tarjetas": [
+          {
+            "texto": "Es pot escriure i llegir",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Es perd en apagar",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Instruccions dels programes a executar",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Dades amb què treballen els programes",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Només és de lectura",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Programes que engeguen l'ordinador",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Diagnòstics en arrencar",
+            "lado": "derecha"
+          },
+          {
+            "texto": "BIOS",
+            "lado": "derecha"
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 5000,
+      "tope": 300
+    }
+  }
+}

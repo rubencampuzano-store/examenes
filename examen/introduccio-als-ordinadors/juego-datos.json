@@ -1,0 +1,1383 @@
+{
+  "meta": {
+    "id": "introduccio-ordinadors-t1",
+    "titulo": "Dins de l'ordinador",
+    "tituloPartido": [
+      "Dins de",
+      "l'ordinador"
+    ],
+    "eyebrow": "Tecnologia · Components d'un ordinador",
+    "subtitulo": "Introducció als ordinadors: hardware, software i funcionament",
+    "intro": "Comences sent un simple bit. Respon bé, supera els 9 nivells i arriba fins al gigabyte!",
+    "idioma": "ca",
+    "icono": "💾"
+  },
+  "tema": {
+    "colores": {
+      "fondo": "#0a2620",
+      "superficie": "#eef3ea",
+      "texto": "#14201a",
+      "textoSuave": "#4a5a50",
+      "textoClaro": "#e3efe6",
+      "acento": "#c2410c",
+      "oro": "#d19a5b",
+      "acierto": "#23804a",
+      "fallo": "#c0392b"
+    },
+    "fuentes": {
+      "display": "'Chakra Petch', 'Segoe UI', system-ui, sans-serif",
+      "texto": "'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif",
+      "mono": "'JetBrains Mono', ui-monospace, Consolas, monospace"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,500;1,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap",
+    "duotono": [
+      "#0a2620",
+      "#e3efe6"
+    ],
+    "motivo": {
+      "patron": "circuito",
+      "sello": "Unitat Central de Procés",
+      "monograma": "CPU"
+    },
+    "numeracion": "arabe",
+    "confeti": [
+      "#23804a",
+      "#d19a5b",
+      "#e3efe6",
+      "#c2410c"
+    ],
+    "imagenes": {
+      "portada": {
+        "archivo": "imagenes/portada.jpg",
+        "titulo": "Detall d'una placa base",
+        "autor": "Lenharth Systems",
+        "anio": "2024",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg"
+      }
+    }
+  },
+  "textos": {
+    "jugar": "Engega l'ordinador",
+    "continuar": "Continua",
+    "niveles": "Nivells",
+    "logros": "Assoliments",
+    "apuntes": "Apunts",
+    "puntos": "punts",
+    "preguntas": "preguntes",
+    "estrellas": "estrelles",
+    "nivelesSuperados": "nivells superats",
+    "sinRango": "Sense dades",
+    "siguienteRango": "Proper rang",
+    "rangoMaximo": "Has arribat al gigabyte!",
+    "reiniciar": "Reinicia el progrés",
+    "confirmarReinicio": "Segur que vols esborrar tot el progrés? Es formatejarà tot!",
+    "bloqueado": "Supera el nivell anterior per desbloquejar-lo",
+    "mejor": "millor",
+    "ayudaMapa": "Nou nivells, de què és un ordinador fins a les parts del portàtil. Aprova cada nivell amb un 60% per obrir el següent.",
+    "dificultad": {
+      "facil": "Fàcil",
+      "media": "Mitjana",
+      "dificil": "Difícil"
+    },
+    "salir": "Surt",
+    "confirmarSalir": "Vols sortir? Perdràs aquesta partida.",
+    "siguiente": "Següent",
+    "verResultado": "Veure resultat",
+    "mensajesAcierto": [
+      "Correcte! Dades rebudes.",
+      "Instrucció executada!",
+      "Bit a bit, ho tens!",
+      "La CPU t'aprova!",
+      "Compilat sense errors!"
+    ],
+    "mensajesFallo": [
+      "Error 404: resposta no trobada",
+      "Ups! Pantalla blava...",
+      "Reinicia i torna-ho a provar",
+      "Aquesta dada està corrupta",
+      "Virus detectat! Repassa els apunts"
+    ],
+    "laCorrectaEra": "La correcta era",
+    "nivelPerfecto": "Nivell perfecte! Zero errors!",
+    "nivelSuperado": "Nivell superat!",
+    "nivelNoSuperado": "Gairebé ho tens!",
+    "aciertos": "encerts",
+    "nuevoRecord": "Nou rècord!",
+    "necesitas": "Necessites un 60% d'encerts per superar el nivell. Repassa i torna-ho a provar!",
+    "desbloqueado": "Nou nivell desbloquejat",
+    "nuevoRango": "Nou rang",
+    "repetir": "Repeteix",
+    "siguienteNivel": "Següent nivell",
+    "repasa": "Repassa aquestes preguntes",
+    "consigue": "Aconsegueix el",
+    "delTotal": "dels bits totals",
+    "logroDesbloqueado": "Assoliment desbloquejat",
+    "inicio": "Inici",
+    "nivel": "Nivell",
+    "indice": "Índex",
+    "rangoActual": "Rang actual",
+    "selloAcierto": "Correcte",
+    "selloFallo": "Error",
+    "silenciar": "Silencia el so",
+    "activarSonido": "Activa el so",
+    "creditos": "Crèdits de les imatges",
+    "textoCreditos": "Totes les imatges són de domini públic o CC0 de Wikimedia Commons. S'hi indica l'autor, l'any i la llicència declarada a Commons.",
+    "fuenteImagen": "Veure a Wikimedia Commons",
+    "moneda": "bits",
+    "serie": "ID"
+  },
+  "rangos": [
+    {
+      "nombre": "Bit",
+      "icono": "⚡",
+      "umbral": 0.1,
+      "descripcion": "Arrenques el camí. Aconsegueix el 10% dels bits."
+    },
+    {
+      "nombre": "Byte",
+      "icono": "🔢",
+      "umbral": 0.3,
+      "descripcion": "Les dades comencen a créixer. Aconsegueix el 30% dels bits."
+    },
+    {
+      "nombre": "Kilobyte",
+      "icono": "💾",
+      "umbral": 0.5,
+      "descripcion": "Ja pots guardar força informació. Aconsegueix el 50% dels bits."
+    },
+    {
+      "nombre": "Megabyte",
+      "icono": "💿",
+      "umbral": 0.75,
+      "descripcion": "Ets tota una memòria. Aconsegueix el 75% dels bits."
+    },
+    {
+      "nombre": "Gigabyte",
+      "icono": "🖥️",
+      "umbral": 0.95,
+      "descripcion": "Domines tot el tema. Aconsegueix el 95% dels bits."
+    }
+  ],
+  "logrosEspeciales": {
+    "primerNivel": {
+      "nombre": "Sistema arrencat",
+      "icono": "🔌",
+      "descripcion": "Supera el teu primer nivell"
+    },
+    "perfecto": {
+      "nombre": "Zero errors",
+      "icono": "✅",
+      "descripcion": "Aconsegueix 3 estrelles en un nivell"
+    },
+    "todos": {
+      "nombre": "Maquinari complet",
+      "icono": "🧩",
+      "descripcion": "Supera tots els nivells"
+    },
+    "maestro": {
+      "nombre": "Mestre del silici",
+      "icono": "🏆",
+      "descripcion": "3 estrelles a tots els nivells"
+    }
+  },
+  "niveles": [
+    {
+      "id": "que-es",
+      "titulo": "Què és un ordinador?",
+      "epoca": "Conceptes",
+      "resumen": "Característiques i on hi ha ordinadors",
+      "imagen": {
+        "archivo": "imagenes/que-es.jpg",
+        "titulo": "PC de sobretaula amb Linux",
+        "autor": "Syced",
+        "anio": "2000",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:2002,_PC_made_from_parts_bought_in_Rue_Montgallet,_running_Linux_debian.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Quina d'aquestes és una característica d'un ordinador?",
+          "opciones": [
+            "Programable",
+            "Mecànic",
+            "Analògic",
+            "De vapor"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Un ordinador és programable: fa el que li indiquen els programes.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        },
+        {
+          "texto": "Un ordinador és una màquina...",
+          "opciones": [
+            "analògica i mecànica",
+            "només manual",
+            "només de càlcul",
+            "digital i electrònica"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "Entre les seves característiques hi ha que és digital i electrònic.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        },
+        {
+          "texto": "On podem trobar ordinadors encastats?",
+          "opciones": [
+            "Només en oficines",
+            "Només en supercomputadors",
+            "En televisions, mòbils i electrodomèstics",
+            "Enlloc"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Hi ha ordinadors encastats en televisions, mòbils i electrodomèstics.",
+          "fuente": "1. Què és un ordinador? > Per tot arreu"
+        },
+        {
+          "texto": "Què vol dir que un ordinador és «de propòsit general»?",
+          "opciones": [
+            "Que només fa una tasca",
+            "Que serveix per a moltes tasques diferents",
+            "Que no necessita electricitat",
+            "Que no es pot programar"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "De propòsit general vol dir que pot fer moltes tasques diferents segons el programa.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        },
+        {
+          "texto": "Quin d'aquests NO apareix com a tipus d'ordinador al material?",
+          "opciones": [
+            "Calculadora de corda",
+            "Servidor",
+            "Supercomputador",
+            "Ordinador quàntic"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "El material cita servidors, sobretaula, portàtils, netbooks, encastats, supercomputadors i quàntics.",
+          "fuente": "1. Què és un ordinador? > Per tot arreu"
+        },
+        {
+          "texto": "Quina característica té a veure amb guardar dades i programes?",
+          "opciones": [
+            "Automàtic",
+            "Electrònic",
+            "Digital",
+            "Amb emmagatzematge"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Un ordinador és una màquina amb emmagatzematge: guarda dades i programes.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        },
+        {
+          "texto": "Portàtils, netbooks i ordinadors de sobretaula són...",
+          "opciones": [
+            "Perifèrics",
+            "Sistemes operatius",
+            "Tipus d'ordinadors",
+            "Memòries"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Són tipus d'ordinadors que tenim per tot arreu.",
+          "fuente": "1. Què és un ordinador? > Per tot arreu"
+        },
+        {
+          "texto": "Quants trets caracteritzen un ordinador segons el material?",
+          "opciones": [
+            "Dos",
+            "Sis",
+            "Tres",
+            "Deu"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Propòsit general, digital, electrònic, programable, automàtic i amb emmagatzematge: sis.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        },
+        {
+          "texto": "Quina parella de característiques és correcta per a un ordinador?",
+          "opciones": [
+            "Automàtic i programable",
+            "Mecànic i manual",
+            "Analògic i fix",
+            "Manual i sense memòria"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "És automàtic i programable, entre d'altres característiques.",
+          "fuente": "1. Què és un ordinador? > Característiques"
+        }
+      ]
+    },
+    {
+      "id": "estructura",
+      "titulo": "Estructura d'un ordinador",
+      "epoca": "Arquitectura",
+      "resumen": "Von Neumann i diagrama de blocs",
+      "imagen": {
+        "archivo": "imagenes/estructura.jpg",
+        "titulo": "Placa base d'un ordinador",
+        "autor": "Kurt Kaiser",
+        "anio": "2015",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Computer_motherboard_2.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Com es diu l'estructura amb CPU, memòria i E/S unides per un bus?",
+          "opciones": [
+            "Newton",
+            "Von Neumann",
+            "Turing",
+            "Babbage"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "És l'estructura o arquitectura de Von Neumann.",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "Què uneix la CPU, la memòria i l'E/S a l'estructura de Von Neumann?",
+          "opciones": [
+            "El bus",
+            "La bateria",
+            "El ventilador",
+            "La pantalla"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Els tres blocs es connecten mitjançant un bus.",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "Què vol dir E/S?",
+          "opciones": [
+            "Energia/Sistema",
+            "Escriptura/Senyal",
+            "Emmagatzematge/Software",
+            "Entrada/Sortida"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "E/S és el subsistema d'entrada i sortida.",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "De quines dues unitats està formada la CPU al diagrama de Von Neumann?",
+          "opciones": [
+            "RAM i ROM",
+            "SSD i GPU",
+            "UC i UP",
+            "Bus i E/S"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "La CPU està formada per la unitat de control (UC) i la unitat de procés (UP).",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "Segons el diagrama de blocs, on hi ha la CPU i la RAM?",
+          "opciones": [
+            "Al monitor",
+            "A la placa mare",
+            "Al teclat",
+            "A la impressora"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "La placa mare conté la CPU i la RAM.",
+          "fuente": "2. Estructura > Diagrama de blocs"
+        },
+        {
+          "texto": "Quin element connecta la CPU amb el monitor al diagrama de blocs?",
+          "opciones": [
+            "L'adaptador gràfic",
+            "La interfície sèrie",
+            "La controladora de discos",
+            "L'adaptador de xarxa"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "El monitor es connecta a través de l'adaptador gràfic.",
+          "fuente": "2. Estructura > Diagrama de blocs"
+        },
+        {
+          "texto": "Un ordinador està format per un conjunt de...",
+          "opciones": [
+            "programes sense maquinari",
+            "cables sense components",
+            "pantalles",
+            "subsistemes amb funcions específiques"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "El material diu que un ordinador és un conjunt de subsistemes amb funcions específiques.",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "Quin d'aquests blocs NO és un dels tres de Von Neumann?",
+          "opciones": [
+            "La CPU",
+            "La memòria",
+            "La bateria",
+            "L'entrada/sortida"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Von Neumann: CPU, memòria i E/S units pel bus. La bateria no hi és.",
+          "fuente": "2. Estructura > Von Neumann"
+        },
+        {
+          "texto": "Al diagrama de blocs, què connecta el disc dur i la disquetera amb la CPU?",
+          "opciones": [
+            "L'adaptador gràfic",
+            "La controladora de discos",
+            "La interfície paral·lel",
+            "El teclat"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Els discos es connecten a través de la controladora HDD/FDD.",
+          "fuente": "2. Estructura > Diagrama de blocs"
+        }
+      ]
+    },
+    {
+      "id": "nivells",
+      "titulo": "Nivells d'abstracció",
+      "epoca": "Nivells 0-6",
+      "resumen": "De la lògica digital a l'usuari",
+      "imagen": {
+        "archivo": "imagenes/nivells.jpg",
+        "titulo": "Xip amb portes lògiques NOR",
+        "autor": "Grabert (Viquipèdia en alemany)",
+        "anio": "2005",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Agc_nor2.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Quin és el nivell més alt d'abstracció?",
+          "opciones": [
+            "La lògica digital",
+            "La màquina",
+            "L'usuari",
+            "El control"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El nivell 6, el més alt, és l'usuari.",
+          "fuente": "3. Nivells d'abstracció"
+        },
+        {
+          "texto": "Quin és el nivell 0?",
+          "opciones": [
+            "Usuari",
+            "Lògica digital",
+            "Llenguatge d'alt nivell",
+            "Sistema operatiu"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "El nivell 0 és la lògica digital: circuits i portes lògiques.",
+          "fuente": "3. Nivells d'abstracció"
+        },
+        {
+          "texto": "Què fa el compilador?",
+          "opciones": [
+            "Tradueix codi d'alt nivell a llenguatge màquina",
+            "Refreda la CPU",
+            "Guarda fitxers",
+            "Imprimeix documents"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El compilador tradueix el codi d'alt nivell a llenguatge màquina.",
+          "fuente": "3. Nivells d'abstracció > Hardware i software"
+        },
+        {
+          "texto": "C++, Java i FORTRAN pertanyen al nivell de...",
+          "opciones": [
+            "Lògica digital",
+            "Control",
+            "Usuari",
+            "Llenguatge d'alt nivell"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Són exemples del nivell 5, llenguatge d'alt nivell.",
+          "fuente": "3. Nivells d'abstracció"
+        },
+        {
+          "texto": "Quins nivells corresponen al software?",
+          "opciones": [
+            "Només el 0",
+            "Del 0 al 2",
+            "De l'1 al 6",
+            "Només el 6"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "El software ocupa els nivells 1 a 6; el hardware és el nivell 0.",
+          "fuente": "3. Nivells d'abstracció > Hardware i software"
+        },
+        {
+          "texto": "El processador, la memòria i els dispositius d'E/S són...",
+          "opciones": [
+            "Software d'aplicació",
+            "Hardware (nivell 0)",
+            "Llenguatges d'alt nivell",
+            "Sistema operatiu"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El hardware (nivell 0) inclou processador, memòria i dispositius d'E/S.",
+          "fuente": "3. Nivells d'abstracció > Hardware i software"
+        },
+        {
+          "texto": "En quin nivell hi ha el sistema operatiu?",
+          "opciones": [
+            "Software del sistema (nivell 3)",
+            "Lògica digital (nivell 0)",
+            "Usuari (nivell 6)",
+            "Control (nivell 1)"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "El sistema operatiu i les biblioteques formen el nivell 3, software del sistema.",
+          "fuente": "3. Nivells d'abstracció"
+        },
+        {
+          "texto": "Quins nivells s'estudien en aquesta assignatura segons el material?",
+          "opciones": [
+            "L'1 i el 6",
+            "El 2 i el 3",
+            "Només el 4",
+            "El 0 i el 5"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "S'estudia el nivell 0 (hardware) i el nivell 5 (programació en alt nivell).",
+          "fuente": "3. Nivells d'abstracció > Hardware i software"
+        },
+        {
+          "texto": "Quina d'aquestes NO és una funció del sistema operatiu segons el material?",
+          "opciones": [
+            "Gestionar l'entrada/sortida",
+            "Gestionar la memòria i l'emmagatzematge",
+            "Traduir codi d'alt nivell a màquina",
+            "Programar tasques i compartir recursos"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Traduir a llenguatge màquina ho fa el compilador, no el sistema operatiu.",
+          "fuente": "3. Nivells d'abstracció > Hardware i software"
+        }
+      ]
+    },
+    {
+      "id": "cpu-memoria",
+      "titulo": "CPU, memòria i busos",
+      "epoca": "Hardware",
+      "resumen": "Unitat de control, ALU, RAM, ROM i busos",
+      "imagen": {
+        "archivo": "imagenes/cpu-memoria.jpg",
+        "titulo": "Mòduls de memòria SDRAM",
+        "autor": "Vitaly Zdanevich",
+        "anio": "2020",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:SDRAM_memory_module.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Què és el hardware segons la definició del material?",
+          "opciones": [
+            "Els programes",
+            "Les dades",
+            "Internet",
+            "La part de l'ordinador que es pot partir amb una destral"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El hardware és tota la part física, «la que es pot partir amb una destral».",
+          "fuente": "4. CPU, memòria i busos > Hardware"
+        },
+        {
+          "texto": "Què vol dir CPU?",
+          "opciones": [
+            "Control de potència universal",
+            "Còpia de programes útils",
+            "Unitat central de procés",
+            "Cable principal d'usuari"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "CPU és la unitat central de procés.",
+          "fuente": "4. CPU, memòria i busos > La CPU"
+        },
+        {
+          "texto": "Quina memòria perd el contingut en apagar l'ordinador?",
+          "opciones": [
+            "La ROM",
+            "La RAM",
+            "El disc dur",
+            "El CD"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "En apagar el subministrament elèctric, la RAM perd el contingut.",
+          "fuente": "4. CPU, memòria i busos > La memòria"
+        },
+        {
+          "texto": "Què fa la unitat de control?",
+          "opciones": [
+            "Obté les instruccions, les descodifica i les executa",
+            "Fa només sumes",
+            "Guarda els fitxers",
+            "Mostra la imatge"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La unitat de control obté, descodifica i executa les instruccions.",
+          "fuente": "4. CPU, memòria i busos > La CPU"
+        },
+        {
+          "texto": "Què fa la unitat aritmètica-lògica (ALU)?",
+          "opciones": [
+            "Refredar la placa",
+            "Connectar a internet",
+            "Guardar la configuració",
+            "Les operacions lògiques i matemàtiques"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "L'ALU realitza les operacions lògiques i matemàtiques.",
+          "fuente": "4. CPU, memòria i busos > La CPU"
+        },
+        {
+          "texto": "La memòria ROM...",
+          "opciones": [
+            "es pot escriure i llegir lliurement",
+            "es perd en apagar",
+            "només és de lectura",
+            "és un perifèric d'entrada"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "La ROM només és de lectura.",
+          "fuente": "4. CPU, memòria i busos > La memòria"
+        },
+        {
+          "texto": "Què són els busos de dades?",
+          "opciones": [
+            "Programes del sistema",
+            "Línies per on circula la informació entre CPU, memòria i E/S",
+            "Tipus d'impressores",
+            "Memòries flash"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Els busos són les línies per on circula la informació.",
+          "fuente": "4. CPU, memòria i busos > Busos"
+        },
+        {
+          "texto": "Quins programes guarda la memòria ROM?",
+          "opciones": [
+            "Els que engeguen l'ordinador i fan els diagnòstics",
+            "Les fotos de l'usuari",
+            "Els jocs instal·lats",
+            "Les pàgines web visitades"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "La ROM guarda programes vitals com els d'arrencada i diagnòstic.",
+          "fuente": "4. CPU, memòria i busos > La memòria"
+        },
+        {
+          "texto": "De quin component depèn la potència final del sistema?",
+          "opciones": [
+            "Del ratolí",
+            "De l'altaveu",
+            "Del cable de xarxa",
+            "Del microprocessador"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "El microprocessador és el component més important: d'ell depèn la potència.",
+          "fuente": "4. CPU, memòria i busos > La CPU"
+        }
+      ]
+    },
+    {
+      "id": "entrada",
+      "titulo": "Perifèrics d'entrada",
+      "epoca": "Perifèrics",
+      "resumen": "Teclat, ratolí, escàner, sensors...",
+      "imagen": {
+        "archivo": "imagenes/entrada.jpg",
+        "titulo": "Ratolí i teclat",
+        "autor": "Charlie Smith FDTB",
+        "anio": "2020",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:A_computer_mouse_in_black_and_white_with_a_computer_keyboard_behind_it.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Per a què serveixen els perifèrics d'entrada?",
+          "opciones": [
+            "Per introduir dades a l'ordinador",
+            "Per imprimir",
+            "Per refredar",
+            "Per guardar l'hora"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Els perifèrics d'entrada permeten a l'usuari introduir dades.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Quin d'aquests és un perifèric d'entrada?",
+          "opciones": [
+            "La impressora",
+            "L'altaveu",
+            "El plotter",
+            "El teclat"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El teclat serveix per introduir dades.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Quin d'aquests dispositius capta so i el fa entrar a l'ordinador?",
+          "opciones": [
+            "El monitor",
+            "L'actuador",
+            "El micròfon",
+            "L'altaveu"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El micròfon capta so i el fa entrar a l'ordinador.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Quins són els tipus bàsics de ratolí?",
+          "opciones": [
+            "Làser, tinta i tèrmic",
+            "Mecànic, òptic i sense fils",
+            "LCD, LED i TRC",
+            "RAM, ROM i flash"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El material cita el ratolí mecànic, l'òptic i el sense fils.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Què fa un escàner?",
+          "opciones": [
+            "Converteix en format digital textos o imatges impresos",
+            "Imprimeix en paper",
+            "Reprodueix so",
+            "Refreda la CPU"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "L'escàner digitalitza textos i imatges impresos.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Què capten els sensors?",
+          "opciones": [
+            "Només text",
+            "Només imatges impreses",
+            "Res",
+            "Senyals de l'entorn com llum, so o distància"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Els sensors capten senyals de l'entorn: llum, so, distància...",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Quina d'aquestes és una classe de teclat segons el material?",
+          "opciones": [
+            "De tinta contínua",
+            "De tall",
+            "Flexible o enrotllable",
+            "Tàctil de monitor"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Classes de teclat: amb trackball, sense fils i flexibles/enrotllables.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "En quin llenguatge tradueix l'escàner allò que escaneja?",
+          "opciones": [
+            "Català",
+            "Binari",
+            "HTML",
+            "Morse"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "L'escàner tradueix el que rastreja a unitats d'informació en llenguatge binari.",
+          "fuente": "5. Perifèrics d'entrada"
+        },
+        {
+          "texto": "Quin grup conté només perifèrics d'entrada?",
+          "opciones": [
+            "Joystick, llapis òptic i càmera web",
+            "Monitor, joystick i altaveus",
+            "Impressora, escàner i plotter",
+            "Mòdem, disc dur i ratolí"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Joystick, llapis òptic i càmera web serveixen per introduir dades.",
+          "fuente": "5. Perifèrics d'entrada"
+        }
+      ]
+    },
+    {
+      "id": "sortida",
+      "titulo": "Sortida, E/S i emmagatzematge",
+      "epoca": "Perifèrics",
+      "resumen": "Monitor, impressora, mòdem, disc dur...",
+      "imagen": {
+        "archivo": "imagenes/sortida.jpg",
+        "titulo": "Disc dur Seagate U4 de 4,3 GB",
+        "autor": "Navaneethpp",
+        "anio": "2026",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Seagate_U4_ST34311A_4.3GB_hard_disk_drive_front_view.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Quin d'aquests és un perifèric de sortida?",
+          "opciones": [
+            "El teclat",
+            "La impressora",
+            "L'escàner",
+            "El micròfon"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "La impressora permet obtenir dades de l'ordinador.",
+          "fuente": "6. Perifèrics > Sortida"
+        },
+        {
+          "texto": "Quin d'aquests és un perifèric d'emmagatzematge?",
+          "opciones": [
+            "El disc dur",
+            "El ratolí",
+            "L'altaveu",
+            "La càmera web"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El disc dur serveix per emmagatzemar dades.",
+          "fuente": "6. Perifèrics > Emmagatzematge"
+        },
+        {
+          "texto": "Quin tipus de perifèric és el mòdem?",
+          "opciones": [
+            "Només d'entrada",
+            "Només de sortida",
+            "D'alimentació",
+            "D'entrada i sortida"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El mòdem permet introduir i obtenir dades: és d'entrada i sortida.",
+          "fuente": "6. Perifèrics > Entrada i sortida"
+        },
+        {
+          "texto": "Què són els actuadors?",
+          "opciones": [
+            "Sensors de llum",
+            "Memòries de lectura",
+            "Dispositius que executen ordres amb una acció motriu, com els motors",
+            "Programes de dibuix"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Els actuadors executen ordres i solen fer una acció motriu, com els motors.",
+          "fuente": "6. Perifèrics > Sortida"
+        },
+        {
+          "texto": "Quin connector té la targeta de xarxa amb cable?",
+          "opciones": [
+            "HDMI",
+            "RJ45",
+            "VGA",
+            "Jack d'àudio"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Hi ha targetes de xarxa amb connector RJ45 i sense fils.",
+          "fuente": "6. Perifèrics > Entrada i sortida"
+        },
+        {
+          "texto": "Quins tipus de pantalla cita el material?",
+          "opciones": [
+            "LCD, LED, TRC i tàctil",
+            "RAM, ROM i flash",
+            "Làser i tinta",
+            "Òptic i mecànic"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Monitors LCD, LED, TRC i pantalles tàctils.",
+          "fuente": "6. Perifèrics > Sortida"
+        },
+        {
+          "texto": "Els llapis USB i les targetes microSD són...",
+          "opciones": [
+            "Discs òptics",
+            "Actuadors",
+            "Targetes de xarxa",
+            "Memòries flash"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Són memòries flash, perifèrics d'emmagatzematge.",
+          "fuente": "6. Perifèrics > Emmagatzematge"
+        },
+        {
+          "texto": "Quins són els quatre tipus de perifèrics?",
+          "opciones": [
+            "Petits, mitjans, grans i gegants",
+            "De so, d'imatge, de text i de xarxa",
+            "D'entrada, de sortida, d'entrada i sortida i d'emmagatzematge",
+            "Interns, externs, mòbils i fixos"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Els perifèrics poden ser d'entrada, de sortida, d'E/S i d'emmagatzematge.",
+          "fuente": "5. Perifèrics d'entrada > Tipus"
+        },
+        {
+          "texto": "Quins dos tipus de plotter apareixen al material?",
+          "opciones": [
+            "Òptic i mecànic",
+            "De tinta i de tall",
+            "LCD i LED",
+            "Làser i tèrmic"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "El material mostra el plotter de tinta i el de tall.",
+          "fuente": "6. Perifèrics > Sortida"
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "titulo": "Software",
+      "epoca": "Programari",
+      "resumen": "Sistema, sistema operatiu, aplicacions i programació",
+      "imagen": {
+        "archivo": "imagenes/software.jpg",
+        "titulo": "Codi font en una pantalla",
+        "autor": "Slashme",
+        "anio": "2026",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:RustCodeOnScreen.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Què és un programa?",
+          "opciones": [
+            "Un component de la placa",
+            "Un tipus de cable",
+            "Un conjunt d'instruccions per donar ordres a l'ordinador",
+            "Una memòria"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Un programa és un conjunt d'instruccions per donar ordres a l'ordinador.",
+          "fuente": "7. Software > Programes"
+        },
+        {
+          "texto": "Quin d'aquests és un sistema operatiu?",
+          "opciones": [
+            "Java",
+            "Linux",
+            "MySQL",
+            "HTML"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Linux (com Windows, macOS o Android) és un sistema operatiu.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "El programari que controla l'ordinador és...",
+          "opciones": [
+            "El sistema operatiu",
+            "El navegador",
+            "El joc",
+            "El plotter"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El sistema operatiu és el programari bàsic que controla l'ordinador.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "De quin estàndard és la definició de software del material?",
+          "opciones": [
+            "La norma ISO 9001",
+            "La llei de Moore",
+            "El protocol HTTP",
+            "L'estàndard 729 de l'IEEE"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "La definició prové de l'estàndard 729 de l'IEEE.",
+          "fuente": "7. Software > Què és"
+        },
+        {
+          "texto": "Quin tipus de software permet fer tasques específiques a l'usuari?",
+          "opciones": [
+            "El software de sistema",
+            "El firmware de la ROM",
+            "El programari d'aplicacions",
+            "El compilador"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "El programari d'aplicacions permet fer tasques específiques.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "Java, PHP o .NET són exemples de...",
+          "opciones": [
+            "Sistemes operatius",
+            "Software de programació",
+            "Perifèrics",
+            "Memòries"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Són eines i llenguatges del software de programació.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "Quin és l'objectiu del software de sistema?",
+          "opciones": [
+            "Aïllar l'usuari dels detalls del maquinari",
+            "Dibuixar gràfics",
+            "Imprimir fotos",
+            "Refredar la CPU"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Desvincula l'usuari i el programador dels detalls del sistema informàtic.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "Quina NO és una de les tres grans funcions del sistema operatiu?",
+          "opciones": [
+            "Coordinar el maquinari",
+            "Gestionar el sistema de fitxers",
+            "Gestionar els errors de maquinari",
+            "Dissenyar pàgines web"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Les tres funcions són coordinar el maquinari, gestionar els fitxers i gestionar errors.",
+          "fuente": "7. Software > Tipus"
+        },
+        {
+          "texto": "Segons el material, el software inclou...",
+          "opciones": [
+            "Només la CPU",
+            "Només els cables",
+            "Programes, procediments, regles, documentació i dades",
+            "Només la pantalla"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "El software és el conjunt de programes, procediments, regles, documentació i dades.",
+          "fuente": "7. Software > Què és"
+        }
+      ]
+    },
+    {
+      "id": "funcionament",
+      "titulo": "Com funciona un ordinador?",
+      "epoca": "Arrencada",
+      "resumen": "De la font d'alimentació a executar programes",
+      "imagen": {
+        "archivo": "imagenes/funcionament.jpg",
+        "titulo": "Interior d'una font d'alimentació ATX",
+        "autor": "Alan Liefting",
+        "anio": "2008",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:ATX_power_supply_interior.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Què s'activa primer quan engeguem l'ordinador?",
+          "opciones": [
+            "La impressora",
+            "El navegador",
+            "El joc",
+            "La font d'alimentació"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "En engegar s'activa la font d'alimentació, que dona energia als components.",
+          "fuente": "8. Com funciona > Arrencada"
+        },
+        {
+          "texto": "On s'ha de carregar un programa per executar-lo?",
+          "opciones": [
+            "A la impressora",
+            "Al ratolí",
+            "A la memòria RAM",
+            "A la ROM"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Només s'executen programes emmagatzemats a la RAM.",
+          "fuente": "8. Com funciona > Executar programes"
+        },
+        {
+          "texto": "Com s'executen les instruccions d'un programa a la CPU?",
+          "opciones": [
+            "Totes a la vegada sempre",
+            "Una a una",
+            "A l'atzar",
+            "No s'executen"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "La CPU executa una a una les instruccions del programa.",
+          "fuente": "8. Com funciona > Executar programes"
+        },
+        {
+          "texto": "Quina memòria s'executa per posar en marxa l'ordinador?",
+          "opciones": [
+            "La ROM (BIOS)",
+            "La RAM",
+            "El disc dur",
+            "La memòria flash"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "L'ordinador executa la seqüència d'operacions de la ROM (BIOS).",
+          "fuente": "8. Com funciona > Arrencada"
+        },
+        {
+          "texto": "Què es posa en marxa després del sistema operatiu?",
+          "opciones": [
+            "La font d'alimentació",
+            "La BIOS",
+            "El ventilador",
+            "L'intèrpret de comandes (p. ex. l'escriptori)"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Després s'engega l'intèrpret de comandes per interactuar amb l'usuari.",
+          "fuente": "8. Com funciona > Arrencada"
+        },
+        {
+          "texto": "On poden estar les dades que fa servir un programa?",
+          "opciones": [
+            "Només a la pantalla",
+            "Només a la ROM",
+            "A la RAM, en un perifèric o arribar per la xarxa",
+            "Només al teclat"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Les dades poden estar a la RAM, en un perifèric o arribar per la xarxa.",
+          "fuente": "8. Com funciona > Executar programes"
+        },
+        {
+          "texto": "Com pot executar la CPU diversos programes alhora?",
+          "opciones": [
+            "Apagant-ne un",
+            "Repartint el seu temps entre ells",
+            "Amb més altaveus",
+            "No pot"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "La CPU reparteix el seu temps entre diversos programes.",
+          "fuente": "8. Com funciona > Executar programes"
+        },
+        {
+          "texto": "Quin és l'ordre correcte de l'arrencada?",
+          "opciones": [
+            "Font d'alimentació → ROM (BIOS) → sistema operatiu → intèrpret",
+            "Sistema operatiu → font → BIOS → intèrpret",
+            "Intèrpret → BIOS → font → sistema operatiu",
+            "BIOS → intèrpret → font → sistema operatiu"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Primer la font, després la BIOS de la ROM, el sistema operatiu i l'intèrpret de comandes.",
+          "fuente": "Seqüència d'arrencada"
+        },
+        {
+          "texto": "Què revisa l'ordinador durant l'arrencada amb la BIOS?",
+          "opciones": [
+            "Les fotos de l'usuari",
+            "Les pàgines web",
+            "El correu",
+            "Els elements instal·lats"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Amb la BIOS es posa en marxa i revisa els elements instal·lats.",
+          "fuente": "8. Com funciona > Arrencada"
+        }
+      ]
+    },
+    {
+      "id": "portatil",
+      "titulo": "Components del portàtil",
+      "epoca": "Portàtil",
+      "resumen": "SSD, RAM, CPU, GPU, bateries i més",
+      "imagen": {
+        "archivo": "imagenes/portatil.jpg",
+        "titulo": "Interior d'un portàtil amb el processador",
+        "autor": "Vitaly Zdanevich",
+        "anio": "2019",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Laptop-intel-core2duo-t5500.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Quin component és «el cervell de l'ordinador»?",
+          "opciones": [
+            "El processador (CPU)",
+            "L'altaveu",
+            "La bateria",
+            "El ventilador"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El processador és el cervell de l'ordinador.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Què fa el ventilador?",
+          "opciones": [
+            "Guarda fitxers",
+            "Connecta a internet",
+            "Reprodueix so",
+            "Refreda el processador i el dissipador"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El ventilador refreda el processador i el dissipador.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Quin component subministra energia a tot l'ordinador portàtil?",
+          "opciones": [
+            "La bateria CMOS",
+            "La RAM",
+            "La bateria principal",
+            "L'SSD"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "La bateria principal alimenta tot l'ordinador.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Què guarda l'SSD?",
+          "opciones": [
+            "Només l'hora",
+            "El sistema operatiu, els programes i els fitxers",
+            "Res, és un ventilador",
+            "Només el so"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "L'SSD és la memòria d'emmagatzematge.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Què fa la targeta gràfica (GPU)?",
+          "opciones": [
+            "Processa els gràfics i el vídeo",
+            "Guarda la configuració de la BIOS",
+            "Dona energia",
+            "Refreda la placa"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La GPU s'encarrega de processar els gràfics i el vídeo.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Quina funció té el mòdul Wi-Fi/Bluetooth?",
+          "opciones": [
+            "Emmagatzemar fitxers",
+            "Fer càlculs",
+            "Mostrar la imatge",
+            "Connectar a internet i a dispositius sense fils"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Permet la connexió a internet i a altres dispositius sense fils.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "On va el processador en aquest portàtil?",
+          "opciones": [
+            "Dins la bateria",
+            "Al costat dels altaveus",
+            "Sota el dissipador",
+            "A la tapa"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "El processador va sota el dissipador de calor.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Què manté la bateria de la CMOS?",
+          "opciones": [
+            "Tota l'energia del portàtil",
+            "L'hora i la configuració de la BIOS amb l'ordinador apagat",
+            "Els fitxers de l'usuari",
+            "La connexió Wi-Fi"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "La bateria CMOS manté l'hora i la configuració de la BIOS encara que estigui apagat.",
+          "fuente": "9. Components del portàtil"
+        },
+        {
+          "texto": "Quina afirmació és correcta?",
+          "opciones": [
+            "L'SSD és la memòria d'emmagatzematge i la RAM, la memòria temporal",
+            "L'SSD és la memòria RAM",
+            "La RAM guarda els fitxers per sempre",
+            "La GPU és la bateria"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Recorda: l'SSD és d'emmagatzematge (no és la RAM); la RAM és temporal.",
+          "fuente": "9. Components del portàtil > Recorda"
+        }
+      ]
+    }
+  ]
+}

@@ -35,7 +35,7 @@ Todos los textos visibles van **en el idioma del material**. Ejemplo completo: `
     "googleFonts": "https://fonts.googleapis.com/css2?family=…&display=swap",
     "duotono": ["#0f1733", "#efe3c6"],   // [sombras, luces]: TODAS las imágenes se tiñen así para parecer una colección
     "motivo": {
-      "patron": "guilloche",             // guilloche | puntos | rejilla | ondas (fondo y billete)
+      "patron": "guilloche",             // guilloche | puntos | rejilla | ondas | circuito (fondo y billete)
       "sello": "République Française",   // texto circular de los sellos de lacre
       "monograma": "RF"                  // 1-3 letras en el centro del sello
     },

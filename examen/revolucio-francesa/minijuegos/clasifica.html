@@ -243,6 +243,8 @@ const MJ = (function () {
     if (tipo === 'puntos') return svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="11" cy="11" r="1.4" fill="${color}"/></svg>`);
     if (tipo === 'rejilla') return svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"><path d="M36 0H0v36" fill="none" stroke="${color}" stroke-width=".8"/></svg>`);
     if (tipo === 'ondas') return svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" width="80" height="20"><path d="M0 10q20-12 40 0t40 0" fill="none" stroke="${color}" stroke-width="1"/></svg>`);
+    // circuito: pistas de placa base con giros a 45º y vías (tesela de 120 px que encaja por los bordes)
+    if (tipo === 'circuito') return svgUrl(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><g fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round"><path d="M0 20h30l14 14h30l12-12h34"/><path d="M0 70h18l12 12v38"/><path d="M60 0v18l10 10v30l-12 12h-12"/><path d="M120 60h-26l-10 10v22l14 14v14"/><path d="M40 120v-18l10-10h22"/></g><g fill="${color}"><circle cx="44" cy="34" r="3"/><circle cx="46" cy="70" r="3"/><circle cx="72" cy="92" r="3"/><circle cx="84" cy="70" r="3"/><circle cx="30" cy="82" r="2.2"/></g></svg>`);
     let d = '';
     for (let k = 0; k < 6; k++) {
       d += 'M0 30 ';

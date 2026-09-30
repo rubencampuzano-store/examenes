@@ -1,0 +1,12 @@
+[
+  { "clave": "portada", "archivo": "File:Computer Motherboard Closeup.jpg", "lado": 960 },
+  { "clave": "que-es", "archivo": "File:2002, PC made from parts bought in Rue Montgallet, running Linux debian.jpg", "lado": 500 },
+  { "clave": "estructura", "archivo": "File:Computer motherboard 2.jpg", "lado": 500 },
+  { "clave": "nivells", "archivo": "File:Agc nor2.jpg", "lado": 500 },
+  { "clave": "cpu-memoria", "archivo": "File:SDRAM memory module.jpg", "lado": 500 },
+  { "clave": "entrada", "archivo": "File:A computer mouse in black and white with a computer keyboard behind it.jpg", "lado": 500 },
+  { "clave": "sortida", "archivo": "File:Seagate U4 ST34311A 4.3GB hard disk drive front view.jpg", "lado": 500 },
+  { "clave": "software", "archivo": "File:RustCodeOnScreen.jpg", "lado": 500 },
+  { "clave": "funcionament", "archivo": "File:ATX power supply interior.jpg", "lado": 500 },
+  { "clave": "portatil", "archivo": "File:Laptop-intel-core2duo-t5500.jpg", "lado": 500 }
+]

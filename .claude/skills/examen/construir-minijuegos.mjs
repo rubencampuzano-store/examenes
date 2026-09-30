@@ -47,6 +47,8 @@ if (comunes(mini.carrera, 'carrera')) {
     (q.opciones || []).forEach((o) => req(String(o).length <= 14, `carrera.puertas[${i}]: la opción "${o}" supera 14 caracteres (no cabe en la puerta)`));
     if (q.opciones && new Set(q.opciones).size !== q.opciones.length) errores.push(`carrera.puertas[${i}] tiene opciones repetidas`);
   });
+  const ESCENAS = ['paris-1789', 'placa-base'];  // escenarios que sabe dibujar carrera3d.html
+  if (mini.carrera.escena != null && !ESCENAS.includes(mini.carrera.escena)) errores.push(`carrera.escena "${mini.carrera.escena}" no existe; valores posibles: ${ESCENAS.join(', ')}`);
 }
 // cronologia
 if (comunes(mini.cronologia, 'cronologia')) {
@@ -140,7 +142,7 @@ if (mini.carrera && existsSync(rutaV2)) {
     // Se quita el aviso de "build obsoleta" que Three.js r159 muestra en la consola al cargarse
     const three = readFileSync(rutaThree, 'utf8').replace(/^console\.warn\('[^']*'\),/, '0,');
     const plantilla = readFileSync(rutaV2, 'utf8');
-    const datos = { meta: examen.meta, tema, textos, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d || ' 3D') }) };
+    const datos = { meta: examen.meta, tema, textos, juego: Object.assign({}, mini.carrera, { id: 'carrera-v2', titulo: mini.carrera.titulo + (mini.carrera.sufijo3d ?? ' 3D') }) };
     for (const m of ['/*__COMUN_CSS__*/', '/*__COMUN_JS__*/', '/*__DATOS__*/null', '/*__THREE__*/']) if (!plantilla.includes(m)) { console.error(`carrera3d.html no contiene ${m}`); process.exit(1); }
     const html = plantilla
       .replace('/*__COMUN_CSS__*/', () => css)

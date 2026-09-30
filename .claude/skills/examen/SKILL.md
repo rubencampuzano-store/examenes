@@ -9,7 +9,8 @@ argument-hint: <ruta de la carpeta con el material>
 Carpeta de material: `$ARGUMENTS`
 
 Si no se indica carpeta, pregunta cuál. Las rutas relativas se resuelven desde la raíz del proyecto.
-**Organización del proyecto** (igual que el repo de GitHub): cada tema vive en `examen/<tema>/`, con el nombre en minúsculas, sin acentos y con guiones (p. ej. `examen/revolucio-francesa/`). Si el material está en otra carpeta, propón moverlo ahí antes de empezar. En la raíz hay un `index.html` de portada con todos los temas, generado por `construir-portada.mjs`.
+**Organización del proyecto** (igual que el repo de GitHub): cada tema vive en `examen/<tema>/`, con el nombre en minúsculas, sin acentos y con guiones (p. ej. `examen/revolucio-francesa/`). Si el material está en otra carpeta, propón moverlo ahí antes de empezar.
+**Entrada y salida**: el material se deja preferentemente en `examen/<tema>/material/` (el `.gitignore` excluye esa subcarpeta entera) y **todo lo generado va en la raíz del tema** `examen/<tema>/`, nunca dentro de `material/`. Si el usuario indica la carpeta `material/`, `<carpeta>` en los pasos siguientes es su carpeta padre. También se admite el material suelto en la raíz del tema (como en `revolucio-francesa/`). En la raíz hay un `index.html` de portada con todos los temas, generado por `construir-portada.mjs`.
 Archivos de apoyo en la carpeta de este skill: `plantilla.html` (motor del juego), `esquema.md` (formato del JSON), `imagenes.mjs` (descarga imágenes libres de Commons), `construir.mjs` (valida, incrusta imágenes y monta el juego), `minijuegos/` + `construir-minijuegos.mjs` + `esquema-minijuegos.md` (4 minijuegos temáticos) y `audio.mjs` (música de dominio público para los minijuegos) y `construir-portada.mjs` (portada con todos los temas).
 Antes del paso 6 carga la skill **`frontend-design`** para decidir la dirección visual del tema.
 
@@ -21,7 +22,7 @@ Antes del paso 6 carga la skill **`frontend-design`** para decidir la dirección
 - El jugador es un estudiante de ESO: tono cercano, divertido y nunca humillante.
 
 ## Paso 1 — Inventario
-1. Lista los archivos de la carpeta (imágenes `jpg/jpeg/png/heic/webp` y `pdf`). Ignora `apuntes.md`, `index.html`, `juego-datos.json`, `imagenes-lista.json`, `minijuegos-datos.json` y las subcarpetas `imagenes/` y `minijuegos/` de ejecuciones anteriores.
+1. Lista los archivos del material (`<carpeta>/material/` si existe; si no, la propia carpeta) (imágenes `jpg/jpeg/png/heic/webp` y `pdf`). Ignora `apuntes.md`, `index.html`, `juego-datos.json`, `imagenes-lista.json`, `minijuegos-datos.json` y las subcarpetas `imagenes/` y `minijuegos/` de ejecuciones anteriores.
 2. Ordénalos por nombre en orden natural (IMG_2 antes que IMG_10).
 3. Si la numeración tiene huecos (p. ej. falta IMG_9832), **avisa al usuario y pregunta** si continuar o esperar a que añada el archivo.
 4. Si ya existen `apuntes.md` / `index.html`, pregunta si sobrescribirlos.
@@ -83,7 +84,7 @@ Las fotos del material **nunca** se usan en el juego (tienen copyright). Se usan
 Diseña una dirección visual propia del tema (época, lugar, disciplina) con `frontend-design`. El motor es una app oscura con tarjetas de "papel"; el tema decide:
 - **Colores** (`tema.colores`) y **duotono** de las imágenes: elige colores sacados del mundo del tema, con los contrastes de `esquema.md`.
 - **Tipografías**: una display con carácter ligada al tema (p. ej. una didona para la Francia de 1789), una de texto legible y una mono para cifras. Evita Inter, Roboto, Arial y Space Grotesk.
-- **Motivo**: patrón (`guilloche`, `puntos`, `rejilla`, `ondas`), texto del sello y monograma.
+- **Motivo**: patrón (`guilloche`, `puntos`, `rejilla`, `ondas`, `circuito` para temas tecnológicos), texto del sello y monograma.
 - **Metáfora de los puntos** (`textos.moneda`): una unidad propia del tema (lliures, dracmas, créditos, kilojulios…).
 - **Textos ambientados**: 5 rangos (umbrales 0.10, 0.30, 0.50, 0.75, 0.95), 4 logros especiales, tampón de acierto/fallo y mensajes. **No uses emojis de banderas** (en Windows salen como letras).
 - **Épocas** de cada nivel (`epoca`) si el tema es cronológico.
@@ -101,7 +102,7 @@ Diseña una dirección visual propia del tema (época, lugar, disciplina) con `f
 ## Paso 8 — Minijuegos
 Cuatro minijuegos temáticos en archivos separados (de momento no están integrados en `index.html`). Controles pensados para ordenador, móvil y tablet.
 1. Escribe `<carpeta>/minijuegos-datos.json` siguiendo **exactamente** `esquema-minijuegos.md`, con contenido sacado solo de `apuntes.md`:
-   - `carrera`: 10-12 preguntas de respuesta muy corta (≤ 14 caracteres, 3 opciones) y un "objetivo" propio del tema.
+   - `carrera`: 10-12 preguntas de respuesta muy corta (≤ 14 caracteres, 3 opciones), un "objetivo" propio del tema y la `escena` 3D más adecuada.
    - `cronologia`: 3-4 rondas de 5 hechos con su fecha (o pasos de un proceso si el tema no es histórico).
    - `parejas`: 8 parejas concepto ↔ idea/obra/definición.
    - `clasifica`: 3 rondas de 8 tarjetas con dos categorías excluyentes.
@@ -111,7 +112,7 @@ Cuatro minijuegos temáticos en archivos separados (de momento no están integra
    node "<ruta del skill>/construir-minijuegos.mjs" "<carpeta>/juego-datos.json" "<carpeta>/minijuegos-datos.json" "<carpeta>/minijuegos"
    ```
 3. Corrige los ERRORES y revisa los AVISOS (textos demasiado largos para móvil).
-   La carrera se genera solo en 3D (`carrera-v2.html`, con los datos de `carrera`); necesita `minijuegos/vendor/three.min.js`. Su escena es la de la Revolución francesa: en otros temas, avisa al usuario de que mantiene ese escenario salvo que se adapte `carrera3d.html`.
+   La carrera se genera solo en 3D (`carrera-v2.html`, con los datos de `carrera`); necesita `minijuegos/vendor/three.min.js`. El escenario se elige con `carrera.escena`: `paris-1789` (por defecto: calles de París y llegada a la Bastilla) o `placa-base` (bus de datos de una placa base hasta la CPU; temas de informática y tecnología). Si ninguna escena encaja con el tema, **pregunta al usuario** si quiere usar una de las existentes, adaptar `carrera3d.html` con una escena nueva (añadiéndola también a `ESCENAS` en `construir-minijuegos.mjs`) u omitir la sección `carrera`.
 4. Sonido de `carrera` (ver "Sonido" en `esquema-minijuegos.md`): elige el `preset` más cercano al tema y, si hay una grabación adecuada de dominio público o CC0 en Wikimedia Commons, descárgala y comprímela con
    `node "<ruta del skill>/audio.mjs" "File:Nombre.ogg" "<carpeta>/audio/nombre.mp3" 48`
    y añádela en `carrera.sonido.musica` con su crédito completo. Si no hay ninguna adecuada, deja solo el `preset` (ambiente y efectos sintetizados).

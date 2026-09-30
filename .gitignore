@@ -12,6 +12,9 @@ examen/*/*.webp
 examen/*/*.pdf
 examen/*/*.PDF
 
+# Carpeta de material de cada tema (PDF, fotos, presentaciones): se lee pero no se publica
+examen/*/material/
+
 # Copias de versiones anteriores del juego
 examen/*/index_v*.html
 

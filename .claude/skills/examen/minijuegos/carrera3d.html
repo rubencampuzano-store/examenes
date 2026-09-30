@@ -80,6 +80,8 @@ const DATOS = /*__DATOS__*/null;
   const V0 = 17, VMAX = 31;
   // Escena 3D (metros)
   const CARRIL = 2.2, CALLE = CARRIL * 3, ACERA = 1.8, VISTA = 190, PASO_FAROLA = 20;
+  // Escenari: 'paris-1789' (per defecte) o 'placa-base'. La lògica del joc és la mateixa en tots dos.
+  const ESCENA = J.escena || 'paris-1789', PCB = ESCENA === 'placa-base';
   // Llegada: la calle desemboca en una plaza (6 m antes de la meta) y la Bastilla está 22 m después de la meta.
   // El corredor se detiene 12 m antes del centro de la muralla, al final del puente levadizo.
   const BASTILLA_TRAS_META = 22, PLAZA_ANTES_META = 6, PARADA_BASTILLA = 16, DURACION_LLEGADA = 3.4;
@@ -292,7 +294,7 @@ const DATOS = /*__DATOS__*/null;
     shell: MJ.color('--shell') || '#0f1733', papel: MJ.color('--papel') || '#efe3c6', tinta: MJ.color('--tinta') || '#1d1a16',
     acento: MJ.color('--acento') || '#b3202a', oro: MJ.color('--oro') || '#c9a44c', azul: (J.colores && J.colores.azul) || '#1f3b7a',
   };
-  let bandera, multitud, fuegos;
+  let bandera, multitud, fuegos, rotores = [], leds = [];
   let escena, camara, luna, luzCalida, farolasLuz = [], grupoPista, suelo, aceras = [], edificios = [], farolas = [], bastilla, corredor, chispasPts;
   const texturas = {};
 
@@ -435,6 +437,234 @@ const DATOS = /*__DATOS__*/null;
     });
   }
 
+  // =====================================================================
+  // ESCENA «placa-base»: un paquet de dades viatja pel bus fins a la CPU
+  // =====================================================================
+  function texPCB() {
+    // Una tesel·la cobreix l'amplada del bus: tres línies brillants (una per carril) sobre la placa
+    return lienzo(512, 512, (g, w, h) => {
+      const r = aleatorio(21);
+      g.fillStyle = '#0c3d27'; g.fillRect(0, 0, w, h);
+      for (let i = 0; i < 900; i++) { g.fillStyle = `rgba(0,0,0,${r() * .08})`; g.fillRect(r() * w, r() * h, 2 + r() * 5, 2 + r() * 5); }
+      // pistes de coure secundàries amb girs a 45º
+      g.strokeStyle = 'rgba(205,140,70,.55)'; g.lineWidth = 3; g.lineCap = 'round';
+      for (let i = 0; i < 26; i++) {
+        let x = r() * w, y = r() * h; g.beginPath(); g.moveTo(x, y);
+        for (let k = 0; k < 4; k++) { const d = 20 + r() * 60, dir = Math.floor(r() * 3); if (dir === 0) y += d; else if (dir === 1) { x += d * .7; y += d * .7; } else { x -= d * .7; y += d * .7; } g.lineTo(x, y); }
+        g.stroke();
+        g.fillStyle = 'rgba(215,160,90,.8)'; g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#0c3d27'; g.beginPath(); g.arc(x, y, 2, 0, Math.PI * 2); g.fill();
+      }
+      // les tres línies del bus (carrils)
+      for (const cx of [w / 6, w / 2, (5 * w) / 6]) {
+        const gr = g.createLinearGradient(cx - 26, 0, cx + 26, 0);
+        gr.addColorStop(0, 'rgba(60,240,255,0)'); gr.addColorStop(.5, 'rgba(60,240,255,.35)'); gr.addColorStop(1, 'rgba(60,240,255,0)');
+        g.fillStyle = gr; g.fillRect(cx - 26, 0, 52, h);
+        g.fillStyle = '#c9f7ff'; g.fillRect(cx - 3, 0, 6, h);
+      }
+      // separadors entre carrils: pistes daurades discontínues
+      g.fillStyle = 'rgba(215,165,90,.9)';
+      for (const cx of [w / 3, (2 * w) / 3]) for (let y = 0; y < h; y += 64) g.fillRect(cx - 2, y, 4, 36);
+    });
+  }
+  function texBordePCB() {
+    // Vora de la placa: contactes daurats com els d'un connector
+    return lienzo(256, 256, (g, w, h) => {
+      g.fillStyle = '#0a3020'; g.fillRect(0, 0, w, h);
+      for (let y = 0; y < h; y += 32) { g.fillStyle = '#d9a646'; g.fillRect(40, y + 4, w - 80, 22); g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(40, y + 4, w - 80, 4); }
+    });
+  }
+  function texDatos() {
+    return lienzo(96, 64, (g, w, h) => {
+      g.fillStyle = '#062c33'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#5ff3ff'; g.font = '700 18px "JetBrains Mono", ui-monospace, monospace'; g.textBaseline = 'top';
+      ['1011', '0110', '1101'].forEach((t, i) => g.fillText(t, 8, 4 + i * 20));
+    });
+  }
+  function texText(texto, color, fondo, w, h, mida) {
+    return lienzo(w, h, (g) => {
+      g.fillStyle = fondo; g.fillRect(0, 0, w, h);
+      g.fillStyle = color; g.textAlign = 'center'; g.textBaseline = 'middle';
+      let fs = mida; g.font = `700 ${fs}px "Chakra Petch", "JetBrains Mono", ui-monospace, monospace`;
+      while (g.measureText(texto).width > w - 30 && fs > 16) { fs -= 2; g.font = `700 ${fs}px "Chakra Petch", "JetBrains Mono", ui-monospace, monospace`; }
+      g.fillText(texto, w / 2, h / 2 + 2);
+    });
+  }
+  const texBits = {};
+  function texBit(b) {
+    if (texBits[b]) return texBits[b];
+    const c = lienzo(128, 128, (g, w, h) => {
+      g.fillStyle = '#0b3a2a'; g.fillRect(0, 0, w, h);
+      g.strokeStyle = '#5dffb0'; g.lineWidth = 8; g.strokeRect(6, 6, w - 12, h - 12);
+      g.fillStyle = '#b9ffdc'; g.font = '700 84px "JetBrains Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(b, w / 2, h / 2 + 4);
+    });
+    texBits[b] = textura(c);
+    return texBits[b];
+  }
+
+  // Components de la placa als costats del bus (es reciclen com les cases de París)
+  function construirComponentes() {
+    const fondoE = 6;
+    const lateral = (lado, x0, semilla, escala) => {
+      const rnd = aleatorio(semilla);
+      let pos = -10; const lista = [];
+      while (pos < VISTA + 30) {
+        const ancho = (3 + Math.floor(rnd() * 5)) * escala, tipo = ['chip', 'ram', 'condensadors', 'dissipador', 'ventilador', 'chip'][Math.floor(rnd() * 6)];
+        const comp = new THREE.Group(), partes = [], hacia = -lado;
+        const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+        if (tipo === 'chip') {
+          const alto = (.7 + rnd() * .6) * escala, prof = 3.6 * escala;
+          partes.push({ geo: B(ancho - .8, alto, prof), p: [0, alto / 2 + .1, 0], c: 0x16181b });
+          partes.push({ geo: B(ancho - 1.6, .02, prof - 1), p: [0, alto + .11, 0], c: 0x2c3036 });
+          const n = Math.floor((ancho - 1) / .35);
+          for (let k = 0; k < n; k++) for (const sz of [-1, 1]) partes.push({ geo: B(.14, .12, .5), p: [-(ancho - 1.2) / 2 + k * .35, .16, sz * (prof / 2 + .2)], c: 0xd4a94a });
+          const led = new THREE.Mesh(B(.22, .12, .22), rnd() < .5 ? MAT.ledVerd : MAT.ledVermell); led.position.set(hacia * (fondoE / 2 - 1), alto + .18, 0); comp.add(led);
+        } else if (tipo === 'ram') {
+          const n = 2 + Math.floor(rnd() * 2), alto = 3 * escala;
+          for (let k = 0; k < n; k++) {
+            const x = (k - (n - 1) / 2) * .9;
+            partes.push({ geo: B(.5, .5, ancho - .4), p: [x, .25, 0], c: 0xe8e6de });                     // sòcol
+            partes.push({ geo: B(.12, alto, ancho - .9), p: [x, .5 + alto / 2, 0], c: 0x1f6a3a });        // placa
+            partes.push({ geo: B(.13, .22, ancho - .9), p: [x, .6, 0], c: 0xd9a646 });                    // contactes
+            const chips = Math.floor((ancho - 1) / .9);
+            for (let c = 0; c < chips; c++) partes.push({ geo: B(.18, alto * .35, .6), p: [x + hacia * .12, .5 + alto * .55, -(ancho - 1.6) / 2 + c * .9], c: 0x15171a });
+          }
+        } else if (tipo === 'condensadors') {
+          const n = 2 + Math.floor(rnd() * 3);
+          for (let k = 0; k < n; k++) {
+            const rr = (.35 + rnd() * .3) * escala, alto = (1.2 + rnd() * 1.6) * escala, z = (k - (n - 1) / 2) * (ancho / n), x = (rnd() - .5) * 2;
+            const col = [0x1d2b4a, 0x121212, 0x3a1f4a][Math.floor(rnd() * 3)];
+            partes.push({ geo: new THREE.CylinderGeometry(rr, rr, alto, 16), p: [x, alto / 2, z], c: col });
+            partes.push({ geo: new THREE.CylinderGeometry(rr * .98, rr * .98, .06, 16), p: [x, alto + .03, z], c: 0xb9c0c7 });
+            partes.push({ geo: new THREE.CylinderGeometry(rr * 1.01, rr * 1.01, alto * .8, 16, 1, true, 0, .6), p: [x, alto * .5, z], r: [0, hacia > 0 ? 0 : Math.PI, 0], c: 0xc8ccd2 });
+          }
+        } else if (tipo === 'dissipador') {
+          const alto = (2.4 + rnd() * 1.6) * escala, aletes = Math.floor((ancho - .4) / .35);
+          partes.push({ geo: B(3.4, .3, ancho - .4), p: [0, .15, 0], c: 0x8e969e });
+          for (let k = 0; k < aletes; k++) partes.push({ geo: B(3.2, alto, .1), p: [0, .3 + alto / 2, -(ancho - .8) / 2 + k * .35], c: 0xb4bcc4 });
+        } else {
+          // ventilador vertical mirant al bus; el rotor gira
+          const mida = Math.min(ancho - .4, 3.4) * escala;
+          partes.push({ geo: B(.4, mida, mida), p: [0, mida / 2 + .2, 0], c: 0x1c1f23 });
+          const rotor = new THREE.Group();
+          const aspes = [];
+          for (let k = 0; k < 7; k++) aspes.push({ geo: B(.06, mida * .42, mida * .14), p: [0, Math.cos(k / 7 * Math.PI * 2) * mida * .22, Math.sin(k / 7 * Math.PI * 2) * mida * .22], r: [k / 7 * Math.PI * 2 + .4, 0, 0], c: 0x2e333a });
+          aspes.push({ geo: new THREE.CylinderGeometry(mida * .12, mida * .12, .12, 16), p: [0, 0, 0], r: [0, 0, Math.PI / 2], c: 0x3c4148 });
+          const m = new THREE.Mesh(fusionar(aspes), MAT.vcol); rotor.add(m);
+          rotor.position.set(hacia * .25, mida / 2 + .2, 0); comp.add(rotor); rotores.push(rotor);
+          const aro = new THREE.Mesh(new THREE.TorusGeometry(mida * .44, .06, 6, 24), MAT.cian); aro.rotation.y = Math.PI / 2; aro.position.set(hacia * .22, mida / 2 + .2, 0); comp.add(aro);
+        }
+        if (partes.length) { const m = new THREE.Mesh(fusionar(partes), MAT.vcol); m.receiveShadow = true; comp.add(m); }
+        comp.position.x = lado * x0;
+        comp.userData = { pos: pos + ancho / 2, ancho };
+        escena.add(comp); edificios.push(comp); lista.push(comp);
+        pos += ancho + rnd() * 1.5;
+      }
+      const largoLado = pos + 10;
+      lista.forEach((c) => { c.userData.largoLado = largoLado; });
+    };
+    for (const lado of [-1, 1]) {
+      lateral(lado, CALLE / 2 + ACERA + fondoE / 2, lado > 0 ? 97 : 53, 1);          // fila propera
+      lateral(lado, CALLE / 2 + ACERA + fondoE + 5, lado > 0 ? 31 : 77, 1.8);        // fila del fons, més gran
+    }
+  }
+  // Arcs de llum sobre el bus (fan el paper dels fanals: il·luminen el recorregut)
+  function construirArcosLuz() {
+    const ext = CALLE / 2 + ACERA * .6;
+    for (let i = 0; i * PASO_FAROLA < VISTA + 20; i++) {
+      const f = new THREE.Group();
+      for (const lado of [-1, 1]) { const pal = new THREE.Mesh(new THREE.BoxGeometry(.18, 5.6, .18), MAT.chip); pal.position.set(lado * ext, 2.8, 0); f.add(pal); }
+      const barra = new THREE.Mesh(new THREE.BoxGeometry(ext * 2 + .2, .18, .18), MAT.chip); barra.position.set(0, 5.6, 0); f.add(barra);
+      const tub = new THREE.Mesh(new THREE.BoxGeometry(ext * 2 - .4, .08, .08), MAT.cian); tub.position.set(0, 5.45, 0); f.add(tub);
+      const farol = new THREE.Mesh(new THREE.BoxGeometry(.3, .16, .3), MAT.cian); farol.position.set(0, 5.35, 0); f.add(farol);
+      const halo = new THREE.Sprite(MAT.brilloCian); halo.scale.set(3.4, 3.4, 1); halo.position.copy(farol.position); f.add(halo);
+      f.userData = { pos: i * PASO_FAROLA + 6, farol };
+      escena.add(f); farolas.push(f);
+    }
+  }
+  // La meta: la CPU, amb dissipador i ventilador; el bus hi porta directament
+  function construirCPU() {
+    bastilla = new THREE.Group();
+    const partes = [];
+    const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+    partes.push({ geo: B(24, .7, 14), p: [0, .35, 0], c: 0x1f5a36 });                // substrat
+    partes.push({ geo: B(17, .9, 10), p: [0, 1.15, 0], c: 0xb9c0c7 });               // encapsulat metàl·lic
+    for (let k = 0; k < 34; k++) partes.push({ geo: B(.28, 6, 9.4), p: [-8.25 + k * .5, 1.6 + 3, 0], c: 0xaab3bc });   // aletes del dissipador
+    partes.push({ geo: B(17.4, .5, 10), p: [0, 7.85, 0], c: 0x8e969e });             // tapa del dissipador
+    partes.push({ geo: B(12, .5, 10), p: [0, 8.35, 0], c: 0x1c1f23 });               // marc del ventilador
+    for (let k = 0; k < 44; k++) partes.push({ geo: B(.22, .2, .7), p: [-10.75 + k * .5, .2, 7.2], c: 0xd4a94a });   // potes davanteres
+    const cpu = new THREE.Mesh(fusionar(partes), MAT.vcol); cpu.receiveShadow = true; cpu.castShadow = true; bastilla.add(cpu);
+    // Rotor del ventilador superior
+    const aspes = [];
+    for (let k = 0; k < 9; k++) aspes.push({ geo: B(1.4, .12, 4.2), p: [Math.cos(k / 9 * Math.PI * 2) * 2.1, 0, Math.sin(k / 9 * Math.PI * 2) * 2.1], r: [0, -k / 9 * Math.PI * 2, .3], c: 0x2e333a });
+    aspes.push({ geo: new THREE.CylinderGeometry(1, 1, .3, 20), p: [0, 0, 0], c: 0x3c4148 });
+    const rotor = new THREE.Mesh(fusionar(aspes), MAT.vcol); rotor.position.set(0, 8.75, 0); bastilla.add(rotor); rotores.push({ rotacionY: rotor });
+    const aro = new THREE.Mesh(new THREE.TorusGeometry(4.6, .12, 6, 40), MAT.cian); aro.rotation.x = Math.PI / 2; aro.position.set(0, 8.7, 0); bastilla.add(aro);
+    // Rètol «CPU» davant
+    const texCPU = textura(texText('CPU', '#9ff8ff', '#062c33', 512, 200, 150));
+    const retol = new THREE.Mesh(new THREE.PlaneGeometry(7, 2.7), new THREE.MeshBasicMaterial({ map: texCPU, toneMapped: false }));
+    retol.position.set(0, 3.6, 5.1); bastilla.add(retol);
+    // El bus porta fins a la CPU: franja brillant que arriba on s'atura el corredor
+    const bus = new THREE.Mesh(new THREE.BoxGeometry(CALLE, .05, PARADA_BASTILLA - 6.5), MAT.cianSuave);
+    bus.position.set(0, .03, 7 + (PARADA_BASTILLA - 6.5) / 2); bastilla.add(bus);
+    // Zona de la placa entre el final del bus lateral i la CPU
+    const largoPlaza = BASTILLA_TRAS_META + PLAZA_ANTES_META - 7;
+    const texZona = textura(texPCB(), true); texZona.repeat.set(12, largoPlaza / CALLE);
+    const zona3 = new THREE.Mesh(new THREE.PlaneGeometry(90, largoPlaza), new THREE.MeshStandardMaterial({ map: texZona, roughness: .8 }));
+    zona3.rotation.x = -Math.PI / 2; zona3.position.set(0, .012, 7 + largoPlaza / 2); zona3.receiveShadow = true; bastilla.add(zona3);
+    // Panell «Instrucció executada!» que apareix a la llegada (fa el paper de la bandera)
+    const texPanel = textura(texText(J.textoLlegada || 'Instrucció executada!', '#b9ffdc', '#062c1f', 1024, 200, 110));
+    bandera = new THREE.Mesh(new THREE.PlaneGeometry(10, 1.95), new THREE.MeshBasicMaterial({ map: texPanel, toneMapped: false, transparent: true }));
+    bandera.userData.base = bandera.geometry.attributes.position.array.slice();
+    bandera.position.set(0, 9, 3); bandera.visible = false; bastilla.add(bandera);
+    // LEDs de la placa que parpellegen a la llegada (fan el paper de la multitud)
+    const r = aleatorio(4242);
+    for (let grup = 0; grup < 2; grup++) {
+      const p = [];
+      for (let i = 0; i < 70; i++) {
+        const lado = i % 2 ? 1 : -1, x = lado * (4.5 + r() * 30), z = 9 + r() * 16;
+        p.push({ geo: B(.35, .22, .35), p: [x, .12, z], c: [0x5dffb0, 0xff5a4a, 0x5ff3ff, 0xffc14a][Math.floor(r() * 4)] });
+      }
+      const m = new THREE.Mesh(fusionar(p), new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false }));
+      bastilla.add(m); leds.push(m);
+    }
+    multitud = leds[0];
+    const antorcha = new THREE.PointLight(0x40e0ff, 70, 34, 2); antorcha.position.set(0, 5, 10); bastilla.add(antorcha);
+    for (const lado of [-1, 1]) { const h = new THREE.Sprite(MAT.brilloCian); h.scale.set(2.6, 2.6, 1); h.position.set(lado * 4.6, 3.6, 5.4); bastilla.add(h); }
+  }
+  // Obstacles: virus (esfera vermella amb punxes); geometria compartida
+  let geoVirus = null;
+  function crearVirus(o) {
+    if (!geoVirus) {
+      const partes = [];
+      const dirs = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1], [.7, .7, 0], [-.7, .7, 0], [.7, -.7, 0], [-.7, -.7, 0], [0, .7, .7], [0, -.7, .7], [0, .7, -.7], [0, -.7, -.7]];
+      for (const [x, y, z] of dirs) {
+        const d = new THREE.Vector3(x, y, z).normalize();
+        const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), d);
+        const e = new THREE.Euler().setFromQuaternion(q);
+        partes.push({ geo: new THREE.CylinderGeometry(.05, .05, .5, 6), p: [d.x * .62, d.y * .62, d.z * .62], r: [e.x, e.y, e.z], c: 0xff8a7a });
+        partes.push({ geo: new THREE.SphereGeometry(.11, 8, 6), p: [d.x * .88, d.y * .88, d.z * .88], c: 0xffd0c8 });
+      }
+      geoVirus = fusionar(partes);
+    }
+    const g = new THREE.Group();
+    const nucli = new THREE.Mesh(new THREE.IcosahedronGeometry(.55, 1), MAT.virus); nucli.castShadow = true; g.add(nucli);
+    const punxes = new THREE.Mesh(geoVirus, MAT.vcolBrillant); punxes.userData.compartida = true; g.add(punxes);
+    const halo = new THREE.Sprite(MAT.brilloVermell); halo.scale.set(2.4, 2.4, 1); g.add(halo);
+    g.userData.virus = true;
+    return g;
+  }
+  // Recollibles: bits (cubs brillants amb 0 o 1)
+  function crearBit(o) {
+    const b = (Math.floor(o.pos) % 2) ? '1' : '0';
+    const tex = texBit(b);
+    const mat = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .8, roughness: .4 });
+    const g = new THREE.Group();
+    const cub = new THREE.Mesh(new THREE.BoxGeometry(.42, .42, .42), mat); cub.castShadow = true; g.add(cub);
+    const halo = new THREE.Sprite(MAT.brilloVerd); halo.scale.set(1.1, 1.1, 1); g.add(halo);
+    return g;
+  }
+
   // --- Materiales compartidos ---
   const MAT = {};
   function materiales() {
@@ -461,6 +691,20 @@ const DATOS = /*__DATOS__*/null;
     MAT.crema = new THREE.MeshStandardMaterial({ color: 0xe8dcc0, roughness: .8 });
     MAT.piel = new THREE.MeshStandardMaterial({ color: 0xe0b890, roughness: .7 });
     MAT.bota = new THREE.MeshStandardMaterial({ color: 0x1f1a16, roughness: .6 });
+    if (PCB) {
+      const brilloDe = (r, g, b) => new THREE.SpriteMaterial({ map: textura(lienzo(64, 64, (c) => { const gr = c.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(.35, `rgba(${r},${g},${b},.45)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`); c.fillStyle = gr; c.fillRect(0, 0, 64, 64); })), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true });
+      MAT.brilloCian = brilloDe(90, 240, 255); MAT.brilloVerd = brilloDe(100, 255, 170); MAT.brilloVermell = brilloDe(255, 80, 60);
+      MAT.vcol = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .55, metalness: .35 });
+      MAT.vcolBrillant = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .4, emissive: 0xff3a2a, emissiveIntensity: .6 });
+      MAT.metal = new THREE.MeshStandardMaterial({ color: 0xa8b2bc, roughness: .35, metalness: .7 });
+      MAT.oscuro = new THREE.MeshStandardMaterial({ color: 0x2c3138, roughness: .6, metalness: .3 });
+      MAT.cian = new THREE.MeshStandardMaterial({ color: 0x5ff3ff, emissive: 0x3cf0ff, emissiveIntensity: 2.2 });
+      MAT.cianSuave = new THREE.MeshStandardMaterial({ color: 0x5ff3ff, emissive: 0x3cf0ff, emissiveIntensity: .9, transparent: true, opacity: .55 });
+      MAT.chip = new THREE.MeshStandardMaterial({ color: 0x17191c, roughness: .5, metalness: .3 });
+      MAT.cobre = new THREE.MeshStandardMaterial({ color: 0xc8894a, roughness: .35, metalness: .8, emissive: 0x2a1406, emissiveIntensity: .6 });
+      MAT.virus = new THREE.MeshStandardMaterial({ color: 0xd8342a, roughness: .45, emissive: 0xb01a10, emissiveIntensity: 1.1, flatShading: true });
+      MAT.ledVerd = new THREE.MeshBasicMaterial({ color: 0x5dffb0 }); MAT.ledVermell = new THREE.MeshBasicMaterial({ color: 0xff5a4a });
+    }
   }
 
   // --- Montaje de la escena ---
@@ -469,26 +713,27 @@ const DATOS = /*__DATOS__*/null;
     const fondo = new THREE.Color(C.shell);
     escena.background = fondo;
     // Niebla nocturna algo más clara que el fondo de la app: la escena se ve más y la distancia sigue difuminada
-    const colorNiebla = new THREE.Color(C.shell).lerp(new THREE.Color(0x4a5a8a), .4);
+    const colorNiebla = PCB ? new THREE.Color(C.shell).lerp(new THREE.Color(0x1c6a5a), .35) : new THREE.Color(C.shell).lerp(new THREE.Color(0x4a5a8a), .4);
     escena.background = colorNiebla;
     escena.fog = new THREE.Fog(colorNiebla, 34, VISTA + 20);
     camara = new THREE.PerspectiveCamera(60, 1, .1, 400);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.65;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = PCB ? 1.45 : 1.65;
     renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     materiales();
 
-    escena.add(new THREE.HemisphereLight(0x8a9ad0, 0x3a2e22, 1.4));
-    luna = new THREE.DirectionalLight(0xc4d0ff, 1.4);
+    escena.add(PCB ? new THREE.HemisphereLight(0x8fe6d8, 0x0a2418, 1.5) : new THREE.HemisphereLight(0x8a9ad0, 0x3a2e22, 1.4));
+    luna = new THREE.DirectionalLight(PCB ? 0xcff4ff : 0xc4d0ff, 1.4);
     luna.position.set(-12, 22, 8); luna.castShadow = true;
     luna.shadow.mapSize.set(1024, 1024);
     Object.assign(luna.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 70 });
     luna.shadow.bias = -.0008;
     escena.add(luna, luna.target);
-    luzCalida = new THREE.PointLight(0xffb070, 30, 18, 2); luzCalida.position.set(0, 3.2, 2); escena.add(luzCalida);
-    for (let i = 0; i < 2; i++) { const l = new THREE.PointLight(0xffa058, 55, 28, 2); escena.add(l); farolasLuz.push(l); }
+    luzCalida = new THREE.PointLight(PCB ? 0x6ff4ff : 0xffb070, 30, 18, 2); luzCalida.position.set(0, 3.2, 2); escena.add(luzCalida);
+    for (let i = 0; i < 2; i++) { const l = new THREE.PointLight(PCB ? 0x40f0d0 : 0xffa058, 55, 28, 2); escena.add(l); farolasLuz.push(l); }
 
-    // Cielo: estrellas lejanas
+    // Cielo: estrellas lejanas y luna (solo en París)
+    if (!PCB) {
     const n = 500, pos = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI - Math.PI / 2, b = Math.random() * .45 + .06; pos[i * 3] = Math.sin(a) * 300; pos[i * 3 + 1] = Math.sin(b) * 300; pos[i * 3 + 2] = -Math.cos(a) * 300; }
     const gEst = new THREE.BufferGeometry(); gEst.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -496,23 +741,25 @@ const DATOS = /*__DATOS__*/null;
     // Luna
     const disco = new THREE.Mesh(new THREE.CircleGeometry(9, 32), new THREE.MeshBasicMaterial({ color: 0xf2ecd8, fog: false }));
     disco.position.set(-80, 95, -260); escena.add(disco);
+    }
 
     grupoPista = new THREE.Group(); escena.add(grupoPista);
     // Calle de adoquines (la textura se desplaza para dar sensación de avance)
-    texturas.adoquines = textura(texAdoquines(), true);
+    texturas.adoquines = textura(PCB ? texPCB() : texAdoquines(), true);
     texturas.adoquines.repeat.set(1, VISTA / CALLE);
     suelo = new THREE.Mesh(new THREE.PlaneGeometry(CALLE, VISTA + 20), new THREE.MeshStandardMaterial({ map: texturas.adoquines, roughness: .95 }));
     suelo.rotation.x = -Math.PI / 2; suelo.position.z = -(VISTA / 2) + 10; suelo.receiveShadow = true; escena.add(suelo);
     // Aceras con bordillo
-    texturas.losas = textura(texLosas(), true); texturas.losas.repeat.set(1, (VISTA + 20) / 3.6);
+    texturas.losas = textura(PCB ? texBordePCB() : texLosas(), true); texturas.losas.repeat.set(1, (VISTA + 20) / 3.6);
     for (const lado of [-1, 1]) {
       const a = new THREE.Mesh(new THREE.BoxGeometry(ACERA, .18, VISTA + 20), new THREE.MeshStandardMaterial({ map: texturas.losas, roughness: .9 }));
       a.position.set(lado * (CALLE / 2 + ACERA / 2), .09, -(VISTA / 2) + 10); a.receiveShadow = true; escena.add(a); aceras.push(a);
     }
     // Suelo más allá de las aceras
-    const tierra = new THREE.Mesh(new THREE.PlaneGeometry(200, VISTA + 20), new THREE.MeshStandardMaterial({ color: 0x1a1714, roughness: 1 }));
+    const tierra = new THREE.Mesh(new THREE.PlaneGeometry(200, VISTA + 20), new THREE.MeshStandardMaterial({ color: PCB ? 0x07291b : 0x1a1714, roughness: 1 }));
     tierra.rotation.x = -Math.PI / 2; tierra.position.set(0, -.02, -(VISTA / 2) + 10); escena.add(tierra);
 
+    if (PCB) construirComponentes(); else {
     // Casas del París de 1789: estrechas, de alturas desiguales, con tres estilos de fachada,
     // tejados inclinados de teja o pizarra (a dos aguas hacia la calle o con buhardilla) y rótulos colgados
     const TIPOS = ['entramado', 'revoque', 'piedra'];
@@ -563,6 +810,8 @@ const DATOS = /*__DATOS__*/null;
       const largoLado = pos + 10;
       casasLado.forEach((c) => { c.userData.largoLado = largoLado; });
     }
+    }
+    if (PCB) construirArcosLuz(); else {
     // Faroles de aceite colgados de una cuerda sobre el centro de la calle (el alumbrado del París de 1789)
     const ext = CALLE / 2 + ACERA;
     for (let i = 0; i * PASO_FAROLA < VISTA + 20; i++) {
@@ -576,6 +825,8 @@ const DATOS = /*__DATOS__*/null;
       f.userData = { pos: i * PASO_FAROLA + 6, farol };
       escena.add(f); farolas.push(f);
     }
+    }
+    if (PCB) construirCPU(); else {
     // La Bastilla: torres almenadas al fondo de la calle
     bastilla = new THREE.Group();
     const muro = new THREE.Mesh(new THREE.BoxGeometry(34, 16, 8), MAT.piedra); muro.position.y = 8; bastilla.add(muro);
@@ -616,6 +867,7 @@ const DATOS = /*__DATOS__*/null;
     // Luz cálida de antorchas ante la puerta
     const antorcha = new THREE.PointLight(0xffa050, 60, 30, 2); antorcha.position.set(0, 5, 10); bastilla.add(antorcha);
     for (const lado of [-1, 1]) { const h = new THREE.Sprite(MAT.brillo); h.scale.set(2.4, 2.4, 1); h.position.set(lado * 3, 5.5, 4.4); bastilla.add(h); }
+    }
     escena.add(bastilla);
     // Fuegos artificiales (colores de la bandera y dorado)
     const nf = 240, pf = new Float32Array(nf * 3).fill(-999), cf = new Float32Array(nf * 3);
@@ -637,33 +889,48 @@ const DATOS = /*__DATOS__*/null;
   function crearCorredor() {
     const g = new THREE.Group(), p = {};
     const caja = (w, h, d, m) => { const x = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); x.castShadow = true; return x; };
+    // París: revolucionari (casaca blava, gorro frigi). Placa: robot «paquet de dades» (metall, visor i antena cian)
+    const M = PCB ? { torso: MAT.metal, faja: MAT.cian, cap: MAT.metal, cames: MAT.oscuro, mans: MAT.metal } : { torso: MAT.azul, faja: MAT.rojo, cap: MAT.piel, cames: MAT.crema, mans: MAT.piel };
     p.cadera = new THREE.Group(); p.cadera.position.y = .95; g.add(p.cadera);
-    const torso = caja(.5, .66, .3, MAT.azul); torso.position.y = .38; p.cadera.add(torso);
-    const faja = caja(.52, .1, .32, MAT.rojo); faja.position.y = .08; p.cadera.add(faja);
-    const cabeza = new THREE.Mesh(new THREE.SphereGeometry(.17, 16, 12), MAT.piel); cabeza.position.y = .88; cabeza.castShadow = true; p.cadera.add(cabeza);
-    const gorro = new THREE.Mesh(new THREE.ConeGeometry(.19, .34, 12), MAT.rojo); gorro.position.set(0, 1.05, .03); gorro.rotation.x = .55; gorro.castShadow = true; p.cadera.add(gorro);
+    const torso = caja(.5, .66, .3, M.torso); torso.position.y = .38; p.cadera.add(torso);
+    const faja = caja(.52, .1, .32, M.faja); faja.position.y = .08; p.cadera.add(faja);
+    const cabeza = new THREE.Mesh(new THREE.SphereGeometry(.17, 16, 12), M.cap); cabeza.position.y = .88; cabeza.castShadow = true; p.cadera.add(cabeza);
+    if (PCB) {
+      const visor = caja(.26, .08, .06, MAT.cian); visor.position.set(0, .9, .15); p.cadera.add(visor);
+      const antena = new THREE.Mesh(new THREE.CylinderGeometry(.015, .015, .32, 6), MAT.oscuro); antena.position.set(0, 1.18, 0); p.cadera.add(antena);
+      const punta = new THREE.Mesh(new THREE.SphereGeometry(.05, 10, 8), MAT.cian); punta.position.set(0, 1.35, 0); p.cadera.add(punta);
+      const pit = caja(.2, .12, .02, MAT.cian); pit.position.set(0, .5, -.16); p.cadera.add(pit);
+    } else {
+      const gorro = new THREE.Mesh(new THREE.ConeGeometry(.19, .34, 12), MAT.rojo); gorro.position.set(0, 1.05, .03); gorro.rotation.x = .55; gorro.castShadow = true; p.cadera.add(gorro);
+    }
     const pierna = (lado) => {
       const pv = new THREE.Group(); pv.position.set(lado * .13, 0, 0); p.cadera.add(pv);
-      const muslo = caja(.16, .48, .18, MAT.crema); muslo.position.y = -.24; pv.add(muslo);
+      const muslo = caja(.16, .48, .18, M.cames); muslo.position.y = -.24; pv.add(muslo);
       const rod = new THREE.Group(); rod.position.y = -.48; pv.add(rod);
-      const espinilla = caja(.14, .44, .16, MAT.crema); espinilla.position.y = -.22; rod.add(espinilla);
+      const espinilla = caja(.14, .44, .16, M.cames); espinilla.position.y = -.22; rod.add(espinilla);
       const bota = caja(.16, .1, .26, MAT.bota); bota.position.set(0, -.45, .05); rod.add(bota);
       return { pv, rod };
     };
     const brazo = (lado) => {
       const pv = new THREE.Group(); pv.position.set(lado * .32, .66, 0); p.cadera.add(pv);
-      const b = caja(.12, .5, .13, MAT.azul); b.position.y = -.25; pv.add(b);
-      const mano = new THREE.Mesh(new THREE.SphereGeometry(.07, 8, 6), MAT.piel); mano.position.y = -.52; pv.add(mano);
+      const b = caja(.12, .5, .13, M.torso); b.position.y = -.25; pv.add(b);
+      const mano = new THREE.Mesh(new THREE.SphereGeometry(.07, 8, 6), M.mans); mano.position.y = -.52; pv.add(mano);
       return pv;
     };
     p.pI = pierna(-1); p.pD = pierna(1); p.bI = brazo(-1); p.bD = brazo(1);
     // Bandera tricolor en la mano derecha
-    const asta = new THREE.Mesh(new THREE.CylinderGeometry(.025, .025, 1.9, 6), MAT.maderaOscura); asta.position.set(0, .2, 0); p.bD.add(asta);
-    texturas.bandera = textura(texBandera());
+    const asta = new THREE.Mesh(new THREE.CylinderGeometry(.025, .025, 1.9, 6), PCB ? MAT.oscuro : MAT.maderaOscura); asta.position.set(0, .2, 0); p.bD.add(asta);
+    texturas.bandera = textura(PCB ? texDatos() : texBandera());  // a la placa porta un panell de dades
     p.telaGeo = new THREE.PlaneGeometry(.85, .55, 12, 4);
     p.telaBase = p.telaGeo.attributes.position.array.slice();
     const tela = new THREE.Mesh(p.telaGeo, new THREE.MeshStandardMaterial({ map: texturas.bandera, side: THREE.DoubleSide, roughness: .8, emissive: 0xffffff, emissiveMap: texturas.bandera, emissiveIntensity: .45 }));
     tela.position.set(.44, .88, 0); tela.castShadow = true; p.bD.add(tela);
+    if (PCB) {  // el panell es veu de darrere: la cara posterior porta la textura girada perquè els bits no surtin al revés
+      tela.material.side = THREE.FrontSide;
+      const texR = texturas.bandera.clone(); texR.wrapS = THREE.RepeatWrapping; texR.repeat.x = -1; texR.needsUpdate = true;
+      const revers = new THREE.Mesh(p.telaGeo, new THREE.MeshStandardMaterial({ map: texR, side: THREE.BackSide, roughness: .8, emissive: 0xffffff, emissiveMap: texR, emissiveIntensity: .45 }));
+      revers.position.copy(tela.position); p.bD.add(revers);
+    }
     g.userData = p;
     return g;
   }
@@ -762,9 +1029,9 @@ const DATOS = /*__DATOS__*/null;
   function lanzarFuego() {
     if (MJ.reducido() || !fuegos) return;
     const d = fuegos.userData, pos = fuegos.geometry.attributes.position.array, col = fuegos.geometry.attributes.color.array;
-    const cols = [new THREE.Color(C.azul).multiplyScalar(1.6), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.4), new THREE.Color(C.oro)];
+    const cols = PCB ? [new THREE.Color(0x5ff3ff), new THREE.Color(0x6dffb4), new THREE.Color(0xffffff), new THREE.Color(C.oro)] : [new THREE.Color(C.azul).multiplyScalar(1.6), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.4), new THREE.Color(C.oro)];
     const c0 = cols[Math.floor(Math.random() * cols.length)];
-    const ox = bastilla.position.x + (Math.random() - .5) * 26, oy = 26 + Math.random() * 8, oz = bastilla.position.z + 2;
+    const ox = bastilla.position.x + (Math.random() - .5) * 26, oy = (PCB ? 13 : 26) + Math.random() * 8, oz = bastilla.position.z + 2;
     for (let i = 0; i < 40; i++) {
       const k = d.siguiente; d.siguiente = (d.siguiente + 1) % d.vida.length;
       const a = Math.random() * Math.PI * 2, b = Math.acos(Math.random() * 2 - 1), v = 5 + Math.random() * 3;
@@ -799,6 +1066,8 @@ const DATOS = /*__DATOS__*/null;
 
   // --- Objetos de la pista (se crean al verlos y se quitan al pasar) ---
   function crearMalla(o) {
+    if (o.tipo === 'obst' && PCB) return crearVirus(o);
+    if (o.tipo === 'moneda' && PCB) return crearBit(o);
     if (o.tipo === 'obst') {
       const g = new THREE.Group();
       const c1 = new THREE.Mesh(new THREE.BoxGeometry(1, .9, .9), MAT.madera); c1.position.set(-.35, .45, 0); g.add(c1);
@@ -836,11 +1105,11 @@ const DATOS = /*__DATOS__*/null;
       g.userData.carteles = [];
       for (let c = 0; c < 3; c++) {
         const x = (c - 1) * CARRIL;
-        for (const dx of [-.95, .95]) { const poste = new THREE.Mesh(new THREE.BoxGeometry(.14, 3.2, .14), MAT.poste); poste.position.set(x + dx, 1.6, 0); poste.castShadow = true; poste.userData.c = c; g.add(poste); }
+        for (const dx of [-.95, .95]) { const poste = new THREE.Mesh(new THREE.BoxGeometry(.14, 3.2, .14), PCB ? MAT.cobre : MAT.poste); poste.position.set(x + dx, 1.6, 0); poste.castShadow = true; poste.userData.c = c; g.add(poste); }
         const texN = textura(texCartel(q.ops[c].texto, c + 1, false)), texM = textura(texCartel(q.ops[c].texto, c + 1, true));
         const cartel = new THREE.Mesh(new THREE.PlaneGeometry(2.05, .8), new THREE.MeshBasicMaterial({ map: texN, toneMapped: false }));
         cartel.position.set(x, 3.1, .08); cartel.userData = { c, texN, texM };
-        const dorso = new THREE.Mesh(new THREE.BoxGeometry(2.1, .85, .1), MAT.maderaOscura); dorso.position.set(x, 3.1, 0); dorso.userData.c = c;
+        const dorso = new THREE.Mesh(new THREE.BoxGeometry(2.1, .85, .1), PCB ? MAT.chip : MAT.maderaOscura); dorso.position.set(x, 3.1, 0); dorso.userData.c = c;
         g.add(dorso, cartel); g.userData.carteles.push(cartel);
       }
       return g;
@@ -851,7 +1120,7 @@ const DATOS = /*__DATOS__*/null;
     if (!o.malla) return;
     grupoPista.remove(o.malla);
     o.malla.traverse((m) => {
-      if (m.geometry && !m.userData.soldado) m.geometry.dispose();
+      if (m.geometry && !m.userData.soldado && !m.userData.compartida) m.geometry.dispose();
       if (m.userData && m.userData.texN) { m.userData.texN.dispose(); m.userData.texM.dispose(); m.material.dispose(); }
     });
     o.malla = null;
@@ -946,11 +1215,18 @@ const DATOS = /*__DATOS__*/null;
     // Llegada: se iza la bandera y la multitud celebra
     const kL = s.fase === 'llegada' ? Math.min(1, s.tLlegada / (MJ.reducido() ? .6 : 2.4)) : 0;
     const suave = kL * kL * (3 - 2 * kL);
-    bandera.position.y = 16.9 + suave * 6.2;
-    const bp = bandera.geometry.attributes.position, bb = bandera.userData.base;
-    for (let i = 0; i < bp.count; i++) { const x = bb[i * 3]; bp.array[i * 3 + 2] = Math.sin(s.t * 6 + x * 3) * .12 * (x + 1.3); }
-    bp.needsUpdate = true;
-    multitud.position.y = s.fase === 'llegada' && !MJ.reducido() ? Math.abs(Math.sin(s.t * 7)) * .12 : 0;
+    if (PCB) {
+      // Placa: apareix el panell «Instrucció executada!», parpellegen els LEDs i giren els ventiladors
+      bandera.visible = suave > .02; bandera.position.y = 9.6 + suave * 3.4;
+      leds.forEach((m, i) => { const on = s.fase === 'llegada' ? .35 + .65 * Math.abs(Math.sin(s.t * 9 + i * 1.6)) : .45; m.material.color.setScalar(on); });
+      if (!MJ.reducido()) rotores.forEach((r) => { if (r.rotacionY) r.rotacionY.rotation.y += (dt || 0) * (s.fase === 'llegada' ? 14 : 4); else r.rotation.x += (dt || 0) * 7; });
+    } else {
+      bandera.position.y = 16.9 + suave * 6.2;
+      const bp = bandera.geometry.attributes.position, bb = bandera.userData.base;
+      for (let i = 0; i < bp.count; i++) { const x = bb[i * 3]; bp.array[i * 3 + 2] = Math.sin(s.t * 6 + x * 3) * .12 * (x + 1.3); }
+      bp.needsUpdate = true;
+      multitud.position.y = s.fase === 'llegada' && !MJ.reducido() ? Math.abs(Math.sin(s.t * 7)) * .12 : 0;
+    }
     // Objetos de la pista
     for (const o of s.objs) {
       const z = o.pos - s.dist;
@@ -962,6 +1238,7 @@ const DATOS = /*__DATOS__*/null;
       if (o.tipo === 'puerta') o.malla.position.set(0, 0, -z);
       else o.malla.position.set((o.carril - 1) * CARRIL, 0, -z);
       if (o.tipo === 'moneda') { o.malla.position.y = 1.1 + (MJ.reducido() ? 0 : Math.sin(s.t * 3 + o.pos * 1.3) * .08); o.malla.rotation.y = s.t * 2.5 + o.pos; }
+      if (o.malla.userData.virus) { o.malla.position.y = .95 + (MJ.reducido() ? 0 : Math.sin(s.t * 2.4 + o.pos) * .1); o.malla.rotation.y = s.t * 1.2 + o.pos; o.malla.rotation.x = s.t * .7; }
       if (o.tipo === 'puerta') {
         const activa = s.fase === 'eligiendo' && s.puertaActual === o;
         o.malla.userData.carteles.forEach((cart) => {
@@ -980,9 +1257,9 @@ const DATOS = /*__DATOS__*/null;
     const objetivoX = xCorr * .55;
     camara.position.x += (objetivoX - camara.position.x) * Math.min(1, (dt || 1) * 5);
     // En la llegada la cámara se aleja y se eleva para mostrar la fortaleza entera
-    camara.position.y = cy + suave * 5; camara.position.z = cz + suave * 12;
+    camara.position.y = cy + suave * (PCB ? 4 : 5); camara.position.z = cz + suave * (PCB ? 10 : 12);
     if (s.sacudida > 0 && !MJ.reducido()) { camara.position.x += (Math.random() - .5) * .25; camara.position.y += (Math.random() - .5) * .15; }
-    camara.lookAt(camara.position.x * .6, 1.4 + suave * 8, -12);
+    camara.lookAt(camara.position.x * .6, 1.4 + suave * (PCB ? 4.5 : 8), -12);
     luzCalida.position.set(xCorr, 3.2, 2);
     luna.position.set(xCorr - 12, 22, 8); luna.target.position.set(xCorr, 0, -6);
     renderer.render(escena, camara);
