@@ -3,7 +3,7 @@
 // Si se pasa apuntes.md, su contenido sustituye al campo "apuntes" del JSON.
 // Las imágenes ("archivo", ruta relativa al JSON) se incrustan como data URI: el HTML no depende de otros archivos.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { dirname, join, extname } from 'node:path';
+import { dirname, join, extname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const [, , rutaDatos, rutaSalida, rutaApuntes] = process.argv;
@@ -114,6 +114,16 @@ if (errores.length) {
   console.error('ERRORES (' + errores.length + '):\n - ' + errores.join('\n - '));
   process.exit(1);
 }
+
+// ---------- Enlace a la portada con todos los temas ----------
+// La raíz del proyecto es la carpeta que contiene examen/ e index.html (salida = examen/<tema>/index.html)
+const dirSalida = dirname(resolve(rutaSalida));
+for (let d = dirname(dirSalida), k = 0; k < 4; k++, d = dirname(d)) {
+  if (existsSync(join(d, 'examen')) && existsSync(join(d, 'index.html')) && resolve(d, 'index.html') !== resolve(rutaSalida)) {
+    datos.portada = (relative(dirSalida, d).replace(/\\/g, '/') || '.') + '/index.html'; break;
+  }
+}
+if (!datos.portada) avisos.push('no se encuentra la portada (index.html junto a la carpeta examen/): el examen no tendrá enlace para volver a ella');
 
 // ---------- Construcción ----------
 const json = JSON.stringify(datos)

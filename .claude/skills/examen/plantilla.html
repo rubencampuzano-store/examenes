@@ -70,6 +70,11 @@
     border-bottom: 1px solid var(--linea-clara);
   }
   .marca { display: flex; align-items: baseline; gap: 10px; margin-right: auto; min-width: 0; text-align: left; }
+  .volver-examenes { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--linea-clara); color: var(--claro-suave); font-family: var(--f-mono); font-size: .8rem; text-decoration: none; white-space: nowrap; transition: color .2s, border-color .2s; }
+  .volver-examenes:hover, .volver-examenes:focus-visible { color: var(--claro); border-color: var(--claro-suave); }
+  .volver-examenes svg { width: 18px; height: 18px; flex: none; }
+  body.en-juego .volver-examenes { display: none; }
+  @media (max-width: 1360px) { .marca span { display: none; } }   /* con el enlace de volver, el título necesita el espacio */   /* durante una partida se sale con el botón propio, que pide confirmación */
   .marca b { font-family: var(--f-display); font-style: italic; font-size: 1.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .marca span { color: var(--oro); font-size: .7rem; }
   .monedero { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--linea-clara); border-radius: 999px; font-size: .85rem; white-space: nowrap; }
@@ -369,6 +374,8 @@
   }
   @media (max-width: 640px) {
     .navtop { display: none; }
+    .volver-examenes { width: 40px; padding: 0; justify-content: center; }
+    .volver-examenes span { display: none; }
     .tabs { display: grid; }
     main { padding-bottom: calc(var(--tab-h) + 40px + var(--safe-b)); padding-top: 18px; }
     body.en-juego main { padding-bottom: 40px; }
@@ -405,6 +412,7 @@
 </svg>
 
 <header class="top">
+  <a class="volver-examenes" id="volverExamenes" href="#" target="_top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span></span></a>
   <button class="marca" id="marca"><b id="marcaTitulo"></b><span class="eyebrow" id="marcaEyebrow"></span></button>
   <nav class="navtop" id="navtop" aria-label="Navegación principal"></nav>
   <div class="monedero" id="monedero"></div>
@@ -594,6 +602,10 @@ const DATOS = /*__DATOS__*/null;
   }
   const selloTema = () => (TEMA.motivo && TEMA.motivo.sello) || DATOS.meta.titulo;
   const monograma = () => (TEMA.motivo && TEMA.motivo.monograma) || selloTema().slice(0, 2);
+
+  // ---------- Enlace a la portada con todos los exámenes ----------
+  const TXT_VOLVER = T.volverExamenes || (DATOS.meta.idioma === 'es' ? 'Todos los exámenes' : 'Tots els exàmens');
+  if (DATOS.portada) { const v = $('#volverExamenes'); v.href = DATOS.portada; v.hidden = false; v.title = TXT_VOLVER; v.setAttribute('aria-label', TXT_VOLVER); v.querySelector('span').textContent = TXT_VOLVER; }
 
   // ---------- Navegación ----------
   const TABS = [['inicio', T.inicio, ICON.inicio], ['mapa', T.niveles, ICON.mapa], ['logros', T.logros, ICON.logros], ['apuntes', T.apuntes, ICON.apuntes]];
