@@ -69,7 +69,7 @@
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--linea-clara);
   }
-  .marca { display: grid; gap: 2px; margin-right: auto; min-width: 0; text-align: left; }   /* título arriba y tema debajo, como subtítulo */
+  .marca { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; margin-right: auto; min-width: 0; text-align: left; }   /* título arriba y tema debajo, como subtítulo */
   .volver-examenes { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--linea-clara); color: var(--claro-suave); font-family: var(--f-mono); font-size: .8rem; text-decoration: none; white-space: nowrap; transition: color .2s, border-color .2s; }
   .volver-examenes:hover, .volver-examenes:focus-visible { color: var(--claro); border-color: var(--claro-suave); }
   .volver-examenes svg { width: 18px; height: 18px; flex: none; }
@@ -373,7 +373,7 @@
   }
   @media (max-width: 640px) {
     .navtop { display: none; }
-    .volver-examenes { width: 40px; padding: 0; justify-content: center; }
+    .volver-examenes { width: 40px; padding: 0; justify-content: center; order: -1; }   /* sin pestañas, la flecha vuelve a la izquierda */
     .volver-examenes span { display: none; }
     .tabs { display: grid; }
     main { padding-bottom: calc(var(--tab-h) + 40px + var(--safe-b)); padding-top: 18px; }
@@ -411,8 +411,8 @@
 </svg>
 
 <header class="top">
-  <a class="volver-examenes" id="volverExamenes" href="#" target="_top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span></span></a>
   <button class="marca" id="marca"><b id="marcaTitulo"></b><span class="eyebrow" id="marcaEyebrow"></span></button>
+  <a class="volver-examenes" id="volverExamenes" href="#" target="_top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span></span></a>
   <nav class="navtop" id="navtop" aria-label="Navegación principal"></nav>
   <div class="monedero" id="monedero"></div>
   <button class="icon-btn" id="btnSonido" aria-pressed="true"></button>
