@@ -1,8 +1,10 @@
 // Genera la portada del proyecto (index.html en la raíz) con una tarjeta por cada tema de examen/.
 // Uso: node construir-portada.mjs [raíz-del-proyecto=.]
 // Cada tema es una carpeta examen/<tema>/ con juego-datos.json e index.html. Si tiene minijuegos/, se enlazan.
+// Orden: del más reciente al más antiguo según la fecha de creación (commit en que entró su juego-datos.json).
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const raiz = process.argv[2] || '.';
 const dirTemas = join(raiz, 'examen');
@@ -24,6 +26,14 @@ const NOMBRES_MINI = { carrera: 'Carrera 3D', cronologia: 'Línia del temps', cl
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const temas = [];
+// Fecha de creación de un tema: el primer commit de su juego-datos.json. Si aún no está en git, cuenta como el más nuevo.
+function fechaCreacion(nombre) {
+  try {
+    const out = execFileSync('git', ['log', '--diff-filter=A', '--follow', '--format=%at', '--', `examen/${nombre}/juego-datos.json`], { cwd: raiz, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().split(/\r?\n/).filter(Boolean);
+    if (out.length) return Number(out[out.length - 1]);
+  } catch (e) { /* sin git: el tema cuenta como el más nuevo */ }
+  return Infinity;
+}
 for (const nombre of readdirSync(dirTemas).sort()) {
   const dir = join(dirTemas, nombre);
   if (!statSync(dir).isDirectory()) continue;
@@ -55,8 +65,10 @@ for (const nombre of readdirSync(dirTemas).sort()) {
     niveles: (d.niveles || []).length,
     preguntas: (d.niveles || []).reduce((s, n) => s + (n.preguntas || []).length, 0),
     minis,
+    creado: fechaCreacion(nombre),
   });
 }
+temas.sort((a, b) => b.creado - a.creado || a.carpeta.localeCompare(b.carpeta));
 
 const tarjeta = (t) => {
   const c = t.colores;
