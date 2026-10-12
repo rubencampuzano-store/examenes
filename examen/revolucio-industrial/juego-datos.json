@@ -1,0 +1,1352 @@
+{
+  "meta": {
+    "id": "revolucio-industrial-t2",
+    "titulo": "Ferro, carbó i vapor",
+    "tituloPartido": [
+      "Ferro, carbó",
+      "i vapor"
+    ],
+    "eyebrow": "Tema 2 · Un món connectat · 1750 — 1914",
+    "subtitulo": "La Revolució Industrial: màquines, fàbriques, capitalisme i moviment obrer",
+    "intro": "Comences com a aprenent en una fàbrica de Manchester. Respon bé, supera els 8 nivells i converteix-te en un gran industrial!",
+    "idioma": "ca",
+    "icono": "🏭"
+  },
+  "tema": {
+    "colores": {
+      "fondo": "#17130f",
+      "superficie": "#ece4d1",
+      "texto": "#1c1712",
+      "textoSuave": "#5a4e40",
+      "textoClaro": "#ece4d1",
+      "acento": "#a8381a",
+      "oro": "#c9963f",
+      "acierto": "#2f6e3f",
+      "fallo": "#a8381a"
+    },
+    "fuentes": {
+      "display": "'Zilla Slab', Rockwell, Georgia, serif",
+      "texto": "'Libre Franklin', 'Franklin Gothic Medium', 'Segoe UI', system-ui, sans-serif",
+      "mono": "'Courier Prime', 'Courier New', ui-monospace, monospace"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,600;0,700;1,600;1,700&family=Libre+Franklin:wght@400;600;700&family=Courier+Prime:wght@400;700&display=swap",
+    "duotono": [
+      "#17130f",
+      "#ece4d1"
+    ],
+    "motivo": {
+      "patron": "puntos",
+      "sello": "Força del vapor · Manchester · 1769",
+      "monograma": "RI"
+    },
+    "numeracion": "romana",
+    "confeti": [
+      "#a8381a",
+      "#c9963f",
+      "#ece4d1",
+      "#5a4e40"
+    ],
+    "imagenes": {
+      "portada": {
+        "archivo": "imagenes/portada.jpg",
+        "titulo": "Coalbrookdale de nit",
+        "autor": "Philip James de Loutherbourg",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Philipp_Jakob_Loutherbourg_d._J._-_Coalbrookdale_by_Night_-_WGA13730.jpg",
+        "anio": "1801"
+      }
+    }
+  },
+  "textos": {
+    "jugar": "Encén la caldera",
+    "continuar": "Continua a tota màquina",
+    "niveles": "Nivells",
+    "logros": "Assoliments",
+    "apuntes": "Apunts",
+    "puntos": "punts",
+    "preguntas": "preguntes",
+    "estrellas": "estrelles",
+    "nivelesSuperados": "nivells superats",
+    "sinRango": "Sense ofici",
+    "siguienteRango": "Proper rang",
+    "rangoMaximo": "Ets un gran industrial!",
+    "reiniciar": "Reinicia el progrés",
+    "confirmarReinicio": "Segur que vols esborrar tot el progrés? La fàbrica tornarà a començar de zero.",
+    "bloqueado": "Supera el nivell anterior per desbloquejar-lo",
+    "mejor": "millor",
+    "ayudaMapa": "Vuit nivells, de les primeres revolucions al moviment obrer. Aprova cada nivell amb un 60% per obrir el següent.",
+    "dificultad": {
+      "facil": "Fàcil",
+      "media": "Mitjana",
+      "dificil": "Difícil"
+    },
+    "salir": "Surt",
+    "confirmarSalir": "Vols sortir? Perdràs aquesta partida.",
+    "siguiente": "Següent",
+    "verResultado": "Veure resultat",
+    "mensajesAcierto": [
+      "A tota màquina!",
+      "Patent aprovada!",
+      "La caldera bull de satisfacció!",
+      "Producció en sèrie de respostes!",
+      "Ni Watt ho hauria fet millor!"
+    ],
+    "mensajesFallo": [
+      "S'ha encallat l'engranatge...",
+      "Avaria a la caldera! Repassa els apunts",
+      "Aquesta peça no encaixa",
+      "Fum negre... torna-ho a provar",
+      "El capatàs diu: repassa i endavant!"
+    ],
+    "laCorrectaEra": "La correcta era",
+    "nivelPerfecto": "Producció perfecta! Zero errors!",
+    "nivelSuperado": "Nivell superat!",
+    "nivelNoSuperado": "Gairebé ho tens!",
+    "aciertos": "encerts",
+    "nuevoRecord": "Nou rècord!",
+    "necesitas": "Necessites un 60% d'encerts per superar el nivell. Repassa i torna-ho a provar!",
+    "desbloqueado": "Nou nivell desbloquejat",
+    "nuevoRango": "Nou rang",
+    "repetir": "Repeteix",
+    "siguienteNivel": "Següent nivell",
+    "repasa": "Repassa aquestes preguntes",
+    "consigue": "Aconsegueix el",
+    "delTotal": "dels xílings totals",
+    "logroDesbloqueado": "Assoliment desbloquejat",
+    "inicio": "Inici",
+    "nivel": "Nivell",
+    "indice": "Índex",
+    "rangoActual": "Rang actual",
+    "selloAcierto": "Patentat",
+    "selloFallo": "Avaria",
+    "silenciar": "Silencia el so",
+    "activarSonido": "Activa el so",
+    "creditos": "Crèdits de les imatges",
+    "textoCreditos": "Totes les imatges són de domini públic de Wikimedia Commons. S'hi indica l'autor, l'any (quan se sap amb seguretat) i la llicència declarada a Commons.",
+    "fuenteImagen": "Veure a Wikimedia Commons",
+    "moneda": "xílings",
+    "serie": "Nº"
+  },
+  "rangos": [
+    {
+      "nombre": "Aprenent",
+      "icono": "🔧",
+      "umbral": 0.1,
+      "descripcion": "Entres a la fàbrica. Aconsegueix el 10% dels xílings."
+    },
+    {
+      "nombre": "Obrer",
+      "icono": "⚙️",
+      "umbral": 0.3,
+      "descripcion": "Ja domines el teler. Aconsegueix el 30% dels xílings."
+    },
+    {
+      "nombre": "Capatàs",
+      "icono": "🛠️",
+      "umbral": 0.5,
+      "descripcion": "Dirigeixes tota la secció. Aconsegueix el 50% dels xílings."
+    },
+    {
+      "nombre": "Enginyer",
+      "icono": "📐",
+      "umbral": 0.75,
+      "descripcion": "Dissenyes les màquines del futur. Aconsegueix el 75% dels xílings."
+    },
+    {
+      "nombre": "Gran industrial",
+      "icono": "🏭",
+      "umbral": 0.95,
+      "descripcion": "Domines tot el tema. Aconsegueix el 95% dels xílings."
+    }
+  ],
+  "logrosEspeciales": {
+    "primerNivel": {
+      "nombre": "Caldera encesa",
+      "icono": "🔥",
+      "descripcion": "Supera el teu primer nivell"
+    },
+    "perfecto": {
+      "nombre": "Patent registrada",
+      "icono": "📜",
+      "descripcion": "Aconsegueix 3 estrelles en un nivell"
+    },
+    "todos": {
+      "nombre": "A tota màquina",
+      "icono": "🚂",
+      "descripcion": "Supera tots els nivells"
+    },
+    "maestro": {
+      "nombre": "Magnat del vapor",
+      "icono": "🏆",
+      "descripcion": "3 estrelles a tots els nivells"
+    }
+  },
+  "niveles": [
+    {
+      "id": "revolucions",
+      "titulo": "Les revolucions que ho van començar tot",
+      "epoca": "Mitjan s. XVIII",
+      "resumen": "Demografia, agricultura, nova mentalitat i avantatges britànics",
+      "imagen": {
+        "archivo": "imagenes/revolucions.jpg",
+        "titulo": "El senyor i la senyora Andrews",
+        "autor": "Thomas Gainsborough",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Thomas_Gainsborough_-_Mr_and_Mrs_Andrews.jpg",
+        "anio": "c. 1750"
+      },
+      "preguntas": [
+        {
+          "texto": "Quin va ser el primer país a industrialitzar-se?",
+          "opciones": [
+            "La Gran Bretanya",
+            "França",
+            "Alemanya",
+            "Els Estats Units"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "La Gran Bretanya va ser el primer país a viure la Primera Revolució Industrial.",
+          "fuente": "1. Les revolucions > Què és la industrialització"
+        },
+        {
+          "texto": "Des de quan es van produir les transformacions de la industrialització?",
+          "opciones": [
+            "Des de principis del segle XVI",
+            "Des de finals del segle XX",
+            "Des de mitjan segle XIV",
+            "Des de mitjan segle XVIII"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El procés d'industrialització va començar a mitjan segle XVIII.",
+          "fuente": "1. Les revolucions > Què és la industrialització"
+        },
+        {
+          "texto": "Quina obra va publicar Adam Smith el 1776?",
+          "opciones": [
+            "Temps difícils",
+            "Rerum Novarum",
+            "La riquesa de les nacions",
+            "La Carta del Poble"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Adam Smith va establir el liberalisme econòmic a La riquesa de les nacions (1776).",
+          "fuente": "1. Les revolucions > Una nova mentalitat"
+        },
+        {
+          "texto": "Quines dues causes van provocar la revolució demogràfica?",
+          "opciones": [
+            "Pujada de la mortalitat i baixada de la natalitat",
+            "Baixada de la mortalitat i pujada de la natalitat",
+            "Baixada de la natalitat i de la mortalitat",
+            "Pujada de la mortalitat i de la natalitat"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "La població va créixer per la reducció de la mortalitat i l'increment de la natalitat.",
+          "fuente": "1. Les revolucions > La revolució demogràfica"
+        },
+        {
+          "texto": "Què va permetre la rotació quadriennal?",
+          "opciones": [
+            "Suprimir el guaret",
+            "Tancar les fàbriques",
+            "Conrear només blat",
+            "Eliminar la ramaderia"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La rotació quadriennal (sistema Norfolk) permetia suprimir el guaret.",
+          "fuente": "1. Les revolucions > La revolució agrícola"
+        },
+        {
+          "texto": "Què van fer les lleis de tancament?",
+          "opciones": [
+            "Prohibir el treball infantil",
+            "Tancar les mines de carbó",
+            "Limitar el comerç colonial",
+            "Concentrar i tancar les antigues terres comunals"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Les lleis de tancament van permetre concentrar i tancar les antigues terres comunals.",
+          "fuente": "1. Les revolucions > La revolució agrícola"
+        },
+        {
+          "texto": "Entre el 1700 i el 1850, la població anglesa es va...",
+          "opciones": [
+            "reduir a la meitat",
+            "mantenir igual",
+            "triplicar",
+            "multiplicar per deu"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "La població anglesa es va triplicar entre el 1700 i el 1850.",
+          "fuente": "1. Les revolucions > La revolució demogràfica"
+        },
+        {
+          "texto": "Al sistema Norfolk, quins conreus servien per alimentar el bestiar?",
+          "opciones": [
+            "El blat i la patata",
+            "Els naps i el trèvol",
+            "El blat de moro i l'arròs",
+            "La vinya i el cotó"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Al sistema Norfolk, els naps i el trèvol eren per al bestiar, i el blat per fer pa.",
+          "fuente": "1. Les revolucions > La revolució agrícola"
+        },
+        {
+          "texto": "Quin d'aquests NO era un avantatge de la Gran Bretanya?",
+          "opciones": [
+            "Una monarquia absoluta sense parlament",
+            "L'estabilitat política",
+            "Els jaciments de ferro i carbó",
+            "Un gran imperi colonial"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "La Gran Bretanya tenia una monarquia parlamentària, que li donava estabilitat política.",
+          "fuente": "1. Les revolucions > Per què a la Gran Bretanya?"
+        },
+        {
+          "texto": "Per què la millora de l'alimentació va fer baixar la mortalitat?",
+          "opciones": [
+            "Va eliminar totes les malalties",
+            "Va fer que la gent treballés menys",
+            "Va permetre tenir més fills",
+            "Va fer la població més resistent a les malalties"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "La millora de l'alimentació va fer la població més resistent a les malalties.",
+          "fuente": "1. Les revolucions > La revolució demogràfica"
+        }
+      ]
+    },
+    {
+      "id": "sectors",
+      "titulo": "Vapor, cotó i ferro",
+      "epoca": "1709 – 1850",
+      "resumen": "La màquina de vapor, el tèxtil, la siderúrgia i el carbó",
+      "imagen": {
+        "archivo": "imagenes/sectors.jpg",
+        "titulo": "La màquina de vapor de doble efecte de Watt (patent de 1782)",
+        "autor": "Gravat de l'obra de John Robison",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Steam_engine_-_Mr._Watt%27s_double_steam_engine_from_his_specification_of_1782_LCCN2006691752.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Qui va patentar el 1769 una màquina de vapor molt més eficaç?",
+          "opciones": [
+            "George Stephenson",
+            "James Watt",
+            "Henry Ford",
+            "Abraham Darby"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "L'inventor escocès James Watt va patentar la seva màquina de vapor el 1769.",
+          "fuente": "2. Els sectors > La màquina de vapor"
+        },
+        {
+          "texto": "Quin va ser el primer sector a mecanitzar-se?",
+          "opciones": [
+            "El tèxtil",
+            "L'automòbil",
+            "La química",
+            "L'elèctric"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El sector tèxtil anglès va ser el primer a mecanitzar la filatura i la teixidura.",
+          "fuente": "2. Els sectors > La indústria tèxtil"
+        },
+        {
+          "texto": "Quina va ser la principal font d'energia de la Primera Revolució Industrial?",
+          "opciones": [
+            "El petroli",
+            "L'electricitat",
+            "L'energia eòlica",
+            "El carbó"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El tèxtil i la siderúrgia necessitaven moltíssim carbó: va ser l'energia principal.",
+          "fuente": "2. Els sectors > La siderúrgia i la mineria"
+        },
+        {
+          "texto": "Amb quin empresari es va associar James Watt?",
+          "opciones": [
+            "Adam Smith",
+            "Henry Bessemer",
+            "Matthew Boulton",
+            "Edmund Cartwright"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Gràcies a l'associació amb Matthew Boulton, Watt va comercialitzar el seu invent.",
+          "fuente": "2. Els sectors > La màquina de vapor"
+        },
+        {
+          "texto": "Per què el cotó va tenir tanta acollida?",
+          "opciones": [
+            "Era més car que la seda",
+            "Era més suau i higiènic que la llana",
+            "Només es produïa a Anglaterra",
+            "No es podia mecanitzar"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El cotó era més suau i higiènic que la llana, i les seves fibres eren resistents.",
+          "fuente": "2. Els sectors > La indústria tèxtil"
+        },
+        {
+          "texto": "Què va inventar Kay el 1733?",
+          "opciones": [
+            "La llançadora volant",
+            "El teler mecànic",
+            "La Spinning Jenny",
+            "El convertidor d'acer"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La llançadora volant de Kay (1733) va accelerar la teixidura.",
+          "fuente": "2. Els sectors > La indústria tèxtil"
+        },
+        {
+          "texto": "Què va permetre el convertidor de Bessemer?",
+          "opciones": [
+            "Filar cotó més ràpid",
+            "Treure l'aigua de les mines",
+            "Moure locomotores elèctriques",
+            "Fabricar acer de qualitat en quantitats industrials"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "El convertidor de Henry Bessemer va permetre fabricar acer en quantitats industrials.",
+          "fuente": "2. Els sectors > La siderúrgia i la mineria"
+        },
+        {
+          "texto": "Quin és l'ordre correcte dels invents tèxtils?",
+          "opciones": [
+            "Teler mecànic → llançadora volant → màquines de filar",
+            "Màquines de filar → teler mecànic → llançadora volant",
+            "Llançadora volant → màquines de filar → teler mecànic",
+            "Teler mecànic → màquines de filar → llançadora volant"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Primer la llançadora volant (1733), després les màquines de filar i, finalment, el teler mecànic (1785).",
+          "fuente": "2. Els sectors > La indústria tèxtil"
+        },
+        {
+          "texto": "Què va aconseguir Abraham Darby el 1709?",
+          "opciones": [
+            "Patentar la màquina de vapor",
+            "Fondre ferro amb carbó de coc als alts forns",
+            "Perfeccionar la pudelació",
+            "Inventar el teler mecànic"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "El 1709 Abraham Darby va fondre ferro amb carbó de coc, de gran poder calorífic.",
+          "fuente": "2. Els sectors > La siderúrgia i la mineria"
+        },
+        {
+          "texto": "Des de quin any situa el llibre la Segona Revolució Industrial?",
+          "opciones": [
+            "1870",
+            "1770",
+            "1945",
+            "1990"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Primera des del 1770, Segona des del 1870, Tercera des del 1945 i Quarta des del 1990.",
+          "fuente": "2. Els sectors > Les fases de la industrialització"
+        }
+      ]
+    },
+    {
+      "id": "fabriques",
+      "titulo": "Les primeres fàbriques",
+      "epoca": "Segle XIX",
+      "resumen": "Del taller artesanal al sistema fabril, i les dures condicions de treball",
+      "imagen": {
+        "archivo": "imagenes/fabriques.jpg",
+        "titulo": "Teixidura amb telers mecànics el 1835",
+        "autor": "T. Allom (dibuix) i J. Tingle (gravat)",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Powerloom_weaving_in_1835.jpg",
+        "anio": "1835"
+      },
+      "preguntas": [
+        {
+          "texto": "Com s'anomena la manera de produir en fàbriques mecanitzades?",
+          "opciones": [
+            "Domestic system",
+            "Sistema gremial",
+            "Sistema fabril",
+            "Sistema Norfolk"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Aquesta nova manera de produir es coneix com a sistema fabril.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Qui controlava la producció artesanal tradicional?",
+          "opciones": [
+            "Els sindicats",
+            "Els gremis",
+            "Els bancs",
+            "Les societats anònimes"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Tradicionalment, la producció artesanal es feia amb el control dels gremis.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Quina energia movia les màquines de les primeres fàbriques?",
+          "opciones": [
+            "El vapor",
+            "L'electricitat",
+            "El petroli",
+            "L'energia solar"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "Les fàbriques feien servir les noves fonts d'energia, com el vapor.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "En què consistia el domestic system?",
+          "opciones": [
+            "Els obrers vivien dins de la fàbrica",
+            "Els gremis dirigien les fàbriques",
+            "Les màquines treballaven soles a les cases",
+            "Els pagesos transformaven a casa la matèria primera a canvi d'un salari"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Els comerciants donaven la matèria primera als productors rurals, que la transformaven a casa per un salari.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Què és la divisió del treball?",
+          "opciones": [
+            "Que cada obrer fa el producte sencer",
+            "Que els obrers es reparteixen els beneficis",
+            "Que cada obrer fa només una part del procés",
+            "Que es treballa a torns de dues hores"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "A la fàbrica, cada obrer només feia una part del procés de producció.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Quines conseqüències va tenir el sistema fabril?",
+          "opciones": [
+            "Menys producció i preus més alts",
+            "Producció en sèrie, més productivitat i menys costos",
+            "La desaparició de les màquines",
+            "La tornada al treball artesanal"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El sistema fabril va portar la producció en sèrie, més productivitat i costos més baixos.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Segons la llei britànica del 1833, quins infants no podien treballar a les fàbriques?",
+          "opciones": [
+            "Els menors de 9 anys",
+            "Els menors de 16 anys",
+            "Els menors de 18 anys",
+            "Cap: tots hi podien treballar"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La llei del 1833 prohibia el treball a les fàbriques als infants menors de 9 anys.",
+          "fuente": "3. Les primeres fàbriques > Condicions dures en mines i fàbriques"
+        },
+        {
+          "texto": "Quin és l'ordre dels sistemes de producció?",
+          "opciones": [
+            "Fàbrica → artesanal → domestic system",
+            "Domestic system → fàbrica → artesanal",
+            "Fàbrica → domestic system → artesanal",
+            "Artesanal → domestic system → fàbrica"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Primer la producció artesanal (gremis), després el domestic system (segle XVII) i finalment la fàbrica.",
+          "fuente": "3. Les primeres fàbriques > Del taller a la fàbrica"
+        },
+        {
+          "texto": "Què va establir la llei britànica del 1842?",
+          "opciones": [
+            "La jornada de 8 hores per a tothom",
+            "El sufragi universal masculí",
+            "Cap dona ni infant menor de 10 anys a les mines",
+            "Un màxim de 10 hores per a dones i menors de 18 anys"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "El 1842 es va prohibir el treball a les mines a les dones i als infants menors de 10 anys.",
+          "fuente": "3. Les primeres fàbriques > Condicions dures en mines i fàbriques"
+        },
+        {
+          "texto": "Quantes hores al dia treballava Betty Harris a la mina (1842)?",
+          "opciones": [
+            "Unes 4",
+            "Unes 12: sis al matí i sis a la tarda",
+            "Unes 8",
+            "Unes 16"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Betty Harris arrossegava vagonetes de carbó sis hores al matí i sis a la tarda.",
+          "fuente": "3. Les primeres fàbriques > Condicions dures en mines i fàbriques"
+        }
+      ]
+    },
+    {
+      "id": "transports",
+      "titulo": "Trens, vaixells i comerç",
+      "epoca": "1830 – 1880",
+      "resumen": "El ferrocarril, la navegació de vapor, el comerç i les ciutats",
+      "imagen": {
+        "archivo": "imagenes/transports.jpg",
+        "titulo": "Pluja, vapor i velocitat",
+        "autor": "J. M. W. Turner",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Turner_-_Rain,_Steam_and_Speed_-_National_Gallery_file.jpg",
+        "anio": "1844"
+      },
+      "preguntas": [
+        {
+          "texto": "Quin enginyer va millorar les locomotores de vapor?",
+          "opciones": [
+            "James Watt",
+            "Henry Ford",
+            "Adam Smith",
+            "George Stephenson"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "L'enginyer George Stephenson va optimitzar les locomotores mogudes per vapor.",
+          "fuente": "4. Transports i comerç > El ferrocarril de vapor"
+        },
+        {
+          "texto": "Entre quines ciutats es va obrir el 1830 la primera línia de tren de passatgers?",
+          "opciones": [
+            "Londres i París",
+            "Madrid i Barcelona",
+            "Manchester i Liverpool",
+            "Nova York i Chicago"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El 1830 es va crear la primera línia ferroviària de passatgers, entre Manchester i Liverpool.",
+          "fuente": "4. Transports i comerç > El ferrocarril de vapor"
+        },
+        {
+          "texto": "Per què van créixer tant les ciutats?",
+          "opciones": [
+            "Per la fi del comerç",
+            "Per l'èxode rural",
+            "Perquè va desaparèixer el ferrocarril",
+            "Perquè la gent tornava al camp"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "Les ciutats van créixer per l'èxode rural: les famílies pageses anaven a treballar a les fàbriques.",
+          "fuente": "4. Transports i comerç > Els efectes de la revolució dels transports"
+        },
+        {
+          "texto": "Qui van patentar models de vaixell de vapor?",
+          "opciones": [
+            "John Fitch i Robert Fulton",
+            "Karl Marx i F. Engels",
+            "Kay i Cartwright",
+            "Darby i Cort"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Els nord-americans John Fitch i Robert Fulton van patentar vaixells de vapor.",
+          "fuente": "4. Transports i comerç > La navegació de vapor"
+        },
+        {
+          "texto": "Fins quan van dominar els grans velers les rutes transoceàniques?",
+          "opciones": [
+            "Fins a la invenció del telègraf",
+            "Fins a l'any 1709",
+            "Fins a l'aparició dels gremis",
+            "Fins a la invenció de l'hèlix"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Els velers van dominar les rutes transoceàniques fins a la invenció de l'hèlix.",
+          "fuente": "4. Transports i comerç > La navegació de vapor"
+        },
+        {
+          "texto": "Què és una economia de mercat?",
+          "opciones": [
+            "Cadascú produeix només el que consumeix",
+            "Només hi ha comerç dins de cada poble",
+            "Es produeix per vendre, no només per a l'autoconsum",
+            "No hi ha diners ni intercanvis"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "En l'economia de mercat la producció ja no s'orienta només a l'autoconsum.",
+          "fuente": "4. Transports i comerç > L'expansió del comerç"
+        },
+        {
+          "texto": "Què s'intercanviava amb les colònies?",
+          "opciones": [
+            "Només or i plata",
+            "Matèries primeres a canvi de productes manufacturats",
+            "Fàbriques a canvi de ferrocarrils",
+            "Res: no hi havia comerç exterior"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El comerç exterior va intensificar l'intercanvi de matèries primeres per productes manufacturats.",
+          "fuente": "4. Transports i comerç > L'expansió del comerç"
+        },
+        {
+          "texto": "Quant trigava el tren entre París i Estrasburg el 1887?",
+          "opciones": [
+            "8 h 50 min",
+            "47 hores",
+            "7 dies",
+            "1 h 45 min"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "En diligència (1834) es trigaven 47 hores; en tren (1887), 8 h 50 min.",
+          "fuente": "4. Transports i comerç > Els efectes de la revolució dels transports"
+        },
+        {
+          "texto": "Per què moltes famílies pageses van marxar a la ciutat?",
+          "opciones": [
+            "Les pagaven per no treballar",
+            "Al camp hi havia massa feina",
+            "Una llei les obligava a marxar",
+            "S'havien quedat sense terres ni feina"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "La mecanització i la concentració de terres les havien deixat sense terres ni feina.",
+          "fuente": "4. Transports i comerç > Els efectes de la revolució dels transports"
+        },
+        {
+          "texto": "Quin d'aquests NO va ser un efecte de la revolució dels transports?",
+          "opciones": [
+            "Reducció dels costos",
+            "Creixement del comerç",
+            "Viatges més cars i més lents",
+            "Especialització econòmica dels territoris"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Els transports van fer els viatges més ràpids i més barats, i van fer créixer el comerç.",
+          "fuente": "4. Transports i comerç > Els efectes de la revolució dels transports"
+        }
+      ]
+    },
+    {
+      "id": "capitalisme",
+      "titulo": "El capitalisme industrial",
+      "epoca": "Segle XIX",
+      "resumen": "El liberalisme, bancs i societats anònimes, i l'expansió pel món",
+      "imagen": {
+        "archivo": "imagenes/capitalisme.jpg",
+        "titulo": "Retrat d'Adam Smith (retrat Muir)",
+        "autor": "Autor desconegut",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Adam_Smith_The_Muir_portrait.jpg"
+      },
+      "preguntas": [
+        {
+          "texto": "Qui és propietari dels mitjans de producció en el capitalisme?",
+          "opciones": [
+            "La burgesia",
+            "Els assalariats",
+            "L'Església",
+            "Els gremis"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "El capital i els mitjans de producció són propietat privada d'una minoria: la burgesia.",
+          "fuente": "5. El capitalisme industrial > L'economia capitalista"
+        },
+        {
+          "texto": "Com s'anomena la part dels beneficis que rep cada accionista?",
+          "opciones": [
+            "Salari",
+            "Dipòsit",
+            "Crèdit",
+            "Dividend"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "Els beneficis d'una SA es reparteixen entre els accionistes en forma de dividends.",
+          "fuente": "5. El capitalisme industrial > L'economia capitalista"
+        },
+        {
+          "texto": "Quin país es va industrialitzar a principis del segle XIX gràcies al carbó i al ferrocarril?",
+          "opciones": [
+            "Rússia",
+            "El Japó",
+            "Bèlgica",
+            "Espanya"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "Bèlgica es va industrialitzar aviat gràcies als jaciments de carbó i la demanda ferroviària.",
+          "fuente": "5. El capitalisme industrial > L'expansió fora de la Gran Bretanya"
+        },
+        {
+          "texto": "Segons la llei de l'oferta i la demanda, qui fixa els preus?",
+          "opciones": [
+            "L'estat",
+            "El mercat lliure",
+            "Els gremis",
+            "El rei"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El mercat lliure equilibra compradors i venedors i el preu varia segons l'oferta i la demanda.",
+          "fuente": "5. El capitalisme industrial > Els principis del liberalisme econòmic"
+        },
+        {
+          "texto": "En una societat anònima, el capital es divideix en...",
+          "opciones": [
+            "accions",
+            "gremis",
+            "dipòsits",
+            "salaris"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "A les societats anònimes el capital es divideix en accions repartides entre els accionistes.",
+          "fuente": "5. El capitalisme industrial > L'economia capitalista"
+        },
+        {
+          "texto": "Què vol dir la «mà invisible» d'Adam Smith?",
+          "opciones": [
+            "Que l'estat controla els preus en secret",
+            "Que els obrers fan la feina sense cobrar",
+            "Que les màquines funcionen soles",
+            "Que buscant el propi benefici es promou l'interès general"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Cada persona busca el seu benefici, però així, sense voler-ho, promou l'interès general.",
+          "fuente": "5. El capitalisme industrial > Els principis del liberalisme econòmic"
+        },
+        {
+          "texto": "Què va impulsar la industrialització d'Alemanya?",
+          "opciones": [
+            "L'era Meiji",
+            "El cartisme",
+            "La Unió Duanera (1834) i la unificació política (1870)",
+            "Les lleis de tancament"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "Alemanya va agafar embranzida gràcies a la Unió Duanera del 1834 i la unificació del 1870.",
+          "fuente": "5. El capitalisme industrial > L'expansió fora de la Gran Bretanya"
+        },
+        {
+          "texto": "Per què els Estats Units es van industrialitzar tan de pressa?",
+          "opciones": [
+            "Perquè tenien gremis molt forts",
+            "Per l'abundància de recursos naturals i l'enorme mercat interior",
+            "Perquè no tenien ferrocarril",
+            "Perquè hi estava prohibida la producció en cadena"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Els EUA tenien molts recursos naturals i un mercat interior enorme, i van adoptar aviat la producció en cadena.",
+          "fuente": "5. El capitalisme industrial > L'expansió fora de la Gran Bretanya"
+        },
+        {
+          "texto": "Què va fer el Japó de l'era Meiji per industrialitzar-se?",
+          "opciones": [
+            "Abolir el feudalisme i importar màquines i tècnics",
+            "Tancar-se a tot comerç exterior",
+            "Prohibir els estudis a l'estranger",
+            "Tornar a l'agricultura tradicional"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "El Japó Meiji va abolir el feudalisme, va importar màquines i tècnics i va enviar estudiants a fora.",
+          "fuente": "5. El capitalisme industrial > L'expansió fora de la Gran Bretanya"
+        },
+        {
+          "texto": "Per què aquest sistema es diu «capitalisme»?",
+          "opciones": [
+            "Perquè el governa la capital del país",
+            "Perquè el capital és de l'estat",
+            "Perquè els obrers en són els propietaris",
+            "Perquè els beneficis es reinverteixen i són capital, no riquesa"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Els beneficis es reinverteixen: són capital, no riquesa. D'aquí el nom de capitalisme.",
+          "fuente": "5. El capitalisme industrial > Els principis del liberalisme econòmic"
+        }
+      ]
+    },
+    {
+      "id": "segona-revolucio",
+      "titulo": "La Segona Revolució Industrial",
+      "epoca": "1870 – 1914",
+      "resumen": "Electricitat, petroli, nous invents, fordisme i grans empreses",
+      "imagen": {
+        "archivo": "imagenes/segona-revolucio.jpg",
+        "titulo": "Cadena de muntatge de Ford",
+        "autor": "Autor desconegut",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Ford_assembly_line_-_1913.jpg",
+        "anio": "1913"
+      },
+      "preguntas": [
+        {
+          "texto": "Quines energies van rellevar el carbó?",
+          "opciones": [
+            "El vapor i la llenya",
+            "L'electricitat i el petroli",
+            "L'eòlica i la hidràulica",
+            "El carbó vegetal i el coc"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "A la Segona Revolució Industrial, l'electricitat i el petroli van rellevar el carbó.",
+          "fuente": "6. La Segona Revolució Industrial > Noves energies"
+        },
+        {
+          "texto": "Qui va implantar la cadena de muntatge als cotxes?",
+          "opciones": [
+            "Henry Ford",
+            "F. Taylor",
+            "James Watt",
+            "Graham Bell"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "La fàbrica d'automòbils Ford va ser una de les primeres a implantar la cadena de muntatge.",
+          "fuente": "6. La Segona Revolució Industrial > Una nova organització del treball"
+        },
+        {
+          "texto": "Qui va inventar la bombeta el 1879?",
+          "opciones": [
+            "Marconi",
+            "Morse",
+            "Meucci",
+            "Edison"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "Segons la cronologia, la bombeta d'Edison és del 1879.",
+          "fuente": "6. La Segona Revolució Industrial > Els nous invents"
+        },
+        {
+          "texto": "En què consisteix el taylorisme?",
+          "opciones": [
+            "Treballar sense horaris",
+            "Fabricar els productes a casa",
+            "Dividir la feina en petites tasques amb temps cronometrats",
+            "Destruir les màquines"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "El taylorisme divideix la producció en petites tasques amb temps i moviments cronometrats.",
+          "fuente": "6. La Segona Revolució Industrial > Una nova organització del treball"
+        },
+        {
+          "texto": "Què és un trust?",
+          "opciones": [
+            "Un acord per fixar preus sense fusionar-se",
+            "La fusió de diverses empreses en una de nova",
+            "Una societat financera amb capital en empreses diverses",
+            "El dret exclusiu a vendre un producte"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "El trust és la fusió de diverses empreses per crear-ne una de nova amb una única administració.",
+          "fuente": "6. La Segona Revolució Industrial > La concentració empresarial"
+        },
+        {
+          "texto": "En quin país es va desenvolupar molt la indústria química?",
+          "opciones": [
+            "Alemanya",
+            "Espanya",
+            "Rússia",
+            "El Japó"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "La indústria química va tenir un gran desenvolupament a Alemanya.",
+          "fuente": "6. La Segona Revolució Industrial > Nous transports i noves indústries"
+        },
+        {
+          "texto": "Què van permetre l'acer i el formigó armat?",
+          "opciones": [
+            "Fabricar teixits de cotó",
+            "Crear el telègraf",
+            "Fer la rotació quadriennal",
+            "Construir els primers gratacels"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "La producció en massa d'acer i formigó armat va permetre edificar els primers gratacels.",
+          "fuente": "6. La Segona Revolució Industrial > Nous transports i noves indústries"
+        },
+        {
+          "texto": "Què va passar amb el preu del cotxe Ford entre el 1909 i el 1914?",
+          "opciones": [
+            "Va pujar de 490 a 950 dòlars",
+            "Es va mantenir igual",
+            "Va baixar de 950 a 490 dòlars",
+            "Va baixar fins a 10 dòlars"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Amb la producció en cadena, el preu va baixar de 950 $ (1909) a 490 $ (1914).",
+          "fuente": "6. La Segona Revolució Industrial > Una nova organització del treball"
+        },
+        {
+          "texto": "Què va investigar Marie Curie?",
+          "opciones": [
+            "L'electricitat estàtica",
+            "La radioactivitat",
+            "La màquina de vapor",
+            "El telègraf"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "Marie Curie va investigar la radioactivitat i va fundar l'Institut Curie a París.",
+          "fuente": "6. La Segona Revolució Industrial > Els avenços de la medicina"
+        },
+        {
+          "texto": "Què és un càrtel?",
+          "opciones": [
+            "Una associació d'empreses similars per fixar preus o repartir-se el mercat",
+            "La fusió de diverses empreses en una de nova",
+            "Una societat financera amb capital en empreses diverses",
+            "Una fàbrica amb cadena de muntatge"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "El càrtel associa empreses similars per fixar preus, quotes de producció o repartir-se el mercat.",
+          "fuente": "6. La Segona Revolució Industrial > La concentració empresarial"
+        }
+      ]
+    },
+    {
+      "id": "societat",
+      "titulo": "La societat de classes",
+      "epoca": "Segle XIX",
+      "resumen": "Alta burgesia, classe mitjana i proletariat",
+      "imagen": {
+        "archivo": "imagenes/societat.jpg",
+        "titulo": "Londres des del tren",
+        "autor": "Gustave Doré",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Dore_London.jpg",
+        "anio": "1872"
+      },
+      "preguntas": [
+        {
+          "texto": "Què distingeix les classes socials a la societat de classes?",
+          "opciones": [
+            "El naixement",
+            "La religió",
+            "La propietat econòmica",
+            "L'edat"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "A la societat de classes, és la propietat econòmica la que distingeix les classes.",
+          "fuente": "7. La societat de classes > De la societat estamental a la de classes"
+        },
+        {
+          "texto": "Quin era el grup més nombrós i desfavorit?",
+          "opciones": [
+            "L'alta burgesia",
+            "El proletariat",
+            "La vella noblesa",
+            "La classe mitjana"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "El proletariat o classe treballadora era el grup més nombrós i desfavorit.",
+          "fuente": "7. La societat de classes > La classe obrera"
+        },
+        {
+          "texto": "Qui formava l'alta burgesia?",
+          "opciones": [
+            "Grans industrials, comerciants i banquers",
+            "Pagesos jornalers",
+            "Obrers de fàbrica",
+            "Mossos i servei domèstic"
+          ],
+          "correcta": 0,
+          "dificultad": "facil",
+          "explicacion": "L'alta burgesia estava formada per grans industrials, comerciants i banquers.",
+          "fuente": "7. La societat de classes > L'alta burgesia, nova classe dirigent"
+        },
+        {
+          "texto": "Com es va vincular la vella noblesa a l'alta burgesia?",
+          "opciones": [
+            "Amb les lleis de tancament",
+            "Amb vagues generals",
+            "Amb la Primera Internacional",
+            "Sovint mitjançant matrimonis"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "La vella noblesa es va vincular a l'alta burgesia, sovint mitjançant matrimonis.",
+          "fuente": "7. La societat de classes > L'alta burgesia, nova classe dirigent"
+        },
+        {
+          "texto": "Què aportava la classe mitjana a la societat?",
+          "opciones": [
+            "Revolucions",
+            "Privilegis de naixement",
+            "Estabilitat social",
+            "Luxes i palauets"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "En un període de conflictes, la classe mitjana actuava com a moderadora i donava estabilitat.",
+          "fuente": "7. La societat de classes > La classe mitjana"
+        },
+        {
+          "texto": "On eren la majoria dels habitatges obrers?",
+          "opciones": [
+            "Als nous eixamples",
+            "A l'extraradi, prop de les fàbriques",
+            "En palauets del centre",
+            "En finques de la noblesa"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "Gran part dels habitatges obrers eren a l'extraradi, prop de les fàbriques, sovint sense aigua ni clavegueram.",
+          "fuente": "7. La societat de classes > La classe obrera"
+        },
+        {
+          "texto": "Quant menys cobraven aproximadament les dones que els homes?",
+          "opciones": [
+            "Un 40% menys",
+            "Un 5% menys",
+            "El mateix",
+            "Un 90% menys"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "Les dones percebien un salari aproximadament un 40% inferior al dels homes.",
+          "fuente": "7. La societat de classes > La classe obrera"
+        },
+        {
+          "texto": "Per què durant bona part del segle XIX no hi havia lleis sobre les condicions de treball?",
+          "opciones": [
+            "Els sindicats prohibien fer lleis",
+            "Els obrers no volien cap llei",
+            "Els gremis ja protegien tots els obrers",
+            "El liberalisme havia abolit els gremis i els empresaris fixaven les condicions"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "El liberalisme havia abolit les reglamentacions gremials i els empresaris fixaven salari i horari segons la seva conveniència.",
+          "fuente": "7. La societat de classes > La classe obrera"
+        },
+        {
+          "texto": "Quins valors de l'alta burgesia es van convertir en model social?",
+          "opciones": [
+            "Els privilegis de naixement",
+            "La propietat col·lectiva",
+            "El treball, l'estalvi i l'esforç individual",
+            "El rebuig de tota autoritat"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "Els valors burgesos (treball i estalvi, esforç individual...) es van imposar com el model a imitar.",
+          "fuente": "7. La societat de classes > L'alta burgesia, nova classe dirigent"
+        },
+        {
+          "texto": "Qui formava part de la petita burgesia?",
+          "opciones": [
+            "Grans banquers",
+            "Propietaris de tallers i comerços",
+            "Pagesos jornalers sense terra",
+            "La vella noblesa"
+          ],
+          "correcta": 1,
+          "dificultad": "dificil",
+          "explicacion": "La petita burgesia la formaven propietaris de tallers i comerços, artesans, pagesos...",
+          "fuente": "7. La societat de classes > La classe mitjana"
+        }
+      ]
+    },
+    {
+      "id": "moviment-obrer",
+      "titulo": "El moviment obrer",
+      "epoca": "1834 – 1889",
+      "resumen": "Luddisme, sindicats, marxisme, anarquisme i les internacionals",
+      "imagen": {
+        "archivo": "imagenes/moviment-obrer.jpg",
+        "titulo": "El quart estat",
+        "autor": "Giuseppe Pellizza da Volpedo",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Quarto_Stato_(crop).jpg",
+        "anio": "1901"
+      },
+      "preguntas": [
+        {
+          "texto": "Què feien els luddites?",
+          "opciones": [
+            "Fundaven bancs",
+            "Construïen ferrocarrils",
+            "Escrivien encícliques",
+            "Destruïen màquines"
+          ],
+          "correcta": 3,
+          "dificultad": "facil",
+          "explicacion": "El luddisme va dur a terme motins i la destrucció de màquines, considerades culpables de l'atur.",
+          "fuente": "8. El moviment obrer > Les primeres respostes"
+        },
+        {
+          "texto": "Quan van néixer els primers sindicats (Trade Unions)?",
+          "opciones": [
+            "El 1709",
+            "El 1906",
+            "El 1834",
+            "El 1776"
+          ],
+          "correcta": 2,
+          "dificultad": "facil",
+          "explicacion": "El 1834 van néixer els primers sindicats, les Trade Unions.",
+          "fuente": "8. El moviment obrer > Les primeres respostes"
+        },
+        {
+          "texto": "Quina festa dels treballadors va adoptar la Segona Internacional?",
+          "opciones": [
+            "El 14 de juliol",
+            "El Primer de Maig",
+            "El 25 de desembre",
+            "El 6 de gener"
+          ],
+          "correcta": 1,
+          "dificultad": "facil",
+          "explicacion": "La Segona Internacional va adoptar el Primer de Maig com a festa dels treballadors.",
+          "fuente": "8. El moviment obrer > Les internacionals obreres"
+        },
+        {
+          "texto": "Què demanava el cartisme?",
+          "opciones": [
+            "El sufragi universal masculí",
+            "La dictadura del proletariat",
+            "L'abolició de l'estat",
+            "La tornada dels gremis"
+          ],
+          "correcta": 0,
+          "dificultad": "media",
+          "explicacion": "El cartisme (Carta del Poble) exigia el sufragi universal masculí.",
+          "fuente": "8. El moviment obrer > Les primeres respostes"
+        },
+        {
+          "texto": "Què volien els reformistes?",
+          "opciones": [
+            "Destruir el capitalisme",
+            "Abolir l'estat immediatament",
+            "Tornar al domestic system",
+            "Millorar les condicions sense qüestionar el capitalisme"
+          ],
+          "correcta": 3,
+          "dificultad": "media",
+          "explicacion": "Les organitzacions reformistes cercaven millors condicions sense qüestionar el capitalisme.",
+          "fuente": "8. El moviment obrer > Reformistes i revolucionaris"
+        },
+        {
+          "texto": "Qui van crear les bases del marxisme?",
+          "opciones": [
+            "Proudhon i Bakunin",
+            "Fourier i Owen",
+            "K. Marx i F. Engels",
+            "Fitch i Fulton"
+          ],
+          "correcta": 2,
+          "dificultad": "media",
+          "explicacion": "A mitjan segle XIX, K. Marx i F. Engels van crear les bases del marxisme.",
+          "fuente": "8. El moviment obrer > El marxisme"
+        },
+        {
+          "texto": "Quins són els tres principis de l'anarquisme?",
+          "opciones": [
+            "Dictadura del proletariat, partits i estat obrer",
+            "Llibertat individual, propietat col·lectiva i rebuig de tota autoritat",
+            "Lliure iniciativa, oferta i demanda i competència",
+            "Propietat privada, estat fort i exèrcit"
+          ],
+          "correcta": 1,
+          "dificultad": "media",
+          "explicacion": "L'anarquisme defensa la llibertat individual, la propietat col·lectiva i el rebuig de tota autoritat, sobretot l'estat.",
+          "fuente": "8. El moviment obrer > L'anarquisme"
+        },
+        {
+          "texto": "Segons el marxisme, què havia de venir després de la revolució obrera?",
+          "opciones": [
+            "La dictadura del proletariat i després el comunisme",
+            "Una monarquia parlamentària",
+            "La desaparició immediata de l'estat",
+            "La tornada al feudalisme"
+          ],
+          "correcta": 0,
+          "dificultad": "dificil",
+          "explicacion": "Per als marxistes, després de la revolució hi hauria una dictadura del proletariat i després el comunisme.",
+          "fuente": "8. El moviment obrer > El marxisme"
+        },
+        {
+          "texto": "Per què es va dividir la Primera Internacional el 1872?",
+          "opciones": [
+            "Per la tragèdia de Chicago",
+            "Per l'encíclica Rerum Novarum",
+            "Per la invenció de la ràdio",
+            "Per les diferències entre Marx i Bakunin"
+          ],
+          "correcta": 3,
+          "dificultad": "dificil",
+          "explicacion": "Les diferències entre Marx i Bakunin van provocar l'escissió el 1872.",
+          "fuente": "8. El moviment obrer > Les internacionals obreres"
+        },
+        {
+          "texto": "Què reclamava la vaga general de Chicago del maig del 1886?",
+          "opciones": [
+            "El sufragi femení",
+            "La destrucció de les màquines",
+            "La jornada de 8 hores",
+            "La fi dels sindicats"
+          ],
+          "correcta": 2,
+          "dificultad": "dificil",
+          "explicacion": "La vaga de Chicago (1886) reclamava la jornada de 8 hores; el Primer de Maig la recorda.",
+          "fuente": "8. El moviment obrer > Les internacionals obreres"
+        }
+      ]
+    }
+  ]
+}

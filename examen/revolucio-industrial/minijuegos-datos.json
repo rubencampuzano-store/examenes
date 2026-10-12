@@ -1,0 +1,558 @@
+{
+  "textos": {
+    "jugar": "Juga",
+    "pausa": "Pausa",
+    "continuar": "Continua",
+    "reiniciar": "Torna a començar",
+    "record": "Rècord",
+    "tambienTactil": "També es pot jugar amb pantalla tàctil.",
+    "victoria": "Victòria!",
+    "finPartida": "Fi de la partida",
+    "guanyes": "Guanyes",
+    "nuevoRecord": "Nou rècord!",
+    "repetir": "Repeteix",
+    "volver": "Torna a l'examen",
+    "vidas": "Vides",
+    "porta": "Porta",
+    "ai": "Ai!",
+    "encerts": "Encerts",
+    "errors": "Errors",
+    "objetos": "Objectes",
+    "ronda": "Ronda",
+    "temps": "Temps",
+    "pistaCronoTactil": "Arrossega cada fet fins a la seva data, o toca el fet i després el forat.",
+    "pistaCronoTeclado": "Arrossega cada fet fins a la seva data. Amb teclat: Tab per triar, Enter per agafar i fletxes per moure't.",
+    "deixaAqui": "Deixa'l aquí",
+    "ratxa": "Ratxa",
+    "restants": "restants",
+    "tempsEsgotat": "Temps esgotat!",
+    "triaTactil": "Toca la porta o el botó amb la resposta correcta",
+    "triaTeclat": "Tria la resposta amb 1, 2 o 3 (o fes-hi clic)",
+    "rapidesa": "Rapidesa",
+    "musica": "Música",
+    "silenciarMusica": "Silencia la música",
+    "activarMusica": "Activa la música",
+    "audio": "So",
+    "ambiente": "Ambient",
+    "efectos": "Efectes",
+    "detalleAmbiente": "Brogit de fàbriques i estació",
+    "detalleEfectos": "Xílings, xocs, senyals i fanfàrries",
+    "activat": "Activat",
+    "desactivat": "Desactivat",
+    "sinWebgl": "Aquest dispositiu no pot mostrar gràfics 3D.",
+    "sinWebglAyuda": "Prova-ho amb un altre navegador o activa l'acceleració gràfica.",
+    "volverExamenes": "Tornar als exàmens"
+  },
+  "carrera": {
+    "titulo": "El tren de Liverpool",
+    "sufijo3d": "",
+    "escena": "industrial",
+    "subtitulo": "És el 1830 i condueixes la locomotora de Stephenson de Manchester a Liverpool. Esquiva les vagonetes, recull xílings i tria la via correcta a cada senyal.",
+    "objetivo": "Liverpool",
+    "objeto": {
+      "plural": "Xílings"
+    },
+    "textoLlegada": "Benvinguts a Liverpool!",
+    "textoVictoria": "Arribada a Liverpool! Viatge completat!",
+    "textoDerrota": "La locomotora s'ha avariat... Torna-ho a provar!",
+    "vidas": 3,
+    "numPuertas": 8,
+    "sonido": {
+      "preset": "revolucion",
+      "volumenMusica": 0.5,
+      "musica": {
+        "archivo": "audio/rule-britannia.mp3",
+        "titulo": "Rule, Britannia!",
+        "interprete": "United States Army Strings",
+        "licencia": "Domini públic",
+        "fuente": "https://commons.wikimedia.org/wiki/File:%27Rule,_Britannia!%27_(United_States_Army_Strings).oga"
+      }
+    },
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Toca la meitat esquerra o dreta, o llisca, per canviar de via"
+        ],
+        [
+          "1s",
+          "Recull xílings i esquiva les vagonetes"
+        ],
+        [
+          "123",
+          "A cada senyal et pararàs: toca la porta o el botó amb la resposta correcta"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Canvia de via (també amb A i D)"
+        ],
+        [
+          "1s",
+          "Recull xílings i esquiva les vagonetes"
+        ],
+        [
+          "123",
+          "A cada senyal et pararàs: tria la resposta amb 1, 2 o 3"
+        ],
+        [
+          "⚡",
+          "Com més ràpid responguis, més punts"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "puertas": [
+      {
+        "pregunta": "Qui va patentar la màquina de vapor el 1769?",
+        "opciones": [
+          "James Watt",
+          "Stephenson",
+          "Henry Ford"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quin va ser el primer sector a mecanitzar-se?",
+        "opciones": [
+          "Automòbil",
+          "Tèxtil",
+          "Química"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Principal energia de la Primera Revolució Industrial?",
+        "opciones": [
+          "Electricitat",
+          "Petroli",
+          "Carbó"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Quin va ser el primer país industrialitzat?",
+        "opciones": [
+          "Gran Bretanya",
+          "França",
+          "Alemanya"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Primera línia de passatgers (1830): Manchester i...",
+        "opciones": [
+          "Londres",
+          "Liverpool",
+          "Leeds"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Qui va millorar les locomotores de vapor?",
+        "opciones": [
+          "Kay",
+          "Cartwright",
+          "Stephenson"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Qui va escriure La riquesa de les nacions?",
+        "opciones": [
+          "Adam Smith",
+          "Karl Marx",
+          "Bakunin"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui va implantar la cadena de muntatge?",
+        "opciones": [
+          "F. Taylor",
+          "Henry Ford",
+          "Edison"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Quina energia va rellevar el carbó, amb el petroli?",
+        "opciones": [
+          "Llenya",
+          "Vapor",
+          "Electricitat"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Què destruïen els luddites?",
+        "opciones": [
+          "Màquines",
+          "Bancs",
+          "Ferrocarrils"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "En quin any van néixer les Trade Unions?",
+        "opciones": [
+          "1709",
+          "1834",
+          "1906"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Grup més nombrós de la societat industrial?",
+        "opciones": [
+          "Alta burgesia",
+          "Noblesa",
+          "Proletariat"
+        ],
+        "correcta": 2
+      }
+    ],
+    "premio": {
+      "objetivo": 2600,
+      "tope": 300
+    }
+  },
+  "cronologia": {
+    "titulo": "La línia del vapor",
+    "subtitulo": "Posa cada fet al seu lloc abans que s'acabi el temps: invents, lleis obreres i la fàbrica de cada època.",
+    "textoVictoria": "Cronologia completa!",
+    "textoDerrota": "S'ha acabat el temps",
+    "tiempoRonda": 45,
+    "instrucciones": {
+      "tactil": [
+        [
+          "☝",
+          "Arrossega cada pas fins al seu lloc"
+        ],
+        [
+          "2×",
+          "O toca el pas i després el forat"
+        ],
+        [
+          "⏱",
+          "Cada error resta 3 segons"
+        ]
+      ],
+      "teclado": [
+        [
+          "🖱",
+          "Arrossega cada pas amb el ratolí fins al seu lloc"
+        ],
+        [
+          "⇥",
+          "Tab per triar un pas i Enter per agafar-lo"
+        ],
+        [
+          "←→",
+          "Tria el forat amb les fletxes i prem Enter"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "titulo": "Invents de la Primera Revolució Industrial",
+        "eventos": [
+          {
+            "texto": "Abraham Darby fon ferro amb carbó de coc",
+            "fecha": "1709",
+            "orden": 1709
+          },
+          {
+            "texto": "Llançadora volant de Kay",
+            "fecha": "1733",
+            "orden": 1733
+          },
+          {
+            "texto": "James Watt patenta la seva màquina de vapor",
+            "fecha": "1769",
+            "orden": 1769
+          },
+          {
+            "texto": "Teler mecànic de Cartwright",
+            "fecha": "1785",
+            "orden": 1785
+          },
+          {
+            "texto": "Línia de tren de passatgers Manchester–Liverpool",
+            "fecha": "1830",
+            "orden": 1830
+          }
+        ]
+      },
+      {
+        "titulo": "Lleis i lluites obreres",
+        "eventos": [
+          {
+            "texto": "Cap infant menor de 9 anys a les fàbriques",
+            "fecha": "1833",
+            "orden": 1833
+          },
+          {
+            "texto": "Neixen els primers sindicats (Trade Unions)",
+            "fecha": "1834",
+            "orden": 1834
+          },
+          {
+            "texto": "Cap dona ni infant menor de 10 anys a la mina",
+            "fecha": "1842",
+            "orden": 1842
+          },
+          {
+            "texto": "Màxim 10 hores per a dones i menors de 18 anys",
+            "fecha": "1847",
+            "orden": 1847
+          },
+          {
+            "texto": "Es crea la Primera Internacional",
+            "fecha": "1864",
+            "orden": 1864
+          },
+          {
+            "texto": "Es funda la Segona Internacional",
+            "fecha": "1889",
+            "orden": 1889
+          }
+        ]
+      },
+      {
+        "titulo": "Nous invents de la Segona Revolució Industrial",
+        "eventos": [
+          {
+            "texto": "Telègraf (Morse)",
+            "fecha": "1838",
+            "orden": 1838
+          },
+          {
+            "texto": "Graham Bell patenta el telèfon",
+            "fecha": "1876",
+            "orden": 1876
+          },
+          {
+            "texto": "Bombeta (Edison)",
+            "fecha": "1879",
+            "orden": 1879
+          },
+          {
+            "texto": "Automòbil",
+            "fecha": "1885",
+            "orden": 1885
+          },
+          {
+            "texto": "Cinematògraf (germans Lumière)",
+            "fecha": "1895",
+            "orden": 1895
+          },
+          {
+            "texto": "Ràdio (Marconi)",
+            "fecha": "1906",
+            "orden": 1906
+          }
+        ]
+      },
+      {
+        "titulo": "Del taller a la cadena de muntatge",
+        "eventos": [
+          {
+            "texto": "Producció artesanal controlada pels gremis",
+            "fecha": "Fase 1",
+            "orden": 1
+          },
+          {
+            "texto": "Domestic system: es treballa a casa per un salari",
+            "fecha": "Fase 2",
+            "orden": 2
+          },
+          {
+            "texto": "La fàbrica: màquines, vapor i divisió del treball",
+            "fecha": "Fase 3",
+            "orden": 3
+          },
+          {
+            "texto": "Taylorisme: tasques amb temps cronometrats",
+            "fecha": "Fase 4",
+            "orden": 4
+          },
+          {
+            "texto": "Fordisme: cadena de muntatge",
+            "fecha": "Fase 5",
+            "orden": 5
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 3500,
+      "tope": 300
+    }
+  },
+  "clasifica": {
+    "titulo": "Primera o Segona?",
+    "subtitulo": "Envia cada targeta al seu grup tan ràpid com puguis. Tres rondes de 30 segons.",
+    "textoVictoria": "Classificació perfecta!",
+    "textoDerrota": "Cal repassar una mica...",
+    "tiempoRonda": 30,
+    "instrucciones": {
+      "tactil": [
+        [
+          "⇆",
+          "Llisca la targeta cap al seu grup"
+        ],
+        [
+          "☝",
+          "O fes servir els botons de sota"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Envia la targeta a l'esquerra o a la dreta"
+        ],
+        [
+          "🖱",
+          "També pots arrossegar-la o usar els botons"
+        ],
+        [
+          "×4",
+          "Els encerts seguits multipliquen els punts"
+        ]
+      ]
+    },
+    "rondas": [
+      {
+        "izquierda": "Primera RI",
+        "derecha": "Segona RI",
+        "tarjetas": [
+          {
+            "texto": "Màquina de vapor",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Carbó",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Teler mecànic",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Llançadora volant",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Electricitat",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Petroli",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Automòbil",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Cadena de muntatge",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "Marxisme",
+        "derecha": "Anarquisme",
+        "tarjetas": [
+          {
+            "texto": "Marx i Engels",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Dictadura del proletariat",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Partits obrers",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Participar en la política",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Bakunin",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Rebuig de l'estat",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Vaga general",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Anarcosindicalisme",
+            "lado": "derecha"
+          }
+        ]
+      },
+      {
+        "izquierda": "Burgesia",
+        "derecha": "Proletariat",
+        "tarjetas": [
+          {
+            "texto": "Propietària de fàbriques",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Grans banquers",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Viu als nous eixamples",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Òpera, casinos i hípica",
+            "lado": "izquierda"
+          },
+          {
+            "texto": "Viu d'un salari",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Viu a l'extraradi",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Pagesos jornalers",
+            "lado": "derecha"
+          },
+          {
+            "texto": "Jornades molt llargues",
+            "lado": "derecha"
+          }
+        ]
+      }
+    ],
+    "premio": {
+      "objetivo": 5000,
+      "tope": 300
+    }
+  }
+}

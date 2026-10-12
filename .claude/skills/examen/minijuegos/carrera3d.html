@@ -80,8 +80,8 @@ const DATOS = /*__DATOS__*/null;
   const V0 = 17, VMAX = 31;
   // Escena 3D (metros)
   const CARRIL = 2.2, CALLE = CARRIL * 3, ACERA = 1.8, VISTA = 190, PASO_FAROLA = 20;
-  // Escenari: 'paris-1789' (per defecte) o 'placa-base'. La lògica del joc és la mateixa en tots dos.
-  const ESCENA = J.escena || 'paris-1789', PCB = ESCENA === 'placa-base';
+  // Escenari: 'paris-1789' (per defecte), 'placa-base' o 'industrial'. La lògica del joc és la mateixa en tots.
+  const ESCENA = J.escena || 'paris-1789', PCB = ESCENA === 'placa-base', IND = ESCENA === 'industrial';
   // Llegada: la calle desemboca en una plaza (6 m antes de la meta) y la Bastilla está 22 m después de la meta.
   // El corredor se detiene 12 m antes del centro de la muralla, al final del puente levadizo.
   const BASTILLA_TRAS_META = 22, PLAZA_ANTES_META = 6, PARADA_BASTILLA = 16, DURACION_LLEGADA = 3.4;
@@ -667,6 +667,301 @@ const DATOS = /*__DATOS__*/null;
     return g;
   }
 
+  // =====================================================================
+  // ESCENA «industrial»: la locomotora de Stephenson va de Manchester a Liverpool (1830)
+  // =====================================================================
+  function texVia() {
+    // Una tessel·la cobreix l'amplada de les tres vies: balast, travesses de fusta i dos carrils per via
+    return lienzo(512, 512, (g, w, h) => {
+      const r = aleatorio(31);
+      g.fillStyle = '#4a4440'; g.fillRect(0, 0, w, h);
+      for (let i = 0; i < 2600; i++) { const t = 50 + r() * 70; g.fillStyle = `rgb(${t + 6},${t},${t - 6})`; g.fillRect(r() * w, r() * h, 2 + r() * 4, 2 + r() * 4); }
+      const carril = w / 3;
+      for (let y = 0; y < h; y += 64) for (let c = 0; c < 3; c++) {
+        const t = 70 + r() * 25; g.fillStyle = `rgb(${t + 26},${t + 6},${t - 12})`; g.fillRect(c * carril + 14, y + 10, carril - 28, 26);
+        g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(c * carril + 14, y + 32, carril - 28, 4);
+      }
+      for (let c = 0; c < 3; c++) for (const dx of [-38, 38]) {
+        const x = c * carril + carril / 2 + dx;
+        g.fillStyle = '#2a2826'; g.fillRect(x - 6, 0, 12, h);
+        g.fillStyle = '#b9b4ac'; g.fillRect(x - 3, 0, 6, h);
+        g.fillStyle = 'rgba(255,255,255,.55)'; g.fillRect(x - 1, 0, 2, h);
+      }
+    });
+  }
+  // Façana de fàbrica tèxtil de maó: files de finestrals alts; luces=true dona el mapa emissiu (finestres enceses)
+  function texFabrica(semilla, plantas, luces) {
+    const r = aleatorio(semilla * 17 + 3);
+    return lienzo(256, 512, (g, w, h) => {
+      if (luces) { g.fillStyle = '#000'; g.fillRect(0, 0, w, h); }
+      else {
+        g.fillStyle = ['#6e3a2a', '#7a4430', '#643426', '#83503a'][semilla % 4]; g.fillRect(0, 0, w, h);
+        for (let y = 0; y < h; y += 10) for (let x = (y / 10) % 2 ? -12 : 0; x < w; x += 24) { const t = r() * 26 - 13; g.fillStyle = `rgba(${t > 0 ? '255,200,170' : '0,0,0'},${Math.abs(t) / 130})`; g.fillRect(x + 1, y + 1, 22, 8); }
+        g.fillStyle = 'rgba(30,20,15,.35)'; for (let y = 0; y < h; y += 10) g.fillRect(0, y, w, 1);
+        for (let i = 0; i < 40; i++) { g.fillStyle = `rgba(10,8,6,${r() * .18})`; g.fillRect(r() * w, 0, 6 + r() * 20, h * (.2 + r() * .5)); }   // sutge
+      }
+      const alto = (h - 30) / plantas;
+      for (let p = 0; p < plantas; p++) for (let v = 0; v < 3; v++) {
+        const x = 28 + v * 74, y = h - (p + 1) * alto + 10, aw = 50, ah = alto - 28, encendida = r() < .55;
+        if (luces) { if (encendida) { g.fillStyle = r() < .5 ? '#e8a050' : '#f4c070'; g.fillRect(x + 3, y + 3, aw - 6, ah - 6); g.fillStyle = '#000'; for (let k = 1; k < 3; k++) g.fillRect(x + (aw / 3) * k - 1, y, 2, ah); for (let k = 1; k < 5; k++) g.fillRect(x, y + (ah / 5) * k - 1, aw, 2); } continue; }
+        g.fillStyle = '#d8c8a8'; g.fillRect(x - 4, y + ah, aw + 8, 5);                                        // ampit de pedra
+        g.fillStyle = '#4a2a1e'; g.beginPath(); g.moveTo(x - 4, y + 10); g.arc(x + aw / 2, y + 10, aw / 2 + 4, Math.PI, 0); g.lineTo(x + aw + 4, y + 10); g.fill();  // arc de maó
+        g.fillStyle = encendida ? '#c08a48' : '#1c1d24'; g.fillRect(x, y + 10, aw, ah - 10);
+        g.beginPath(); g.arc(x + aw / 2, y + 10, aw / 2, Math.PI, 0); g.fill();
+        g.fillStyle = 'rgba(30,22,16,.85)'; for (let k = 1; k < 3; k++) g.fillRect(x + (aw / 3) * k - 1, y, 2, ah); for (let k = 1; k < 5; k++) g.fillRect(x, y + 10 + ((ah - 10) / 5) * k - 1, aw, 2);
+      }
+      if (!luces) { g.fillStyle = 'rgba(0,0,0,.3)'; g.fillRect(0, 0, w, 12); g.fillStyle = '#5a2e22'; g.fillRect(0, 12, w, 6); }
+    });
+  }
+  function texHumo() {
+    return lienzo(64, 64, (g) => { const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(120,112,104,.9)'); gr.addColorStop(.5, 'rgba(90,84,78,.45)'); gr.addColorStop(1, 'rgba(70,64,60,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); });
+  }
+  function texXiling() {
+    return lienzo(128, 128, (g, w, h) => {
+      g.fillStyle = '#d9a53c'; g.beginPath(); g.arc(64, 64, 62, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = '#8a5a14'; g.lineWidth = 5; g.beginPath(); g.arc(64, 64, 52, 0, Math.PI * 2); g.stroke();
+      for (let a = 0; a < 40; a++) { g.save(); g.translate(64, 64); g.rotate(a / 40 * Math.PI * 2); g.fillStyle = '#b07c22'; g.fillRect(56, -1.5, 6, 3); g.restore(); }
+      g.fillStyle = '#7a4a10'; g.font = '700 54px "Courier Prime", Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('1s', 64, 68);
+    });
+  }
+  function texRetol(texto, color, fondo, w, h, mida) {
+    return lienzo(w, h, (g) => {
+      g.fillStyle = fondo; g.fillRect(0, 0, w, h);
+      g.strokeStyle = color; g.lineWidth = 6; g.strokeRect(10, 10, w - 20, h - 20);
+      g.fillStyle = color; g.textAlign = 'center'; g.textBaseline = 'middle';
+      let fs = mida; g.font = `700 ${fs}px "Zilla Slab", Rockwell, Georgia, serif`;
+      while (g.measureText(texto).width > w - 50 && fs > 16) { fs -= 2; g.font = `700 ${fs}px "Zilla Slab", Rockwell, Georgia, serif`; }
+      g.fillText(texto, w / 2, h / 2 + 3);
+    });
+  }
+  function texRellotge() {
+    return lienzo(128, 128, (g) => {
+      g.fillStyle = '#efe6cf'; g.beginPath(); g.arc(64, 64, 60, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = '#2a2420'; g.lineWidth = 5; g.stroke();
+      for (let k = 0; k < 12; k++) { g.save(); g.translate(64, 64); g.rotate(k / 12 * Math.PI * 2); g.fillStyle = '#2a2420'; g.fillRect(-2, -54, 4, 10); g.restore(); }
+      g.lineCap = 'round'; g.lineWidth = 6; g.beginPath(); g.moveTo(64, 64); g.lineTo(64, 30); g.stroke();
+      g.lineWidth = 4; g.beginPath(); g.moveTo(64, 64); g.lineTo(92, 74); g.stroke();
+    });
+  }
+  // Fum de les xemeneies: sprites que pugen i es fan grans (es reciclen amb les fàbriques)
+  const humos = [];
+  // Fàbriques als costats de la via (es reciclen com les cases de París)
+  function construirFabricas() {
+    const fondoE = 7, facC = {}, facE = {};
+    const lateral = (lado, x0, semilla, escala) => {
+      const rnd = aleatorio(semilla);
+      let pos = -10; const lista = [];
+      while (pos < VISTA + 30) {
+        const ancho = (7 + Math.floor(rnd() * 6)) * escala, plantas = 3 + Math.floor(rnd() * 3), k = Math.floor(rnd() * 4), clave = `${k}-${plantas}`;
+        if (!facC[clave]) { facC[clave] = textura(texFabrica(k + 1, plantas, false)); facE[clave] = textura(texFabrica(k + 1, plantas, true)); facC[clave].wrapS = facE[clave].wrapS = THREE.RepeatWrapping; }
+        const alto = (2.4 + plantas * 3) * escala, rep = Math.max(1, Math.round(ancho / 6));
+        const mapC = facC[clave].clone(), mapE = facE[clave].clone(); mapC.repeat.x = mapE.repeat.x = rep; mapC.needsUpdate = mapE.needsUpdate = true;
+        const fab = new THREE.Group();
+        const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(fondoE * escala, alto, ancho - .1), new THREE.MeshStandardMaterial({ map: mapC, emissive: 0xffa050, emissiveMap: mapE, emissiveIntensity: 1.4, roughness: .92 }));
+        cuerpo.position.y = alto / 2; cuerpo.receiveShadow = true; fab.add(cuerpo);
+        // teulada de dents de serra (shed) o a dues aigües
+        const dents = rnd() < .6;
+        if (dents) {
+          const n = Math.max(2, Math.round(ancho / 3)), pas = (ancho - .1) / n;
+          for (let d = 0; d < n; d++) {
+            const f = new THREE.Shape(); f.moveTo(0, 0); f.lineTo(pas, 0); f.lineTo(pas, 1.6 * escala); f.lineTo(0, 0);
+            const t = new THREE.Mesh(new THREE.ExtrudeGeometry(f, { depth: fondoE * escala, bevelEnabled: false }), MAT.pizarraInd);
+            t.rotation.y = Math.PI / 2; t.position.set(-fondoE * escala / 2, alto, -(ancho - .1) / 2 + d * pas + pas); fab.add(t);
+          }
+        } else {
+          const f = new THREE.Shape(); f.moveTo(-fondoE * escala / 2, 0); f.lineTo(fondoE * escala / 2, 0); f.lineTo(0, 2.2 * escala); f.lineTo(-fondoE * escala / 2, 0);
+          const t = new THREE.Mesh(new THREE.ExtrudeGeometry(f, { depth: ancho - .1, bevelEnabled: false }), MAT.pizarraInd);
+          t.position.set(0, alto, -(ancho - .1) / 2); fab.add(t);
+        }
+        // xemeneia alta de maó amb fum
+        if (rnd() < .7) {
+          const hx = (10 + rnd() * 8) * escala, rz = (rnd() - .5) * (ancho - 3);
+          const xem = new THREE.Mesh(new THREE.CylinderGeometry(.45 * escala, .75 * escala, hx, 10), MAT.maoXemeneia);
+          xem.position.set(lado * 1.2 * escala, alto + hx / 2, rz); xem.castShadow = true; fab.add(xem);
+          const corona = new THREE.Mesh(new THREE.CylinderGeometry(.6 * escala, .5 * escala, .5, 10), MAT.hierro); corona.position.set(lado * 1.2 * escala, alto + hx, rz); fab.add(corona);
+          for (let q = 0; q < 3; q++) {
+            const sp = new THREE.Sprite(MAT.humoXemeneia); sp.position.set(lado * 1.2 * escala, alto + hx + 1, rz);
+            sp.userData = { base: alto + hx + .8, fase: q / 3, escala, x0: lado * 1.2 * escala }; fab.add(sp); humos.push(sp);
+          }
+        }
+        fab.position.x = lado * x0;
+        fab.userData = { pos: pos + ancho / 2, ancho };
+        escena.add(fab); edificios.push(fab); lista.push(fab);
+        pos += ancho + (rnd() < .3 ? 2 + rnd() * 4 : .2);
+      }
+      const largoLado = pos + 10;
+      lista.forEach((c) => { c.userData.largoLado = largoLado; });
+    };
+    for (const lado of [-1, 1]) {
+      lateral(lado, CALLE / 2 + ACERA + fondoE / 2, lado > 0 ? 71 : 29, 1);
+      lateral(lado, CALLE / 2 + ACERA + fondoE * 1.8 + 6, lado > 0 ? 13 : 89, 1.6);
+    }
+  }
+  // Pòrtics de ferro sobre les vies amb fanals de gas (fan el paper dels fanals de París)
+  function construirPorticos() {
+    const ext = CALLE / 2 + ACERA * .55;
+    for (let i = 0; i * PASO_FAROLA < VISTA + 20; i++) {
+      const f = new THREE.Group();
+      for (const lado of [-1, 1]) { const pal = new THREE.Mesh(new THREE.BoxGeometry(.2, 5.8, .2), MAT.hierro); pal.position.set(lado * ext, 2.9, 0); f.add(pal); }
+      const barra = new THREE.Mesh(new THREE.BoxGeometry(ext * 2 + .3, .22, .22), MAT.hierro); barra.position.set(0, 5.8, 0); f.add(barra);
+      for (let k = -2; k <= 2; k++) { const d = new THREE.Mesh(new THREE.BoxGeometry(.06, .7, .06), MAT.hierro); d.position.set(k * ext / 2.5, 5.4, 0); d.rotation.z = k % 2 ? .6 : -.6; f.add(d); }
+      let farol = null;
+      for (const lx of [-CARRIL, CARRIL]) {
+        const l = new THREE.Mesh(new THREE.BoxGeometry(.3, .42, .3), MAT.farolGas); l.position.set(lx, 5.3, 0); f.add(l);
+        const tapa = new THREE.Mesh(new THREE.ConeGeometry(.28, .2, 4), MAT.hierro); tapa.position.set(lx, 5.6, 0); tapa.rotation.y = Math.PI / 4; f.add(tapa);
+        const halo = new THREE.Sprite(MAT.brillo); halo.scale.set(2.6, 2.6, 1); halo.position.copy(l.position); f.add(halo);
+        if (!farol) farol = l;
+      }
+      f.userData = { pos: i * PASO_FAROLA + 6, farol };
+      escena.add(f); farolas.push(f);
+    }
+  }
+  // La meta: l'estació de Liverpool, amb la coberta de les andanes, el rellotge i la gent que espera el tren
+  function construirEstacion() {
+    bastilla = new THREE.Group();
+    const piedra = MAT.piedraEstacio;
+    // façana amb tres grans arcs (un per via) i dues torres
+    const fac = new THREE.Mesh(new THREE.BoxGeometry(34, 11, 3), piedra); fac.position.set(0, 5.5, 0); fac.castShadow = true; bastilla.add(fac);
+    const cornisa = new THREE.Mesh(new THREE.BoxGeometry(35, .6, 3.6), MAT.piedraClara); cornisa.position.set(0, 11.2, 0); bastilla.add(cornisa);
+    for (const c of [-1, 0, 1]) {
+      const hueco = new THREE.Mesh(new THREE.BoxGeometry(2.6, 5.2, .2), MAT.foscor); hueco.position.set(c * CARRIL, 2.6, 1.55); bastilla.add(hueco);
+      const arco = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.3, .2, 16, 1, false, 0, Math.PI), MAT.foscor); arco.rotation.set(Math.PI / 2, 0, -Math.PI / 2); arco.position.set(c * CARRIL, 5.2, 1.55); bastilla.add(arco);
+      const llum = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 4.4), new THREE.MeshBasicMaterial({ color: 0xd88a40, transparent: true, opacity: .35 })); llum.position.set(c * CARRIL, 2.5, 1.5); bastilla.add(llum);
+    }
+    const ventanas = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1.8), new THREE.MeshBasicMaterial({ color: 0xf0b060 }), 12);
+    const m4 = new THREE.Matrix4(); let iv = 0;
+    for (const lado of [-1, 1]) for (let k = 0; k < 3; k++) for (let fl = 0; fl < 2; fl++) ventanas.setMatrixAt(iv++, m4.makeTranslation(lado * (8 + k * 2.6), 3.5 + fl * 4.2, 1.52));
+    bastilla.add(ventanas);
+    for (const lado of [-1, 1]) {
+      const torre = new THREE.Mesh(new THREE.BoxGeometry(4, 16, 4), piedra); torre.position.set(lado * 15.5, 8, .2); torre.castShadow = true; bastilla.add(torre);
+      const tejado = new THREE.Mesh(new THREE.ConeGeometry(3.2, 3.4, 4), MAT.pizarraInd); tejado.position.set(lado * 15.5, 17.7, .2); tejado.rotation.y = Math.PI / 4; bastilla.add(tejado);
+    }
+    // frontó central amb el rellotge i el rètol
+    const fronto = new THREE.Mesh(new THREE.BoxGeometry(10, 4, 3), piedra); fronto.position.set(0, 13.5, 0); bastilla.add(fronto);
+    const rel = new THREE.Mesh(new THREE.CircleGeometry(1.4, 32), new THREE.MeshBasicMaterial({ map: textura(texRellotge()) })); rel.position.set(0, 13.7, 1.52); bastilla.add(rel);
+    const retol = new THREE.Mesh(new THREE.PlaneGeometry(9, 1.5), new THREE.MeshBasicMaterial({ map: textura(texRetol(String(J.objetivo || 'Liverpool').replace(/^(l'|la |el )/i, '').toUpperCase(), '#efe1c0', '#2a1a12', 1024, 170, 110)), toneMapped: false }));
+    retol.position.set(0, 9.6, 1.53); bastilla.add(retol);
+    // coberta de les andanes: volta de ferro i vidre que surt de la façana cap al tren
+    const volta = new THREE.Mesh(new THREE.CylinderGeometry(6.4, 6.4, 12, 24, 1, true, -Math.PI / 2, Math.PI), MAT.voltaVidre);
+    volta.rotation.x = -Math.PI / 2; volta.position.set(0, 4.6, 7.4); bastilla.add(volta);
+    for (let k = 0; k <= 4; k++) { const cost = new THREE.Mesh(new THREE.TorusGeometry(6.4, .1, 6, 24, Math.PI), MAT.hierro); cost.position.set(0, 4.6, 1.6 + k * 2.9); bastilla.add(cost); }
+    for (const lado of [-1, 1]) for (let k = 0; k <= 4; k++) { const col = new THREE.Mesh(new THREE.CylinderGeometry(.12, .14, 4.6, 8), MAT.hierro); col.position.set(lado * 6.3, 2.3, 1.6 + k * 2.9); bastilla.add(col); }
+    // topalls al final de cada via, just davant d'on s'atura la locomotora
+    for (const c of [-1, 0, 1]) {
+      const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, .9, .5), MAT.maderaOscura); base.position.set(c * CARRIL, .45, 12.6); bastilla.add(base);
+      for (const dx of [-.5, .5]) { const top = new THREE.Mesh(new THREE.CylinderGeometry(.16, .16, .35, 10), MAT.topall); top.rotation.x = Math.PI / 2; top.position.set(c * CARRIL + dx, .62, 12.95); bastilla.add(top); }
+    }
+    // terra: les vies continuen fins a l'estació i a banda i banda hi ha les andanes de pedra
+    const largoPlaza = BASTILLA_TRAS_META + PLAZA_ANTES_META - 1.5;
+    const texVias = textura(texVia(), true); texVias.repeat.set(1, largoPlaza / CALLE);
+    const vias = new THREE.Mesh(new THREE.PlaneGeometry(CALLE, largoPlaza), new THREE.MeshStandardMaterial({ map: texVias, roughness: .95 }));
+    vias.rotation.x = -Math.PI / 2; vias.position.set(0, .012, 1.5 + largoPlaza / 2); vias.receiveShadow = true; bastilla.add(vias);
+    const texAnd = textura(texLosas(), true); texAnd.repeat.set(10, largoPlaza / 3.6);
+    for (const lado of [-1, 1]) {
+      const and = new THREE.Mesh(new THREE.BoxGeometry(40, .3, largoPlaza), new THREE.MeshStandardMaterial({ map: texAnd, roughness: .9 }));
+      and.position.set(lado * (CALLE / 2 + 20), .15, 1.5 + largoPlaza / 2); and.receiveShadow = true; bastilla.add(and);
+    }
+    // rètol de benvinguda que s'hissa a la llegada (fa el paper de la bandera de la Bastilla)
+    const texPanel = textura(texRetol(J.textoLlegada || 'Benvinguts a Liverpool!', '#2a1a12', '#efe1c0', 1024, 200, 100));
+    bandera = new THREE.Mesh(new THREE.PlaneGeometry(10, 1.95), new THREE.MeshBasicMaterial({ map: texPanel, toneMapped: false }));
+    bandera.userData.base = bandera.geometry.attributes.position.array.slice();
+    bandera.position.set(0, 14, 2); bandera.visible = false; bastilla.add(bandera);
+    // gent amb barret de copa a les andanes (una sola geometria)
+    multitud = new THREE.Mesh(geometriaMultitud('industrial'), MAT.soldado); multitud.castShadow = true; bastilla.add(multitud);
+    const llumE = new THREE.PointLight(0xffb060, 70, 34, 2); llumE.position.set(0, 5, 10); bastilla.add(llumE);
+    for (const lado of [-1, 1]) { const h = new THREE.Sprite(MAT.brillo); h.scale.set(2.4, 2.4, 1); h.position.set(lado * 3.4, 6.2, 2); bastilla.add(h); }
+  }
+  // Obstacles: vagonetes de carbó o piles de caixes damunt la via
+  function crearVagoneta(o) {
+    const g = new THREE.Group();
+    if (o.v < .55) {
+      const caixa = new THREE.Mesh(new THREE.BoxGeometry(1.3, .75, 1.1), MAT.vagoneta); caixa.position.y = .7; g.add(caixa);
+      const vora = new THREE.Mesh(new THREE.BoxGeometry(1.4, .08, 1.2), MAT.hierro); vora.position.y = 1.08; g.add(vora);
+      const carbo = new THREE.Mesh(new THREE.DodecahedronGeometry(.62, 0), MAT.carbo); carbo.scale.set(1, .5, .85); carbo.position.y = 1.15; g.add(carbo);
+      for (const dx of [-.45, .45]) for (const dz of [-.38, .38]) { const r = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .1, 12), MAT.hierro); r.rotation.z = Math.PI / 2; r.position.set(dx * 1.25, .22, dz); g.add(r); }
+      const halo = new THREE.Sprite(MAT.brillo); halo.scale.set(1.3, 1.3, 1); halo.position.set(0, 1.5, .4); g.add(halo);
+    } else {
+      const c1 = new THREE.Mesh(new THREE.BoxGeometry(.9, .9, .9), MAT.madera); c1.position.set(-.4, .45, 0); g.add(c1);
+      const c2 = new THREE.Mesh(new THREE.BoxGeometry(.8, .8, .8), MAT.maderaOscura); c2.position.set(.45, .4, .1); c2.rotation.y = .3; g.add(c2);
+      const c3 = new THREE.Mesh(new THREE.BoxGeometry(.7, .7, .7), MAT.madera); c3.position.set(0, 1.2, 0); c3.rotation.y = -.4; g.add(c3);
+      const bala = new THREE.Mesh(new THREE.CylinderGeometry(.3, .3, .9, 12), MAT.cotoBala); bala.rotation.z = Math.PI / 2; bala.position.set(.3, 1.05, .45); g.add(bala);
+    }
+    g.traverse((m) => { if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; } });
+    g.rotation.y = (o.v - .5) * .3;
+    return g;
+  }
+  function crearXiling() {
+    const g = new THREE.Group();
+    const disco = new THREE.Mesh(new THREE.CylinderGeometry(.3, .3, .06, 24), [MAT.cantoXiling, MAT.xiling, MAT.xiling]);
+    disco.rotation.x = Math.PI / 2; disco.castShadow = true; g.add(disco);
+    const halo = new THREE.Sprite(MAT.brillo); halo.scale.set(1.1, 1.1, 1); g.add(halo);
+    g.userData.disco = disco;
+    return g;
+  }
+  // El corredor: una locomotora de vapor amb ténder (mirant cap a +z abans del gir del grup)
+  function crearLocomotora() {
+    const g = new THREE.Group(), p = { rodes: [], bieles: [] };
+    const caja = (w, h, d, m, x, y, z) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); b.position.set(x, y, z); b.castShadow = true; g.add(b); return b; };
+    caja(1.2, .16, 3.8, MAT.hierro, 0, .5, .2);                                            // xassís
+    // ténder (darrere, el més proper a la càmera) carregat de carbó
+    caja(1.25, .75, 1.3, MAT.locoVerd, 0, .95, -1.05);
+    const carbo = new THREE.Mesh(new THREE.DodecahedronGeometry(.6, 0), MAT.carbo); carbo.scale.set(1, .45, 1); carbo.position.set(0, 1.38, -1.05); g.add(carbo);
+    caja(.7, .3, .1, MAT.lato, 0, 1.15, -1.72);                                            // placa del ténder
+    // caldera horitzontal, fogaina i xemeneia alta (com la Rocket de Stephenson)
+    caja(1.15, 1.05, .8, MAT.locoVerd, 0, 1.1, .35);                                        // fogaina
+    const caldera = new THREE.Mesh(new THREE.CylinderGeometry(.5, .5, 2, 18), MAT.locoGroc); caldera.rotation.x = Math.PI / 2; caldera.position.set(0, 1.25, 1.6); caldera.castShadow = true; g.add(caldera);
+    for (const z of [.9, 1.6, 2.3]) { const anell = new THREE.Mesh(new THREE.TorusGeometry(.51, .03, 6, 18), MAT.lato); anell.position.set(0, 1.25, z); g.add(anell); }
+    const xem = new THREE.Mesh(new THREE.CylinderGeometry(.17, .14, 1.5, 12), MAT.hierro); xem.position.set(0, 2.4, 2.35); xem.castShadow = true; g.add(xem);
+    const corona = new THREE.Mesh(new THREE.CylinderGeometry(.26, .2, .22, 12), MAT.lato); corona.position.set(0, 3.15, 2.35); g.add(corona);
+    p.boca = new THREE.Object3D(); p.boca.position.set(0, 3.3, 2.35); g.add(p.boca);
+    const fanal = new THREE.Mesh(new THREE.BoxGeometry(.24, .2, .14), MAT.farolGas); fanal.position.set(0, 1.25, 2.68); g.add(fanal);
+    // rodes: dues grans motrius davant i dues petites darrere (giren segons la velocitat)
+    const roda = (r, x, z) => {
+      const rd = new THREE.Group(); rd.position.set(x, r, z); g.add(rd);
+      const disc = new THREE.Mesh(new THREE.CylinderGeometry(r, r, .1, 20), MAT.locoGroc); disc.rotation.z = Math.PI / 2; rd.add(disc);
+      const llanta = new THREE.Mesh(new THREE.TorusGeometry(r, .05, 6, 20), MAT.hierro); llanta.rotation.y = Math.PI / 2; rd.add(llanta);
+      for (let k = 0; k < 4; k++) { const radi = new THREE.Mesh(new THREE.BoxGeometry(.12, r * 1.9, .05), MAT.hierro); radi.rotation.x = k * Math.PI / 4; rd.add(radi); }
+      p.rodes.push({ rd, r }); return rd;
+    };
+    for (const lado of [-1, 1]) { roda(.62, lado * .66, 1.85); roda(.34, lado * .66, .15); roda(.3, lado * .66, -1.05); }
+    for (const lado of [-1, 1]) { const b = caja(.06, .08, 1.4, MAT.lato, lado * .74, .62, 1.2); p.bieles.push(b); }
+    // tota la màquina es desplaça enrere perquè el morro quedi on el joc comprova els xocs
+    const cos = new THREE.Group(); while (g.children.length) cos.add(g.children[0]); cos.position.z = -1.4; g.add(cos);
+    g.userData = p;
+    return g;
+  }
+  // Fum de la locomotora: bufarades que surten de la xemeneia i queden enrere
+  const fumLoco = [];
+  function crearFumLoco() {
+    for (let i = 0; i < 16; i++) {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: texturas.humo, transparent: true, depthWrite: false, opacity: 0 }));
+      sp.userData = { vida: 0 }; escena.add(sp); fumLoco.push(sp);
+    }
+  }
+  function animarLocomotora(t, corriendo, dt) {
+    const p = corredor.userData;
+    const gir = corriendo ? s.v * dt : 0;
+    p.rodes.forEach(({ rd, r }) => { rd.rotation.x -= gir / r; });
+    p.fase = (p.fase || 0) + gir / .62;
+    p.bieles.forEach((b, i) => { b.position.y = .62 + Math.sin(p.fase + i * Math.PI) * .18; b.position.z = 1.2 + Math.cos(p.fase + i * Math.PI) * .12; });
+    corredor.position.y = corriendo ? Math.abs(Math.sin(p.fase * 2)) * .02 : 0;
+    // bufarades: més sovint com més corre; a la llegada, un gran núvol de vapor
+    p.tFum = (p.tFum || 0) - dt;
+    const ritme = s.fase === 'llegada' ? .08 : corriendo ? Math.max(.09, .5 - s.v * .012) : .7;
+    if (p.tFum <= 0 && !MJ.reducido()) {
+      p.tFum = ritme;
+      const sp = fumLoco.find((x) => x.userData.vida <= 0);
+      if (sp) { p.boca.getWorldPosition(sp.position); sp.userData.vida = 1.6; sp.userData.vx = (Math.random() - .5) * .6; sp.material.opacity = .75; sp.scale.setScalar(.6); }
+    }
+    for (const sp of fumLoco) {
+      if (sp.userData.vida <= 0) { sp.visible = false; continue; }
+      sp.visible = true; sp.userData.vida -= dt;
+      sp.position.y += dt * 1.6; sp.position.z += dt * (s.v + 1.5); sp.position.x += dt * sp.userData.vx;
+      const k = 1 - sp.userData.vida / 1.6; sp.scale.setScalar(.6 + k * 2.6); sp.material.opacity = .75 * (1 - k);
+    }
+    corredor.visible = !(s.invul > 0 && Math.floor(s.invul * 12) % 2);
+  }
+
   // --- Materiales compartidos ---
   const MAT = {};
   function materiales() {
@@ -707,6 +1002,26 @@ const DATOS = /*__DATOS__*/null;
       MAT.virus = new THREE.MeshStandardMaterial({ color: 0xd8342a, roughness: .45, emissive: 0xb01a10, emissiveIntensity: 1.1, flatShading: true });
       MAT.ledVerd = new THREE.MeshBasicMaterial({ color: 0x5dffb0 }); MAT.ledVermell = new THREE.MeshBasicMaterial({ color: 0xff5a4a });
     }
+    if (IND) {
+      texturas.humo = textura(texHumo()); texturas.xiling = textura(texXiling());
+      MAT.pizarraInd = new THREE.MeshStandardMaterial({ color: 0x3c3a3c, roughness: .8, flatShading: true });
+      MAT.maoXemeneia = new THREE.MeshStandardMaterial({ color: 0x6a3a2a, roughness: .9, emissive: 0x1a0a04, emissiveIntensity: .6 });
+      MAT.humoXemeneia = new THREE.SpriteMaterial({ map: texturas.humo, transparent: true, depthWrite: false, opacity: .42 });
+      MAT.farolGas = new THREE.MeshStandardMaterial({ color: 0xffc070, emissive: 0xffa040, emissiveIntensity: 2.4 });
+      MAT.piedraEstacio = new THREE.MeshStandardMaterial({ color: 0x9a8a72, roughness: .9, emissive: 0x1a120a, emissiveIntensity: .5 });
+      MAT.piedraClara = new THREE.MeshStandardMaterial({ color: 0xc8b898, roughness: .85 });
+      MAT.foscor = new THREE.MeshStandardMaterial({ color: 0x120c08, roughness: 1 });
+      MAT.voltaVidre = new THREE.MeshStandardMaterial({ color: 0x8a9aa0, roughness: .3, metalness: .4, transparent: true, opacity: .45, side: THREE.DoubleSide, depthWrite: false });
+      MAT.topall = new THREE.MeshStandardMaterial({ color: 0xb3302a, roughness: .5, emissive: 0x3a0a06, emissiveIntensity: .6 });
+      MAT.vagoneta = new THREE.MeshStandardMaterial({ color: 0x8a4a2c, roughness: .7, metalness: .3, emissive: 0x2a1006, emissiveIntensity: .8 });
+      MAT.carbo = new THREE.MeshStandardMaterial({ color: 0x141416, roughness: .95, metalness: 0, flatShading: true });
+      MAT.cotoBala = new THREE.MeshStandardMaterial({ color: 0xeee6d4, roughness: .95, emissive: 0x2a2620, emissiveIntensity: .6 });
+      MAT.xiling = new THREE.MeshStandardMaterial({ map: texturas.xiling, emissive: 0xffffff, emissiveMap: texturas.xiling, emissiveIntensity: .35, roughness: .35, metalness: .6 });
+      MAT.cantoXiling = new THREE.MeshStandardMaterial({ color: 0xc8922e, roughness: .35, metalness: .7 });
+      MAT.locoVerd = new THREE.MeshStandardMaterial({ color: 0x2f4a32, roughness: .5, metalness: .3, emissive: 0x08140a, emissiveIntensity: .6 });
+      MAT.locoGroc = new THREE.MeshStandardMaterial({ color: 0xd9a63a, roughness: .45, metalness: .3, emissive: 0x2a1a04, emissiveIntensity: .6 });
+      MAT.lato = new THREE.MeshStandardMaterial({ color: 0xd8b060, roughness: .3, metalness: .8 });
+    }
   }
 
   // --- Montaje de la escena ---
@@ -715,17 +1030,17 @@ const DATOS = /*__DATOS__*/null;
     const fondo = new THREE.Color(C.shell);
     escena.background = fondo;
     // Niebla nocturna algo más clara que el fondo de la app: la escena se ve más y la distancia sigue difuminada
-    const colorNiebla = PCB ? new THREE.Color(C.shell).lerp(new THREE.Color(0x1c6a5a), .35) : new THREE.Color(C.shell).lerp(new THREE.Color(0x4a5a8a), .4);
+    const colorNiebla = PCB ? new THREE.Color(C.shell).lerp(new THREE.Color(0x1c6a5a), .35) : IND ? new THREE.Color(C.shell).lerp(new THREE.Color(0x9a6a48), .42) : new THREE.Color(C.shell).lerp(new THREE.Color(0x4a5a8a), .4);
     escena.background = colorNiebla;
     escena.fog = new THREE.Fog(colorNiebla, 34, VISTA + 20);
     camara = new THREE.PerspectiveCamera(60, 1, .1, 400);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = PCB ? 1.45 : 1.65;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = PCB ? 1.45 : IND ? 1.55 : 1.65;
     renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     materiales();
 
-    escena.add(PCB ? new THREE.HemisphereLight(0x8fe6d8, 0x0a2418, 1.5) : new THREE.HemisphereLight(0x8a9ad0, 0x3a2e22, 1.4));
-    luna = new THREE.DirectionalLight(PCB ? 0xcff4ff : 0xc4d0ff, 1.4);
+    escena.add(PCB ? new THREE.HemisphereLight(0x8fe6d8, 0x0a2418, 1.5) : IND ? new THREE.HemisphereLight(0xffc89a, 0x2a1c12, 1.4) : new THREE.HemisphereLight(0x8a9ad0, 0x3a2e22, 1.4));
+    luna = new THREE.DirectionalLight(PCB ? 0xcff4ff : IND ? 0xffbf88 : 0xc4d0ff, 1.4);
     luna.position.set(-12, 22, 8); luna.castShadow = true;
     luna.shadow.mapSize.set(1024, 1024);
     Object.assign(luna.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 70 });
@@ -734,8 +1049,10 @@ const DATOS = /*__DATOS__*/null;
     luzCalida = new THREE.PointLight(PCB ? 0x6ff4ff : 0xffb070, 30, 18, 2); luzCalida.position.set(0, 3.2, 2); escena.add(luzCalida);
     for (let i = 0; i < 2; i++) { const l = new THREE.PointLight(PCB ? 0x40f0d0 : 0xffa058, 55, 28, 2); escena.add(l); farolasLuz.push(l); }
 
+    // Fàbriques: sol de capvespre enmig del fum
+    if (IND) { const sol = new THREE.Mesh(new THREE.CircleGeometry(16, 32), new THREE.MeshBasicMaterial({ color: 0xf0a060, fog: false, transparent: true, opacity: .55 })); sol.position.set(-150, 42, -300); escena.add(sol); }
     // Cielo: estrellas lejanas y luna (solo en París)
-    if (!PCB) {
+    if (!PCB && !IND) {
     const n = 500, pos = new Float32Array(n * 3);
     for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI - Math.PI / 2, b = Math.random() * .45 + .06; pos[i * 3] = Math.sin(a) * 300; pos[i * 3 + 1] = Math.sin(b) * 300; pos[i * 3 + 2] = -Math.cos(a) * 300; }
     const gEst = new THREE.BufferGeometry(); gEst.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -747,7 +1064,7 @@ const DATOS = /*__DATOS__*/null;
 
     grupoPista = new THREE.Group(); escena.add(grupoPista);
     // Calle de adoquines (la textura se desplaza para dar sensación de avance)
-    texturas.adoquines = textura(PCB ? texPCB() : texAdoquines(), true);
+    texturas.adoquines = textura(PCB ? texPCB() : IND ? texVia() : texAdoquines(), true);
     texturas.adoquines.repeat.set(1, VISTA / CALLE);
     suelo = new THREE.Mesh(new THREE.PlaneGeometry(CALLE, VISTA + 20), new THREE.MeshStandardMaterial({ map: texturas.adoquines, roughness: .95 }));
     suelo.rotation.x = -Math.PI / 2; suelo.position.z = -(VISTA / 2) + 10; suelo.receiveShadow = true; escena.add(suelo);
@@ -758,10 +1075,10 @@ const DATOS = /*__DATOS__*/null;
       a.position.set(lado * (CALLE / 2 + ACERA / 2), .09, -(VISTA / 2) + 10); a.receiveShadow = true; escena.add(a); aceras.push(a);
     }
     // Suelo más allá de las aceras
-    const tierra = new THREE.Mesh(new THREE.PlaneGeometry(200, VISTA + 20), new THREE.MeshStandardMaterial({ color: PCB ? 0x07291b : 0x1a1714, roughness: 1 }));
+    const tierra = new THREE.Mesh(new THREE.PlaneGeometry(200, VISTA + 20), new THREE.MeshStandardMaterial({ color: PCB ? 0x07291b : IND ? 0x231a14 : 0x1a1714, roughness: 1 }));
     tierra.rotation.x = -Math.PI / 2; tierra.position.set(0, -.02, -(VISTA / 2) + 10); escena.add(tierra);
 
-    if (PCB) construirComponentes(); else {
+    if (PCB) construirComponentes(); else if (IND) construirFabricas(); else {
     // Casas del París de 1789: estrechas, de alturas desiguales, con tres estilos de fachada,
     // tejados inclinados de teja o pizarra (a dos aguas hacia la calle o con buhardilla) y rótulos colgados
     const TIPOS = ['entramado', 'revoque', 'piedra'];
@@ -813,7 +1130,7 @@ const DATOS = /*__DATOS__*/null;
       casasLado.forEach((c) => { c.userData.largoLado = largoLado; });
     }
     }
-    if (PCB) construirArcosLuz(); else {
+    if (PCB) construirArcosLuz(); else if (IND) construirPorticos(); else {
     // Faroles de aceite colgados de una cuerda sobre el centro de la calle (el alumbrado del París de 1789)
     const ext = CALLE / 2 + ACERA;
     for (let i = 0; i * PASO_FAROLA < VISTA + 20; i++) {
@@ -828,7 +1145,7 @@ const DATOS = /*__DATOS__*/null;
       escena.add(f); farolas.push(f);
     }
     }
-    if (PCB) construirCPU(); else {
+    if (PCB) construirCPU(); else if (IND) construirEstacion(); else {
     // La Bastilla: torres almenadas al fondo de la calle
     bastilla = new THREE.Group();
     const muro = new THREE.Mesh(new THREE.BoxGeometry(34, 16, 8), MAT.piedra); muro.position.y = 8; bastilla.add(muro);
@@ -880,6 +1197,7 @@ const DATOS = /*__DATOS__*/null;
     escena.add(fuegos);
     // Corredor y chispas
     corredor = crearCorredor(); escena.add(corredor);
+    if (IND) crearFumLoco();
     const nc = 80; const pc = new Float32Array(nc * 3).fill(-999);
     const gc = new THREE.BufferGeometry(); gc.setAttribute('position', new THREE.BufferAttribute(pc, 3));
     chispasPts = new THREE.Points(gc, new THREE.PointsMaterial({ color: new THREE.Color(C.oro), size: .14, transparent: true, depthWrite: false }));
@@ -889,6 +1207,7 @@ const DATOS = /*__DATOS__*/null;
 
   // --- Corredor low-poly articulado ---
   function crearCorredor() {
+    if (IND) return crearLocomotora();
     const g = new THREE.Group(), p = {};
     const caja = (w, h, d, m) => { const x = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); x.castShadow = true; return x; };
     // París: revolucionari (casaca blava, gorro frigi). Placa: robot «paquet de dades» (metall, visor i antena cian)
@@ -937,6 +1256,7 @@ const DATOS = /*__DATOS__*/null;
     return g;
   }
   function animarCorredor(t, corriendo, dt) {
+    if (IND) { animarLocomotora(t, corriendo, dt); return; }
     const p = corredor.userData;
     p.fase = (p.fase || 0) + (corriendo ? dt * (8 + s.v * .25) : 0);
     const a = corriendo ? Math.sin(p.fase) : 0, amp = corriendo ? Math.min(1, s.v / V0) : 0;
@@ -1004,14 +1324,15 @@ const DATOS = /*__DATOS__*/null;
     geoSoldado[pose] = fusionar(partes);
     return geoSoldado[pose];
   }
-  function geometriaMultitud() {
+  function geometriaMultitud(estilo) {
+    const ind = estilo === 'industrial';   // 1830: barrets de copa i gorres, sense piques
     const r = aleatorio(2024), partes = [];
     const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
     const ropas = [0x2a3c7a, 0x6a4a30, 0x5a5a5a, 0x7a2a22, 0x3a4a2a, 0x8a7a5a];
     for (let i = 0; i < 26; i++) {
       const lado = i % 2 ? 1 : -1;
       const x = lado * (4.5 + r() * 24), z = 12 + r() * 12, rot = -lado * (.4 + r() * .5) + Math.PI;
-      const m = new THREE.Matrix4().compose(new THREE.Vector3(x, 0, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, rot, 0)), new THREE.Vector3(1, .9 + r() * .2, 1));
+      const m = new THREE.Matrix4().compose(new THREE.Vector3(x, ind ? .3 : 0, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, rot, 0)), new THREE.Vector3(1, .9 + r() * .2, 1));
       const ropa = ropas[Math.floor(r() * ropas.length)], brazoArriba = r() < .5;
       const pieza = (geo, pos, color, rotE) => {
         const g = geo; g.applyMatrix4(new THREE.Matrix4().compose(new THREE.Vector3(...pos), new THREE.Quaternion().setFromEuler(new THREE.Euler(...(rotE || [0, 0, 0]))), new THREE.Vector3(1, 1, 1)));
@@ -1020,20 +1341,23 @@ const DATOS = /*__DATOS__*/null;
       pieza(B(.34, .8, .22), [0, .4, 0], 0x3a2e24);                 // piernas
       pieza(B(.46, .62, .28), [0, 1.1, 0], ropa);                   // chaqueta
       pieza(new THREE.SphereGeometry(.15, 8, 6), [0, 1.56, 0], 0xe0b890);
-      if (r() < .6) pieza(new THREE.ConeGeometry(.16, .3, 8), [0, 1.78, .03], 0xb3202a, [.5, 0, 0]);   // gorro frigio
+      if (ind) {
+        if (r() < .55) { pieza(new THREE.CylinderGeometry(.13, .13, .3, 10), [0, 1.84, 0], 0x161616); pieza(new THREE.CylinderGeometry(.21, .21, .03, 12), [0, 1.69, 0], 0x161616); }  // barret de copa
+        else pieza(new THREE.CylinderGeometry(.17, .17, .07, 10), [0, 1.7, .03], 0x4a4036);                                                                                          // gorra
+      } else if (r() < .6) pieza(new THREE.ConeGeometry(.16, .3, 8), [0, 1.78, .03], 0xb3202a, [.5, 0, 0]);   // gorro frigio
       else pieza(new THREE.CylinderGeometry(.24, .24, .08, 3), [0, 1.72, 0], 0x161616);                // tricornio
       pieza(B(.1, .5, .11), [-.28, brazoArriba ? 1.6 : 1.12, 0], ropa, [0, 0, brazoArriba ? -.3 : 0]);
       pieza(B(.1, .5, .11), [.28, brazoArriba ? 1.6 : 1.12, 0], ropa, [0, 0, brazoArriba ? .3 : 0]);
-      if (r() < .45) { pieza(B(.05, 2.6, .05), [.34, 1.4, 0], 0x5a3a22); pieza(new THREE.ConeGeometry(.06, .3, 5), [.34, 2.85, 0], 0xa0a6ac); } // pica
+      if (!ind && r() < .45) { pieza(B(.05, 2.6, .05), [.34, 1.4, 0], 0x5a3a22); pieza(new THREE.ConeGeometry(.06, .3, 5), [.34, 2.85, 0], 0xa0a6ac); } // pica
     }
     return fusionar(partes);
   }
   function lanzarFuego() {
     if (MJ.reducido() || !fuegos) return;
     const d = fuegos.userData, pos = fuegos.geometry.attributes.position.array, col = fuegos.geometry.attributes.color.array;
-    const cols = PCB ? [new THREE.Color(0x5ff3ff), new THREE.Color(0x6dffb4), new THREE.Color(0xffffff), new THREE.Color(C.oro)] : [new THREE.Color(C.azul).multiplyScalar(1.6), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.4), new THREE.Color(C.oro)];
+    const cols = IND ? [new THREE.Color(C.oro).multiplyScalar(1.3), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.5), new THREE.Color(0xffd27a)] : PCB ? [new THREE.Color(0x5ff3ff), new THREE.Color(0x6dffb4), new THREE.Color(0xffffff), new THREE.Color(C.oro)] : [new THREE.Color(C.azul).multiplyScalar(1.6), new THREE.Color(0xffffff), new THREE.Color(C.acento).multiplyScalar(1.4), new THREE.Color(C.oro)];
     const c0 = cols[Math.floor(Math.random() * cols.length)];
-    const ox = bastilla.position.x + (Math.random() - .5) * 26, oy = (PCB ? 13 : 26) + Math.random() * 8, oz = bastilla.position.z + 2;
+    const ox = bastilla.position.x + (Math.random() - .5) * 26, oy = (PCB ? 13 : IND ? 21 : 26) + Math.random() * 8, oz = bastilla.position.z + 2;
     for (let i = 0; i < 40; i++) {
       const k = d.siguiente; d.siguiente = (d.siguiente + 1) % d.vida.length;
       const a = Math.random() * Math.PI * 2, b = Math.acos(Math.random() * 2 - 1), v = 5 + Math.random() * 3;
@@ -1070,6 +1394,8 @@ const DATOS = /*__DATOS__*/null;
   function crearMalla(o) {
     if (o.tipo === 'obst' && PCB) return crearVirus(o);
     if (o.tipo === 'moneda' && PCB) return crearBit(o);
+    if (o.tipo === 'obst' && IND) return crearVagoneta(o);
+    if (o.tipo === 'moneda' && IND) return crearXiling(o);
     if (o.tipo === 'obst') {
       const g = new THREE.Group();
       const c1 = new THREE.Mesh(new THREE.BoxGeometry(1, .9, .9), MAT.madera); c1.position.set(-.35, .45, 0); g.add(c1);
@@ -1107,7 +1433,7 @@ const DATOS = /*__DATOS__*/null;
       g.userData.carteles = [];
       for (let c = 0; c < 3; c++) {
         const x = (c - 1) * CARRIL;
-        for (const dx of [-.95, .95]) { const poste = new THREE.Mesh(new THREE.BoxGeometry(.14, 3.2, .14), PCB ? MAT.cobre : MAT.poste); poste.position.set(x + dx, 1.6, 0); poste.castShadow = true; poste.userData.c = c; g.add(poste); }
+        for (const dx of [-.95, .95]) { const poste = new THREE.Mesh(new THREE.BoxGeometry(.14, 3.2, .14), PCB ? MAT.cobre : IND ? MAT.hierro : MAT.poste); poste.position.set(x + dx, 1.6, 0); poste.castShadow = true; poste.userData.c = c; g.add(poste); }
         const texN = textura(texCartel(q.ops[c].texto, c + 1, false)), texM = textura(texCartel(q.ops[c].texto, c + 1, true));
         const cartel = new THREE.Mesh(new THREE.PlaneGeometry(2.05, .8), new THREE.MeshBasicMaterial({ map: texN, toneMapped: false }));
         cartel.position.set(x, 3.1, .08); cartel.userData = { c, texN, texM };
@@ -1217,7 +1543,15 @@ const DATOS = /*__DATOS__*/null;
     // Llegada: se iza la bandera y la multitud celebra
     const kL = s.fase === 'llegada' ? Math.min(1, s.tLlegada / (MJ.reducido() ? .6 : 2.4)) : 0;
     const suave = kL * kL * (3 - 2 * kL);
-    if (PCB) {
+    if (IND && !MJ.reducido()) for (const sp of humos) {
+      const u = sp.userData, k = (s.t * .22 + u.fase) % 1;
+      sp.position.y = u.base + k * 7 * u.escala; sp.position.x = u.x0 + k * 2.4 * u.escala; sp.scale.setScalar((1.4 + k * 4.2) * u.escala);
+    }
+    if (IND) {
+      // Estació: s'hissa el rètol de benvinguda i la gent celebra l'arribada del tren
+      bandera.visible = suave > .02; bandera.position.y = 14 + suave * 3.4;
+      multitud.position.y = s.fase === 'llegada' && !MJ.reducido() ? Math.abs(Math.sin(s.t * 7)) * .12 : 0;
+    } else if (PCB) {
       // Placa: apareix el panell «Instrucció executada!», parpellegen els LEDs i giren els ventiladors
       bandera.visible = suave > .02; bandera.position.y = 9.6 + suave * 3.4;
       leds.forEach((m, i) => { const on = s.fase === 'llegada' ? .35 + .65 * Math.abs(Math.sin(s.t * 9 + i * 1.6)) : .45; m.material.color.setScalar(on); });

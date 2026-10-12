@@ -33,10 +33,10 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
       "musica": { "archivo": "audio/marsellesa.mp3", "titulo": "La Marseillaise", "interprete": "United States Navy Band",
                   "anio": "c. 1987", "licencia": "Domini públic", "fuente": "https://commons.wikimedia.org/wiki/File:La_Marseillaise.ogg" }
     },
-    "escena": "paris-1789",               // opcional: paris-1789 (por defecto) | placa-base (bus de datos hasta la CPU)
+    "escena": "paris-1789",               // opcional: paris-1789 (por defecto) | placa-base (bus de datos hasta la CPU) | industrial (tren hasta Liverpool)
     "objetivo": "la Bastilla",            // meta del recorrido (nombre del lugar)
     "sufijo3d": " 3D",                   // opcional: se añade al título (por defecto " 3D"; "" para no añadir nada)
-    "textoLlegada": "…",                  // opcional, solo placa-base: rótulo que se enciende al llegar (por defecto "Instrucció executada!")
+    "textoLlegada": "…",                  // opcional, placa-base e industrial: rótulo que aparece al llegar ("Instrucció executada!" / "Benvinguts a Liverpool!")
     "objeto": { "plural": "Escarapel·les" },
     "vidas": 3,
     "numPuertas": 8,                      // se eligen al azar de "puertas" en cada partida
@@ -72,7 +72,7 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
 - Escena generada por código (sin imágenes externas): calle de adoquines con casas del París de 1789, faroles colgados, luna y estrellas, corredor low-poly animado, barricadas con soldados del rey, escarapelas, puertas con carteles y, al final, la plaza con la Bastilla (bandera, multitud y fuegos artificiales).
 - Three.js r159 incrustado desde `minijuegos/vendor/three.min.js` (licencia MIT en `vendor/THREE-LICENSE.txt`): funciona sin internet. Peso ≈ 1,4 MB con música.
 - Rendimiento: resolución limitada y **calidad automática** (si baja de ~40 fps quita sombras y luego resolución). Sin WebGL muestra un aviso.
-- Escenarios (`carrera.escena`): `paris-1789` (por defecto) y `placa-base` (bus de datos de una placa base hasta la CPU). Otro tema necesita una escena nueva en `carrera3d.html` (y añadirla a `ESCENAS` en `construir-minijuegos.mjs`) u omitir `carrera`.
+- Escenarios (`carrera.escena`): `paris-1789` (por defecto), `placa-base` (bus de datos de una placa base hasta la CPU) e `industrial` (la locomotora de Stephenson recorre las vías entre fábricas con chimeneas, esquiva vagonetas de carbón, recoge xílings y llega a la estación de Liverpool, cuyo nombre sale de `carrera.objetivo`). Otro tema necesita una escena nueva en `carrera3d.html` (y añadirla a `ESCENAS` en `construir-minijuegos.mjs`) u omitir `carrera`.
 - Textos opcionales: `sinWebgl`, `sinWebglAyuda`.
 
 ## Sonido

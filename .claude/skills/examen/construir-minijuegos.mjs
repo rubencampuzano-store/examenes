@@ -47,7 +47,7 @@ if (comunes(mini.carrera, 'carrera')) {
     (q.opciones || []).forEach((o) => req(String(o).length <= 14, `carrera.puertas[${i}]: la opción "${o}" supera 14 caracteres (no cabe en la puerta)`));
     if (q.opciones && new Set(q.opciones).size !== q.opciones.length) errores.push(`carrera.puertas[${i}] tiene opciones repetidas`);
   });
-  const ESCENAS = ['paris-1789', 'placa-base'];  // escenarios que sabe dibujar carrera3d.html
+  const ESCENAS = ['paris-1789', 'placa-base', 'industrial'];  // escenarios que sabe dibujar carrera3d.html
   if (mini.carrera.escena != null && !ESCENAS.includes(mini.carrera.escena)) errores.push(`carrera.escena "${mini.carrera.escena}" no existe; valores posibles: ${ESCENAS.join(', ')}`);
 }
 // cronologia
