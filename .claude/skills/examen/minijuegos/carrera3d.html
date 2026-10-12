@@ -911,7 +911,10 @@ const DATOS = /*__DATOS__*/null;
     caja(1.15, 1.05, .8, MAT.locoVerd, 0, 1.1, .35);                                        // fogaina
     const caldera = new THREE.Mesh(new THREE.CylinderGeometry(.5, .5, 2, 18), MAT.locoGroc); caldera.rotation.x = Math.PI / 2; caldera.position.set(0, 1.25, 1.6); caldera.castShadow = true; g.add(caldera);
     for (const z of [.9, 1.6, 2.3]) { const anell = new THREE.Mesh(new THREE.TorusGeometry(.51, .03, 6, 18), MAT.lato); anell.position.set(0, 1.25, z); g.add(anell); }
-    const xem = new THREE.Mesh(new THREE.CylinderGeometry(.17, .14, .55, 12), MAT.hierro); xem.position.set(0, 1.98, 2.35);   // baixa: no tapa la via de davant xem.castShadow = true; g.add(xem);
+    // xemeneia baixa (no tapa la via de davant): tub que neix de la caldera, amb base acampanada i anell de llautó
+    const xem = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .75, 14), MAT.xemeneiaLoco); xem.position.set(0, 1.9, 2.35);
+    const baseX = new THREE.Mesh(new THREE.CylinderGeometry(.22, .34, .16, 14), MAT.xemeneiaLoco); baseX.position.set(0, 1.74, 2.35); g.add(baseX);
+    const anellX = new THREE.Mesh(new THREE.TorusGeometry(.21, .035, 6, 16), MAT.lato); anellX.rotation.x = Math.PI / 2; anellX.position.set(0, 1.84, 2.35); g.add(anellX); xem.castShadow = true; g.add(xem);
     const corona = new THREE.Mesh(new THREE.CylinderGeometry(.26, .2, .22, 12), MAT.lato); corona.position.set(0, 2.32, 2.35); g.add(corona);
     p.boca = new THREE.Object3D(); p.boca.position.set(0, 2.45, 2.35); g.add(p.boca);
     const fanal = new THREE.Mesh(new THREE.BoxGeometry(.24, .2, .14), MAT.farolGas); fanal.position.set(0, 1.25, 2.68); g.add(fanal);
@@ -1022,6 +1025,7 @@ const DATOS = /*__DATOS__*/null;
       MAT.locoVerd = new THREE.MeshStandardMaterial({ color: 0x2f4a32, roughness: .5, metalness: .3, emissive: 0x08140a, emissiveIntensity: .6 });
       MAT.locoGroc = new THREE.MeshStandardMaterial({ color: 0xd9a63a, roughness: .45, metalness: .3, emissive: 0x2a1a04, emissiveIntensity: .6 });
       MAT.lato = new THREE.MeshStandardMaterial({ color: 0xd8b060, roughness: .3, metalness: .8 });
+      MAT.xemeneiaLoco = new THREE.MeshStandardMaterial({ color: 0x6a645c, roughness: .35, metalness: .6, emissive: 0x2a2018, emissiveIntensity: .7 });
     }
   }
 
