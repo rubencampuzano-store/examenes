@@ -369,14 +369,14 @@ const MJ = (function () {
     const lista = (tactil ? ins.tactil : ins.teclado) || ins.tactil || [];
     const otra = tactil ? null : ins.tactil;
     const rec = record();
-    const c = capa(`<div class="mj-carta">
+    const notas = [otra && otra.length ? esc(T.tambienTactil) : '', rec ? `<span class="num">${esc(T.record)}: ${fmt(rec.record)} ${esc(T.puntos)}</span>` : ''].filter(Boolean);
+    const c = capa(`<div class="mj-carta mj-intro">
       ${sello(selloTexto(), monograma(), 'var(--acento)', 'mj-sello')}
       <span class="eyebrow">${esc(D.meta.titulo)}</span>
       <h2>${esc(JUEGO.titulo)}</h2>
       <p>${esc(JUEGO.subtitulo || '')}</p>
       <ul class="mj-controles">${lista.map(([k, t]) => `<li><i>${esc(k)}</i><span>${esc(t)}</span></li>`).join('')}</ul>
-      ${otra && otra.length ? `<p style="font-size:.8rem">${esc(T.tambienTactil)}</p>` : ''}
-      ${rec ? `<p class="num" style="font-size:.85rem">${esc(T.record)}: ${fmt(rec.record)} ${esc(T.puntos)}</p>` : ''}
+      ${notas.length ? `<p class="mj-nota">${notas.join(' · ')}</p>` : ''}
       <div class="mj-acciones"><button class="btn" id="mjJugar">${esc(T.jugar)} →</button></div>
       ${creditoMusica()}
     </div>`);

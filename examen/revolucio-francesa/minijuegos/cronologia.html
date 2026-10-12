@@ -129,6 +129,20 @@
   .mj-cuenta { font-family: var(--f-display); font-weight: 800; font-size: clamp(6rem, 30vw, 11rem); color: var(--claro); text-shadow: 0 10px 40px rgba(0,0,0,.6); animation: mjLatido .9s ease both; }
   @keyframes mjLatido { 0% { transform: scale(1.8); opacity: 0; } 30% { transform: scale(1); opacity: 1; } 100% { opacity: .0; transform: scale(.8); } }
   .mj-sello { width: 110px; justify-self: center; transform: rotate(-10deg); filter: drop-shadow(0 8px 14px rgba(0,0,0,.35)); }
+  /* Tarjeta de inicio compacta: el botón de jugar siempre queda a la vista */
+  .mj-intro { gap: 10px; padding: 18px 22px 16px; }
+  .mj-intro .mj-sello { width: 70px; margin-bottom: -2px; }
+  .mj-intro h2 { font-size: clamp(1.5rem, 5vw, 2rem); line-height: 1.1; }
+  .mj-intro > p { font-size: .9rem; line-height: 1.4; }
+  .mj-intro .mj-controles { gap: 5px; margin: 0; }
+  .mj-intro .mj-controles li { grid-template-columns: 28px 1fr; gap: 8px; font-size: .86rem; line-height: 1.3; }
+  .mj-intro .mj-controles li i { width: 28px; height: 28px; font-size: .66rem; border-width: 1.2px; }
+  .mj-intro .mj-nota { font-size: .76rem; }
+  .mj-intro .mj-acciones { margin-top: 2px; }
+  .mj-intro > p:last-child { font-size: .7rem !important; line-height: 1.3; }
+  /* Si aun así no cabe (pantallas muy bajas), el botón queda fijo abajo y el resto se desplaza */
+  @media (max-height: 560px) { .mj-intro .mj-acciones { position: sticky; bottom: -16px; z-index: 1; margin: 0 -22px; padding: 8px 22px; background: var(--papel); } }
+  @media (max-height: 640px) { .mj-intro .mj-sello { display: none; } }
   .mj-estrellas { display: flex; justify-content: center; gap: 10px; color: var(--oro); }
   .mj-estrellas svg { width: 44px; height: 44px; animation: mjBrillo .6s cubic-bezier(.2,1.4,.4,1) backwards; }
   .mj-estrellas svg.off { color: var(--linea); }
@@ -600,14 +614,14 @@ const MJ = (function () {
     const lista = (tactil ? ins.tactil : ins.teclado) || ins.tactil || [];
     const otra = tactil ? null : ins.tactil;
     const rec = record();
-    const c = capa(`<div class="mj-carta">
+    const notas = [otra && otra.length ? esc(T.tambienTactil) : '', rec ? `<span class="num">${esc(T.record)}: ${fmt(rec.record)} ${esc(T.puntos)}</span>` : ''].filter(Boolean);
+    const c = capa(`<div class="mj-carta mj-intro">
       ${sello(selloTexto(), monograma(), 'var(--acento)', 'mj-sello')}
       <span class="eyebrow">${esc(D.meta.titulo)}</span>
       <h2>${esc(JUEGO.titulo)}</h2>
       <p>${esc(JUEGO.subtitulo || '')}</p>
       <ul class="mj-controles">${lista.map(([k, t]) => `<li><i>${esc(k)}</i><span>${esc(t)}</span></li>`).join('')}</ul>
-      ${otra && otra.length ? `<p style="font-size:.8rem">${esc(T.tambienTactil)}</p>` : ''}
-      ${rec ? `<p class="num" style="font-size:.85rem">${esc(T.record)}: ${fmt(rec.record)} ${esc(T.puntos)}</p>` : ''}
+      ${notas.length ? `<p class="mj-nota">${notas.join(' · ')}</p>` : ''}
       <div class="mj-acciones"><button class="btn" id="mjJugar">${esc(T.jugar)} →</button></div>
       ${creditoMusica()}
     </div>`);
