@@ -69,14 +69,13 @@
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--linea-clara);
   }
-  .marca { display: flex; align-items: baseline; gap: 10px; margin-right: auto; min-width: 0; text-align: left; }
+  .marca { display: grid; gap: 2px; margin-right: auto; min-width: 0; text-align: left; }   /* título arriba y tema debajo, como subtítulo */
   .volver-examenes { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--linea-clara); color: var(--claro-suave); font-family: var(--f-mono); font-size: .8rem; text-decoration: none; white-space: nowrap; transition: color .2s, border-color .2s; }
   .volver-examenes:hover, .volver-examenes:focus-visible { color: var(--claro); border-color: var(--claro-suave); }
   .volver-examenes svg { width: 18px; height: 18px; flex: none; }
-  body.en-juego .volver-examenes { display: none; }
-  @media (max-width: 1360px) { .marca span { display: none; } }   /* con el enlace de volver, el título necesita el espacio */   /* durante una partida se sale con el botón propio, que pide confirmación */
-  .marca b { font-family: var(--f-display); font-style: italic; font-size: 1.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .marca span { color: var(--oro); font-size: .7rem; }
+  body.en-juego .volver-examenes { display: none; }   /* durante una partida se sale con el botón propio, que pide confirmación */
+  .marca b { font-family: var(--f-display); font-style: italic; font-size: 1.2rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .marca span { color: var(--oro); font-size: .64rem; line-height: 1.35; }
   .monedero { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--linea-clara); border-radius: 999px; font-size: .85rem; white-space: nowrap; }
   .monedero .num { color: var(--oro); font-weight: 500; }
   .navtop { display: flex; gap: 4px; }
