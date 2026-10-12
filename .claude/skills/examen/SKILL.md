@@ -100,9 +100,10 @@ Diseña una dirección visual propia del tema (época, lugar, disciplina) con `f
 4. Opcional: si el usuario quiere verlo en el móvil, ofrece publicarlo como artifact privado (pide confirmación antes).
 
 ## Paso 8 — Minijuegos
-Tres minijuegos temáticos en archivos separados (de momento no están integrados en `index.html`). Controles pensados para ordenador, móvil y tablet.
+Cuatro minijuegos temáticos en archivos separados (de momento no están integrados en `index.html`). Controles pensados para ordenador, móvil y tablet.
 1. Escribe `<carpeta>/minijuegos-datos.json` siguiendo **exactamente** `esquema-minijuegos.md`, con contenido sacado solo de `apuntes.md`:
    - `carrera`: 10-12 preguntas de respuesta muy corta (≤ 14 caracteres, 3 opciones), un "objetivo" propio del tema y la `escena` 3D más adecuada.
+   - `plataformas`: 8-10 preguntas cortas distintas de las de la carrera (3 opciones de ≤ 16 caracteres) y la misma `escena` que la carrera.
    - `cronologia`: 3-4 rondas de 5 hechos con su fecha (o pasos de un proceso si el tema no es histórico).
    - `clasifica`: 3 rondas de 8 tarjetas con dos categorías excluyentes.
    Títulos y textos ambientados en el tema (como en el Paso 6).

@@ -225,6 +225,173 @@
       "tope": 300
     }
   },
+  "plataformas": {
+    "vidas": 3,
+    "numPreguntas": 6,
+    "hudPregunta": "Pregunta",
+    "textoSalta": "Salta",
+    "notaTeclat": "Salta i colpeja el bloc correcte, o prem 1, 2 o 3",
+    "notaTactil": "Colpeja el bloc correcte saltant, o toca'l",
+    "premio": {
+      "objetivo": 2400,
+      "tope": 300
+    },
+    "titulo": "Salts a la fàbrica",
+    "escena": "industrial",
+    "objetivo": "Liverpool",
+    "subtitulo": "Salta per bigues i caixes, esquiva les vagonetes i colpeja el bloc amb la resposta correcta fins a l'estació de Liverpool.",
+    "objeto": {
+      "plural": "Xílings"
+    },
+    "textoLlegada": "Benvinguts a Liverpool!",
+    "textoVictoria": "Arribada a Liverpool!",
+    "textoDerrota": "T'has quedat atrapat a la fàbrica... Torna-ho a provar!",
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Mou-te amb els botons de l'esquerra"
+        ],
+        [
+          "⤒",
+          "Salta amb el botó de la dreta"
+        ],
+        [
+          "?",
+          "A cada parada, colpeja des de sota el bloc correcte (o toca'l)"
+        ],
+        [
+          "★",
+          "Recull xílings i salta sobre les vagonetes"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Mou-te (també amb A i D)"
+        ],
+        [
+          "↑",
+          "Salta amb ↑, espai o W (més alt si el mantens)"
+        ],
+        [
+          "123",
+          "A cada parada, colpeja el bloc correcte o prem 1, 2 o 3"
+        ],
+        [
+          "★",
+          "Recull xílings i salta sobre les vagonetes"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "preguntas": [
+      {
+        "pregunta": "Rotació quadriennal: el sistema...",
+        "opciones": [
+          "Norfolk",
+          "Bessemer",
+          "Taylor"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui va inventar el teler mecànic (1785)?",
+        "opciones": [
+          "Kay",
+          "Cartwright",
+          "Watt"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Amb quin carbó va fondre ferro Darby (1709)?",
+        "opciones": [
+          "Vegetal",
+          "De pedra",
+          "De coc"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Qui va crear el marxisme amb Engels?",
+        "opciones": [
+          "Karl Marx",
+          "Bakunin",
+          "Proudhon"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Fusió d'empreses en una de nova?",
+        "opciones": [
+          "Càrtel",
+          "Trust",
+          "Hòlding"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Any de la tragèdia de Chicago?",
+        "opciones": [
+          "1834",
+          "1864",
+          "1886"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Encíclica del papa Lleó XIII (1890)?",
+        "opciones": [
+          "Rerum Novarum",
+          "Temps difícils",
+          "Carta del Poble"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Què demanava el cartisme?",
+        "opciones": [
+          "Vaga general",
+          "Sufragi masculí",
+          "Fi de l'estat"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Qui va investigar la radioactivitat?",
+        "opciones": [
+          "Edison",
+          "Marconi",
+          "Marie Curie"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Festa adoptada per la Segona Internacional?",
+        "opciones": [
+          "1r de Maig",
+          "14 de juliol",
+          "25 de desembre"
+        ],
+        "correcta": 0
+      }
+    ],
+    "sonido": {
+      "preset": "revolucion",
+      "volumenMusica": 0.5,
+      "musica": {
+        "archivo": "audio/rule-britannia.mp3",
+        "titulo": "Rule, Britannia!",
+        "interprete": "United States Army Strings",
+        "licencia": "Domini públic",
+        "fuente": "https://commons.wikimedia.org/wiki/File:%27Rule,_Britannia!%27_(United_States_Army_Strings).oga"
+      }
+    }
+  },
   "cronologia": {
     "titulo": "La línia del vapor",
     "subtitulo": "Posa cada fet al seu lloc abans que s'acabi el temps: invents, lleis obreres i la fàbrica de cada època.",

@@ -19,8 +19,9 @@ const js = readFileSync(join(aqui, 'comun.js'), 'utf8');
 
 const errores = [], avisos = [];
 const req = (c, m) => { if (!c) errores.push(m); };
-// Minijuegos DOM que se montan desde su plantilla. La carrera (datos "carrera") solo existe en 3D: ver más abajo.
-const JUEGOS = ['cronologia', 'clasifica'];
+// Minijuegos que se montan desde su plantilla. La carrera (datos "carrera") solo existe en 3D: ver más abajo.
+const JUEGOS = ['plataformas', 'cronologia', 'clasifica'];
+const ESCENAS = ['paris-1789', 'placa-base', 'industrial'];  // escenarios que saben dibujar carrera3d.html y plataformas.html
 
 const TEXTOS = ['jugar', 'pausa', 'continuar', 'reiniciar', 'record', 'tambienTactil', 'victoria', 'finPartida', 'guanyes', 'nuevoRecord',
   'repetir', 'volver', 'vidas', 'porta', 'ai', 'encerts', 'errors', 'objetos', 'ronda', 'temps', 'pistaCronoTactil', 'pistaCronoTeclado',
@@ -47,8 +48,21 @@ if (comunes(mini.carrera, 'carrera')) {
     (q.opciones || []).forEach((o) => req(String(o).length <= 14, `carrera.puertas[${i}]: la opción "${o}" supera 14 caracteres (no cabe en la puerta)`));
     if (q.opciones && new Set(q.opciones).size !== q.opciones.length) errores.push(`carrera.puertas[${i}] tiene opciones repetidas`);
   });
-  const ESCENAS = ['paris-1789', 'placa-base', 'industrial'];  // escenarios que sabe dibujar carrera3d.html
   if (mini.carrera.escena != null && !ESCENAS.includes(mini.carrera.escena)) errores.push(`carrera.escena "${mini.carrera.escena}" no existe; valores posibles: ${ESCENAS.join(', ')}`);
+}
+// plataformas
+if (comunes(mini.plataformas, 'plataformas')) {
+  const p = mini.plataformas.preguntas || [];
+  req(p.length >= 4, 'plataformas.preguntas necesita al menos 4 preguntas');
+  p.forEach((q, i) => {
+    req(q.pregunta, `plataformas.preguntas[${i}].pregunta falta`);
+    req(Array.isArray(q.opciones) && q.opciones.length === 3, `plataformas.preguntas[${i}] debe tener exactamente 3 opciones (un bloque cada una)`);
+    req(Number.isInteger(q.correcta) && q.correcta >= 0 && q.correcta <= 2, `plataformas.preguntas[${i}].correcta debe ser 0, 1 o 2`);
+    (q.opciones || []).forEach((o) => req(String(o).length <= 16, `plataformas.preguntas[${i}]: la opción "${o}" supera 16 caracteres (no cabe en el bloque)`));
+    if (q.opciones && new Set(q.opciones).size !== q.opciones.length) errores.push(`plataformas.preguntas[${i}] tiene opciones repetidas`);
+  });
+  if (mini.plataformas.numPreguntas != null) req(mini.plataformas.numPreguntas >= 1 && mini.plataformas.numPreguntas <= p.length, 'plataformas.numPreguntas debe estar entre 1 y el número de preguntas');
+  if (mini.plataformas.escena != null && !ESCENAS.includes(mini.plataformas.escena)) errores.push(`plataformas.escena "${mini.plataformas.escena}" no existe; valores posibles: ${ESCENAS.join(', ')}`);
 }
 // cronologia
 if (comunes(mini.cronologia, 'cronologia')) {

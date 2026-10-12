@@ -225,6 +225,173 @@
     },
     "textoLlegada": "Instrucció executada!"
   },
+  "plataformas": {
+    "vidas": 3,
+    "numPreguntas": 6,
+    "hudPregunta": "Pregunta",
+    "textoSalta": "Salta",
+    "notaTeclat": "Salta i colpeja el bloc correcte, o prem 1, 2 o 3",
+    "notaTactil": "Colpeja el bloc correcte saltant, o toca'l",
+    "premio": {
+      "objetivo": 2400,
+      "tope": 300
+    },
+    "titulo": "Salt de dades",
+    "escena": "placa-base",
+    "objetivo": "la CPU",
+    "subtitulo": "Salta per xips i mòduls de memòria, esquiva els virus i colpeja el bloc amb la resposta correcta fins arribar a la CPU.",
+    "objeto": {
+      "plural": "Bits"
+    },
+    "textoLlegada": "Instrucció executada!",
+    "textoVictoria": "Dades a la CPU! Instrucció executada!",
+    "textoDerrota": "Sistema penjat... Torna-ho a provar!",
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Mou-te amb els botons de l'esquerra"
+        ],
+        [
+          "⤒",
+          "Salta amb el botó de la dreta"
+        ],
+        [
+          "?",
+          "A cada parada, colpeja des de sota el bloc correcte (o toca'l)"
+        ],
+        [
+          "★",
+          "Recull bits i salta sobre els virus"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Mou-te (també amb A i D)"
+        ],
+        [
+          "↑",
+          "Salta amb ↑, espai o W (més alt si el mantens)"
+        ],
+        [
+          "123",
+          "A cada parada, colpeja el bloc correcte o prem 1, 2 o 3"
+        ],
+        [
+          "★",
+          "Recull bits i salta sobre els virus"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "preguntas": [
+      {
+        "pregunta": "Què guarda el sistema operatiu i els teus fitxers?",
+        "opciones": [
+          "SSD",
+          "RAM",
+          "GPU"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Quin d'aquests és d'entrada i sortida?",
+        "opciones": [
+          "Teclat",
+          "Mòdem",
+          "Monitor"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Programa de la ROM que posa en marxa l'ordinador?",
+        "opciones": [
+          "El compilador",
+          "Linux",
+          "BIOS"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Quina unitat fa les operacions matemàtiques?",
+        "opciones": [
+          "ALU",
+          "UC",
+          "Bus"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Nivell d'abstracció més alt?",
+        "opciones": [
+          "Màquina",
+          "Usuari",
+          "Lògica digital"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Quin estàndard defineix el software?",
+        "opciones": [
+          "ISO 9001",
+          "Llei de Moore",
+          "IEEE 729"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Quina part «es pot partir amb una destral»?",
+        "opciones": [
+          "Hardware",
+          "Software",
+          "Programa"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Què hi ha a sobre del processador del portàtil?",
+        "opciones": [
+          "La bateria",
+          "El dissipador",
+          "L'SSD"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "L'escàner tradueix el que llegeix a llenguatge...",
+        "opciones": [
+          "natural",
+          "HTML",
+          "binari"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Quants tipus de perifèrics hi ha?",
+        "opciones": [
+          "Quatre",
+          "Dos",
+          "Sis"
+        ],
+        "correcta": 0
+      }
+    ],
+    "sonido": {
+      "preset": "tecnologia",
+      "volumenMusica": 0.5,
+      "musica": {
+        "archivo": "audio/slay-the-evil.mp3",
+        "titulo": "Slay The Evil (8-bit Music for GameDev)",
+        "interprete": "HydroGene",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:8-bit_Music_for_GameDev_-_01._Slay_The_Evil.opus"
+      }
+    }
+  },
   "cronologia": {
     "titulo": "Seqüències de l'ordinador",
     "subtitulo": "Posa cada pas al seu lloc abans que s'acabi el temps: l'arrencada, els nivells d'abstracció i el camí de les dades.",

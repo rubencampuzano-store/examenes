@@ -1,6 +1,6 @@
 # Esquema de `minijuegos-datos.json`
 
-`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera,cronologia,clasifica}.html` (la carrera solo existe en 3D).
+`construir-minijuegos.mjs` lo valida y genera `<carpeta>/minijuegos/{carrera,plataformas,cronologia,clasifica}.html` (la carrera solo existe en 3D).
 El tema visual, `meta` y algunos textos (`puntos`, `moneda`, `selloAcierto`, `selloFallo`, `silenciar`, `activarSonido`) se toman de `juego-datos.json`.
 Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemplo completo: `examen/revolucio-francesa/minijuegos-datos.json`.
 
@@ -18,7 +18,7 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
     "audio", "ambiente", "efectos", "detalleAmbiente", "detalleEfectos", "activat", "desactivat"  // opcionales: interruptores del menú de pausa
   },
 
-  // Campos comunes a los 3 juegos:
+  // Campos comunes a los 4 juegos:
   //   titulo, subtitulo, textoVictoria, (textoDerrota),
   //   instrucciones: { "tactil": [["icono o tecla", "texto"], ...], "teclado": [[...], ...] }
   //   premio: { "objetivo": puntos que dan el premio completo, "tope": lliures máximas (300 recomendado) }
@@ -43,6 +43,23 @@ Todo el contenido sale de `apuntes.md` y va **en el idioma del material**. Ejemp
     "puertas": [                          // >= numPuertas; mejor 10-12 para que varíe
       { "pregunta": "…", "opciones": ["…", "…", "…"], "correcta": 0 }  // 3 opciones (una por carril), <= 14 caracteres
     ]
+  },
+
+  "plataformas": {            // salto 2D: recorrido con huecos, plataformas y enemigos; en cada parada, tres bloques con las respuestas
+                              // que se golpean saltando desde abajo (o con 1/2/3, tocando el bloque o el botón del panel).
+                              // Una barrera impide seguir hasta responder. Fallo = -1 vida; caer a un hueco o tocar un enemigo = -1 vida.
+    "escena": "paris-1789",               // opcional: paris-1789 (por defecto) | placa-base | industrial (las mismas que la carrera)
+    "objetivo": "la Bastilla",            // meta del recorrido
+    "objeto": { "plural": "Escarapel·les" },
+    "textoLlegada": "La Bastilla és nostra!",   // opcional: rótulo que aparece en la meta
+    "vidas": 3,
+    "numPreguntas": 6,                    // se eligen al azar de "preguntas"
+    "hudPregunta": "Pregunta", "textoSalta": "Salta",          // opcionales: etiqueta del marcador y texto del botón táctil
+    "notaTeclat": "…", "notaTactil": "…",                      // opcionales: indicación bajo la pregunta (si faltan, triaTeclat/triaTactil)
+    "preguntas": [                        // >= numPreguntas; mejor 8-10, distintas de las de la carrera
+      { "pregunta": "…", "opciones": ["…", "…", "…"], "correcta": 0 }  // 3 opciones, <= 16 caracteres
+    ],
+    "sonido": { … }                       // opcional, como en "carrera" (se puede reutilizar la misma música)
   },
 
   "cronologia": {             // arrastrar hechos a su fecha

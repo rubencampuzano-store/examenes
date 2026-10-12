@@ -223,6 +223,174 @@
       }
     }
   },
+  "plataformas": {
+    "vidas": 3,
+    "numPreguntas": 6,
+    "hudPregunta": "Pregunta",
+    "textoSalta": "Salta",
+    "notaTeclat": "Salta i colpeja el bloc correcte, o prem 1, 2 o 3",
+    "notaTactil": "Colpeja el bloc correcte saltant, o toca'l",
+    "premio": {
+      "objetivo": 2400,
+      "tope": 300
+    },
+    "titulo": "Pels carrers de París",
+    "escena": "paris-1789",
+    "objetivo": "la Bastilla",
+    "subtitulo": "Salta per carrers i barricades, esquiva els soldats del rei i colpeja el bloc amb la resposta correcta fins arribar a la Bastilla.",
+    "objeto": {
+      "plural": "Escarapel·les"
+    },
+    "textoLlegada": "La Bastilla és nostra!",
+    "textoVictoria": "Has arribat a la Bastilla!",
+    "textoDerrota": "Els soldats del rei t'han aturat... Torna-ho a provar!",
+    "instrucciones": {
+      "tactil": [
+        [
+          "◀▶",
+          "Mou-te amb els botons de l'esquerra"
+        ],
+        [
+          "⤒",
+          "Salta amb el botó de la dreta"
+        ],
+        [
+          "?",
+          "A cada parada, colpeja des de sota el bloc correcte (o toca'l)"
+        ],
+        [
+          "★",
+          "Recull escarapel·les i salta sobre els soldats"
+        ]
+      ],
+      "teclado": [
+        [
+          "← →",
+          "Mou-te (també amb A i D)"
+        ],
+        [
+          "↑",
+          "Salta amb ↑, espai o W (més alt si el mantens)"
+        ],
+        [
+          "123",
+          "A cada parada, colpeja el bloc correcte o prem 1, 2 o 3"
+        ],
+        [
+          "★",
+          "Recull escarapel·les i salta sobre els soldats"
+        ],
+        [
+          "P",
+          "Pausa"
+        ]
+      ]
+    },
+    "preguntas": [
+      {
+        "pregunta": "Qui va dirigir l'Enciclopèdia amb D'Alembert?",
+        "opciones": [
+          "Diderot",
+          "Voltaire",
+          "Rousseau"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Qui va defensar la sobirania nacional?",
+        "opciones": [
+          "Montesquieu",
+          "Rousseau",
+          "Locke"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Data de la Declaració de Drets de l'Home?",
+        "opciones": [
+          "14/7/1789",
+          "4/8/1789",
+          "26/8/1789"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Republicans radicals de la Convenció?",
+        "opciones": [
+          "Jacobins",
+          "Girondins",
+          "Monàrquics"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Govern de cinc membres (1795)?",
+        "opciones": [
+          "Consolat",
+          "Directori",
+          "Convenció"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Qui va escriure la Declaració de Drets de la Dona?",
+        "opciones": [
+          "Maria Antonieta",
+          "Claire Lacombe",
+          "Olympe de Gouges"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Any de la Declaració d'Independència dels EUA?",
+        "opciones": [
+          "1776",
+          "1787",
+          "1789"
+        ],
+        "correcta": 0
+      },
+      {
+        "pregunta": "Màxim exponent del Despotisme Il·lustrat a Espanya?",
+        "opciones": [
+          "Felip V",
+          "Carles III",
+          "Carles IV"
+        ],
+        "correcta": 1
+      },
+      {
+        "pregunta": "Llibertat, igualtat i...",
+        "opciones": [
+          "justícia",
+          "propietat",
+          "fraternitat"
+        ],
+        "correcta": 2
+      },
+      {
+        "pregunta": "Congrés que va reorganitzar Europa el 1815?",
+        "opciones": [
+          "Viena",
+          "Utrecht",
+          "Versalles"
+        ],
+        "correcta": 0
+      }
+    ],
+    "sonido": {
+      "preset": "revolucion",
+      "volumenMusica": 0.55,
+      "musica": {
+        "archivo": "audio/marsellesa.mp3",
+        "titulo": "La Marseillaise",
+        "interprete": "United States Navy Band",
+        "anio": "c. 1987",
+        "licencia": "Domini públic",
+        "fuente": "https://commons.wikimedia.org/wiki/File:La_Marseillaise.ogg"
+      }
+    }
+  },
   "cronologia": {
     "titulo": "La Línia del Temps",
     "subtitulo": "Col·loca cada fet a la seva data abans que s'acabi el temps. Quatre rondes, del 1679 al 1848.",

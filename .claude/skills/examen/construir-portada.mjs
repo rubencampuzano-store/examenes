@@ -22,7 +22,7 @@ const TX = {
   buit: 'Encara no hi ha cap tema.',
   peu: 'Imatges i música de domini públic (crèdits dins de cada joc).',
 };
-const NOMBRES_MINI = { carrera: 'Carrera 3D', cronologia: 'Línia del temps', clasifica: 'Classifica' };
+const NOMBRES_MINI = { carrera: 'Carrera 3D', plataformas: 'Plataformes', cronologia: 'Línia del temps', clasifica: 'Classifica' };
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const temas = [];
